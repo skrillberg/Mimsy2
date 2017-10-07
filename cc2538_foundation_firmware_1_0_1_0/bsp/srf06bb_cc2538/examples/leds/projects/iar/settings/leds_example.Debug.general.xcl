@@ -1,0 +1,15 @@
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\bin\armproc.dll" 
+
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\bin\armjlink2.dll" 
+
+"C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\..\..\bin\iar\leds_example.out" 
+
+--plugin "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\bin\armbat.dll" 
+
+--device_macro "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\config\debugger\TexasInstruments\CC2538.dmac" 
+
+--flash_loader "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\config\flashloader\TexasInstruments\FlashCC2538RAM32K.board" 
+
+
+
+

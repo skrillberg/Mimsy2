@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspace>
+    <project>
+        <path>$WS_DIR$\..\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\leds_example.ewp</path>
+    </project>
+    <project>
+        <path>$WS_DIR$\Mimsy2.ewp</path>
+    </project>
+    <batchBuild />
+</workspace>

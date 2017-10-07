@@ -1,0 +1,216 @@
+###############################################################################
+#
+# IAR ELF Linker V8.11.3.13950/W32 for ARM                07/Oct/2017  14:20:18
+# Copyright 2007-2017 IAR Systems AB.
+#
+#    Output file  =  
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\bin\iar\leds_example.out
+#    Map file     =  
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\List\leds_example.map
+#    Command line =  
+#        -f C:\Users\kilberg\AppData\Local\Temp\EW8E17.tmp
+#        (C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\adc.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\bsp.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\bsp_led.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\cpu.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\debug.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\flash.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\gpio.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\gptimer.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\i2c.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\interrupt.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\ioc.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\led.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\leds_example.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\sleepmode.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\ssi.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\startup_iar.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\sys_ctrl.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\systick.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\uart.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\udma.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\watchdog.o
+#        -o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\bin\iar\leds_example.out
+#        --map
+#        C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\List\leds_example.map
+#        --config "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\config\linker\TexasInstruments\cx2538xf53.icf" --semihosting
+#        --entry __iar_program_start --vfe --text_out locale)
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__SystemLibrary = DLib
+__dlib_version  = 6
+
+
+*******************************************************************************
+*** HEAP SELECTION
+***
+
+The basic heap was selected because no calls to memory allocation
+functions were found in the application outside of system library
+functions, and there are calls to deallocation functions in the
+application.
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A0":  place at 0x00200000 { ro section .intvec };
+"A1":  place at start of [0x0027ffd4-0x0027ffdf] { ro section .flashcca };
+"P1":  place in [from 0x00200000 to 0x0027ffd3] { ro };
+define block CSTACK with size = 2K, alignment = 8 { section .stack };
+"A3":  place at end of [0x20004000-0x20007fff] { block CSTACK };
+do not initialize { section .stack };
+
+  Section    Kind        Address   Size  Object
+  -------    ----        -------   ----  ------
+"A0":                             0x100
+  .intvec    const    0x00200000  0x100  startup_iar.o [1]
+                    - 0x00200100  0x100
+
+"P1":                             0x4a0
+  .text      ro code  0x00200100  0x13c  gpio.o [1]
+  .text      ro code  0x0020023c    0x2  debug.o [1]
+  .text      ro code  0x00200240  0x110  ioc.o [1]
+  .rodata    const    0x00200350   0x68  gpio.o [1]
+  .rodata    const    0x002003b8   0x68  ioc.o [1]
+  .text      ro code  0x00200420   0x3e  startup_iar.o [1]
+  .text      ro code  0x0020045e    0xc  cstartup_M.o [4]
+  .text      ro code  0x0020046c   0x1a  cmain.o [4]
+  .text      ro code  0x00200486    0x4  low_level_init.o [3]
+  .text      ro code  0x0020048c   0x34  leds_example.o [1]
+  .text      ro code  0x002004c0    0x4  exit.o [3]
+  .text      ro code  0x002004c4   0x3c  led.o [1]
+  .text      ro code  0x00200500    0xa  cexit.o [4]
+  .text      ro code  0x0020050c   0x14  exit.o [5]
+  .rodata    const    0x00200520   0x20  ioc.o [1]
+  .rodata    const    0x00200540   0x20  ioc.o [1]
+  .rodata    const    0x00200560   0x20  ioc.o [1]
+  .rodata    const    0x00200580   0x20  ioc.o [1]
+                    - 0x002005a0  0x4a0
+
+"A1":                               0xc
+  .flashcca  const    0x0027ffd4    0xc  startup_iar.o [1]
+                    - 0x0027ffe0    0xc
+
+"A3":                             0x800
+  CSTACK              0x20007800  0x800  <Block>
+    .stack   uninit   0x20007800    0x4  startup_iar.o [1]
+    CSTACK   uninit   0x20007804  0x7fc  <Block tail>
+                    - 0x20008000  0x800
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module            ro code  ro data  rw data
+    ------            -------  -------  -------
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj: [1]
+    debug.o                 2
+    gpio.o                316      104
+    ioc.o                 272      232
+    led.o                  60
+    leds_example.o         52
+    startup_iar.o          62      268        4
+    -------------------------------------------
+    Total:                764      604        4
+
+command line: [2]
+    -------------------------------------------
+    Total:
+
+dl7M_tln.a: [3]
+    exit.o                  4
+    low_level_init.o        4
+    -------------------------------------------
+    Total:                  8
+
+rt7M_tl.a: [4]
+    cexit.o                10
+    cmain.o                26
+    cstartup_M.o           12
+    -------------------------------------------
+    Total:                 48
+
+shb_l.a: [5]
+    exit.o                 20
+    -------------------------------------------
+    Total:                 20
+
+    Gaps                    8
+    Linker created                        2 044
+-----------------------------------------------
+    Grand Total:          848      604    2 048
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address   Size  Type      Object
+-----                      -------   ----  ----      ------
+?main                   0x0020046d         Code  Gb  cmain.o [4]
+CSTACK$$Base            0x20007800          --   Gb  - Linker created -
+CSTACK$$Limit           0x20008000          --   Gb  - Linker created -
+FaultISR                0x0020045b    0x2  Code  Lc  startup_iar.o [1]
+GPIOBaseValid           0x00200101   0x2a  Code  Lc  gpio.o [1]
+GPIODirModeSet          0x0020012b   0x76  Code  Gb  gpio.o [1]
+GPIOPinRead             0x002001a1   0x26  Code  Gb  gpio.o [1]
+GPIOPinTypeGPIOOutput   0x002001f1   0x36  Code  Gb  gpio.o [1]
+GPIOPinWrite            0x002001c7   0x2a  Code  Gb  gpio.o [1]
+IOCPadConfigSet         0x00200241   0xe2  Code  Gb  ioc.o [1]
+IntDefaultHandler       0x0020045d    0x2  Code  Lc  startup_iar.o [1]
+NmiISR                  0x00200459    0x2  Code  Lc  startup_iar.o [1]
+Region$$Table$$Base     0x00000000          --   Gb  - Linker created -
+Region$$Table$$Limit    0x00000000          --   Gb  - Linker created -
+ResetISR                0x00200421   0x28  Code  Lc  startup_iar.o [1]
+STACK_TOP {Abs}         0x20008000         Data  Gb  command line/config [2]
+__cca                   0x0027ffd4    0xc  Data  Gb  startup_iar.o [1]
+__cmain                 0x0020046d         Code  Gb  cmain.o [4]
+__error__               0x0020023d    0x2  Code  Gb  debug.o [1]
+__exit                  0x0020050d   0x14  Code  Gb  exit.o [5]
+__iar_program_start     0x0020045f         Code  Gb  cstartup_M.o [4]
+__iar_systems$$module {Abs}
+                        0x00000001         Data  Gb  command line/config [2]
+__low_level_init        0x00200487    0x4  Code  Gb  low_level_init.o [3]
+__vector_table          0x00200000  0x100  Data  Gb  startup_iar.o [1]
+_call_main              0x00200479         Code  Gb  cmain.o [4]
+_exit                   0x00200501         Code  Gb  cexit.o [4]
+_main                   0x00200483         Code  Gb  cmain.o [4]
+dummy_stack             0x20007800    0x4  Data  Lc  startup_iar.o [1]
+exit                    0x002004c1    0x4  Code  Gb  exit.o [3]
+g_pui32IOCPortAOverrideReg
+                        0x00200520   0x20  Data  Lc  ioc.o [1]
+g_pui32IOCPortBOverrideReg
+                        0x00200540   0x20  Data  Lc  ioc.o [1]
+g_pui32IOCPortCOverrideReg
+                        0x00200560   0x20  Data  Lc  ioc.o [1]
+g_pui32IOCPortDOverrideReg
+                        0x00200580   0x20  Data  Lc  ioc.o [1]
+main                    0x0020048d   0x34  Code  Gb  leds_example.o [1]
+mimsyLedSet             0x002004c5   0x12  Code  Gb  led.o [1]
+mimsyLedToggle          0x002004d7   0x24  Code  Gb  led.o [1]
+
+
+[1] = C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj
+[2] = command line
+[3] = dl7M_tln.a
+[4] = rt7M_tl.a
+[5] = shb_l.a
+
+    848 bytes of readonly  code memory
+    604 bytes of readonly  data memory
+  2 048 bytes of readwrite data memory
+
+Errors: none
+Warnings: none
