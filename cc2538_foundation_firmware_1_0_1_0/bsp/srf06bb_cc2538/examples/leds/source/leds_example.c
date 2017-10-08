@@ -42,8 +42,12 @@
 /******************************************************************************
 * INCLUDES
 */
+#include <stdio.h>
 #include "bsp.h"
 #include "bsp_led.h"
+#include "gptimer.h"
+#include "sys_ctrl.h"
+#include "hw_gptimer.h"
 #include "C:\Users\kilberg\Documents\Mimsy2\iar\Applications\Mimsy2_BSP_drivers\bsp\led.h" 
 
 /******************************************************************************
@@ -54,8 +58,11 @@
 /******************************************************************************
 * LOCAL VARIABLES AND FUNCTIONS
 */
-
-
+  uint32_t timer;
+  uint32_t load;
+  uint32_t x=5;
+  uint32_t y=5;
+  uint32_t z=5;
 /******************************************************************************
 * FUNCTIONS
 */
@@ -78,14 +85,40 @@ void main(void)
     // Turn on LED1 and LED4
     //
     mimsyLedSet(GPIO_PIN_7|GPIO_PIN_4);
+    mimsyLedClear(GPIO_PIN_7|GPIO_PIN_4);
     
+        //config timer for pwm 
+    
+    
+    //HWREG(GPTIMER1_BASE + GPTIMER_O_CTL) |= GPTIMER_A & (GPTIMER_CTL_TAEN | GPTIMER_CTL_TBEN);
+    SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT1);
+    TimerConfigure(GPTIMER1_BASE,GPTIMER_CFG_PERIODIC); //configures timer 0a as periodic
+
+    TimerLoadSet(GPTIMER1_BASE,GPTIMER_A,5000000);
+       for(ui32Loop = 0; ui32Loop < 500000; ui32Loop++)
+       {
+       }
+    TimerEnable(GPTIMER1_BASE,GPTIMER_A);
+    
+    load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
+    printf("%d",load);
     //
     // Infinite loop
     //
     while(1)
     {
       
-      mimsyLedToggle(GPIO_PIN_4);
+      timer=TimerValueGet(GPTIMER1_BASE,GPTIMER_A);
+      //printf("%d",timer);
+      load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
+      if(timer<2500000)
+      {
+       mimsyLedSet(GPIO_PIN_4);
+      }else
+      {
+        mimsyLedClear(GPIO_PIN_4);
+      }
+      
         //
         // Toggle LED2 and LED3
         //
@@ -108,8 +141,10 @@ void main(void)
         //
         // Simple wait
         //
-        for(ui32Loop = 0; ui32Loop < 500000; ui32Loop++)
-        {
-        }
+        //for(ui32Loop = 0; ui32Loop < 500000; ui32Loop++)
+       // {
+        //}
     }
+
+    
 }
