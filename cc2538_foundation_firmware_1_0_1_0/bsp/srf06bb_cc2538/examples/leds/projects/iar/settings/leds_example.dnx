@@ -16,7 +16,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </XdsDriver>
     <DebugChecksum>
-        <Checksum>1993507184</Checksum>
+        <Checksum>648188959</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -26,8 +26,8 @@
         <Enabled>_ 0</Enabled>
     </CodeCoverage>
     <Disassembly>
-        <InstrCount>0</InstrCount>
         <MixedMode>1</MixedMode>
+        <InstrCount>0</InstrCount>
     </Disassembly>
     <CallStack>
         <ShowArgs>0</ShowArgs>
@@ -44,25 +44,15 @@
         <Enabled>0</Enabled>
         <ShowSource>1</ShowSource>
     </Trace1>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints2>
-        <Bp0>_ 0 "EMUL_CODE" "{C:\Users\kilberg\Documents\Mimsy2\iar\Applications\applications\led_example.c}.45.1" 0 0 1 "" 0 "" 0</Bp0>
-        <Bp1>_ 0 "EMUL_CODE" "{C:\Users\kilberg\Documents\Mimsy2\iar\Applications\Mimsy2_BSP_drivers\bsp\led.c}.13.1" 0 0 1 "" 0 "" 0</Bp1>
-        <Bp2>_ 0 "EMUL_CODE" "{C:\Users\kilberg\Documents\Mimsy2\iar\Applications\Mimsy2_BSP_drivers\bsp\led.c}.14.1" 0 0 1 "" 0 "" 0</Bp2>
-        <Bp3>_ 0 "EMUL_CODE" "{C:\Users\kilberg\Documents\Mimsy2\iar\Applications\Mimsy2_BSP_drivers\bsp\led.h}.2.1" 0 0 1 "" 0 "" 0</Bp3>
-        <Count>4</Count>
-    </Breakpoints2>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
-    <Aliases>
-        <Count>0</Count>
-        <SuppressDialog>0</SuppressDialog>
-    </Aliases>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+    </TermIOLog>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>1</Mode>
@@ -76,8 +66,18 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
-    <TermIOLog>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-    </TermIOLog>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Bp0>_ 0 "EMUL_CODE" "{C:\Users\kilberg\Documents\Mimsy2\iar\Applications\applications\led_example.c}.45.1" 0 0 1 "" 0 "" 0</Bp0>
+        <Bp1>_ 0 "EMUL_CODE" "{C:\Users\kilberg\Documents\Mimsy2\iar\Applications\Mimsy2_BSP_drivers\bsp\led.c}.13.1" 0 0 1 "" 0 "" 0</Bp1>
+        <Bp2>_ 0 "EMUL_CODE" "{C:\Users\kilberg\Documents\Mimsy2\iar\Applications\Mimsy2_BSP_drivers\bsp\led.c}.14.1" 0 0 1 "" 0 "" 0</Bp2>
+        <Bp3>_ 0 "EMUL_CODE" "{C:\Users\kilberg\Documents\Mimsy2\iar\Applications\Mimsy2_BSP_drivers\bsp\led.h}.2.1" 0 0 1 "" 0 "" 0</Bp3>
+        <Count>4</Count>
+    </Breakpoints2>
+    <Aliases>
+        <Count>0</Count>
+        <SuppressDialog>0</SuppressDialog>
+    </Aliases>
 </settings>

@@ -1,0 +1,15 @@
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\bin\armproc.dll" 
+
+"C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\bin\armjlink2.dll" 
+
+"C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Exe\Mimsy2_dev.out" 
+
+--plugin "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\bin\armbat.dll" 
+
+--device_macro "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\config\debugger\TexasInstruments\CC2538.dmac" 
+
+--flash_loader "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\config\flashloader\TexasInstruments\FlashCC2538RAM32K.board" 
+
+
+
+

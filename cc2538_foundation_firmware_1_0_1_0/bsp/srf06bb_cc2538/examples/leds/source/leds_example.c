@@ -48,6 +48,9 @@
 #include "gptimer.h"
 #include "sys_ctrl.h"
 #include "hw_gptimer.h"
+#include "hw_ints.h"
+#include "leds_example.h"
+#include "interrupt.h"
 #include "C:\Users\kilberg\Documents\Mimsy2\iar\Applications\Mimsy2_BSP_drivers\bsp\led.h" 
 
 /******************************************************************************
@@ -66,7 +69,17 @@
 /******************************************************************************
 * FUNCTIONS
 */
+void
+Timer1AIntHandler(void)
+{
+    //
+    // Clear the timer interrupt flag.
+    //
+     TimerIntClear(GPTIMER1_BASE, GPTIMER_TIMA_TIMEOUT);
+    mimsyLedToggle(GPIO_PIN_4);
 
+
+}
 
 /**************************************************************************//**
 * @brief    Main function of example.
@@ -90,14 +103,29 @@ void main(void)
         //config timer for pwm 
     
     
-    //HWREG(GPTIMER1_BASE + GPTIMER_O_CTL) |= GPTIMER_A & (GPTIMER_CTL_TAEN | GPTIMER_CTL_TBEN);
     SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT1);
     TimerConfigure(GPTIMER1_BASE,GPTIMER_CFG_PERIODIC); //configures timer 0a as periodic
+    
+  
+       
+      //interrupts
+    TimerIntRegister(GPTIMER1_BASE, GPTIMER_A, Timer1AIntHandler);      
+    
+    //
+    // Enable processor interrupts.
+    //
+    IntMasterEnable();
 
-    TimerLoadSet(GPTIMER1_BASE,GPTIMER_A,5000000);
-       for(ui32Loop = 0; ui32Loop < 500000; ui32Loop++)
-       {
-       }
+    //
+    // Configure the Timer0A interrupt for timer timeout.
+    //
+    TimerIntEnable(GPTIMER1_BASE, GPTIMER_TIMA_TIMEOUT);
+
+    //
+    // Enable the Timer0B interrupt on the processor (NVIC).
+    //
+    IntEnable(INT_TIMER1A);
+       
     TimerEnable(GPTIMER1_BASE,GPTIMER_A);
     
     load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
@@ -108,16 +136,16 @@ void main(void)
     while(1)
     {
       
-      timer=TimerValueGet(GPTIMER1_BASE,GPTIMER_A);
-      //printf("%d",timer);
-      load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
-      if(timer<2500000)
-      {
-       mimsyLedSet(GPIO_PIN_4);
-      }else
-      {
-        mimsyLedClear(GPIO_PIN_4);
-      }
+//      timer=TimerValueGet(GPTIMER1_BASE,GPTIMER_A);
+//      //printf("%d",timer);
+//      load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
+//      if(timer<2500000)
+//      {
+//       mimsyLedSet(GPIO_PIN_4);
+//      }else
+//      {
+//        mimsyLedClear(GPIO_PIN_4);
+//      }
       
         //
         // Toggle LED2 and LED3

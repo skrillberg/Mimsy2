@@ -1,0 +1,319 @@
+###############################################################################
+#
+# IAR ELF Linker V8.11.3.13950/W32 for ARM                09/Oct/2017  14:48:06
+# Copyright 2007-2017 IAR Systems AB.
+#
+#    Output file  =  
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Exe\Mimsy2_dev.out
+#    Map file     =  
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\List\Mimsy2_dev.map
+#    Command line =  
+#        -f C:\Users\kilberg\AppData\Local\Temp\EW2C7D.tmp
+#        (C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\adc.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\aes.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\ccm.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\cpu.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\debug.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\flash.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\gpio.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\gptimer.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\i2c.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\interrupt.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\ioc.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\led.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\leds_example.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\pka.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\sha256.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\sleepmode.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\ssi.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\startup_iar.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\sys_ctrl.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\systick.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\uart.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\udma.o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\watchdog.o
+#        -o
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Exe\Mimsy2_dev.out
+#        --map
+#        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\List\Mimsy2_dev.map
+#        --config "C:\Program Files (x86)\IAR Systems\Embedded Workbench
+#        8.0\arm\config\linker\TexasInstruments\cx2538xf53.icf" --semihosting
+#        --entry __iar_program_start --vfe --text_out locale)
+#
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor       = *
+__SystemLibrary = DLib
+__dlib_version  = 6
+
+
+*******************************************************************************
+*** HEAP SELECTION
+***
+
+The basic heap was selected because no calls to memory allocation
+functions were found in the application outside of system library
+functions, and there are calls to deallocation functions in the
+application.
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"A0":  place at 0x00200000 { ro section .intvec };
+"A1":  place at start of [0x0027ffd4-0x0027ffdf] { ro section .flashcca };
+"P1":  place in [from 0x00200000 to 0x0027ffd3] { ro };
+"A2":  place at start of [0x20004000-0x20007fff] { section VTABLE };
+define block HEAP with size = 4K, alignment = 8 { };
+"P2":  place in [from 0x20004000 to 0x20007fff] { rw, block HEAP };
+define block CSTACK with size = 2K, alignment = 8 { section .stack };
+"A3":  place at end of [0x20004000-0x20007fff] { block CSTACK };
+do not initialize { section .stack };
+initialize by copy { rw };
+
+  Section            Kind        Address   Size  Object
+  -------            ----        -------   ----  ------
+"A0":                                     0x28c
+  .intvec            const    0x00200000  0x28c  startup_iar.o [1]
+                            - 0x0020028c  0x28c
+
+"P1":                                     0x81e
+  .text              ro code  0x0020028c  0x13e  xprintftiny.o [3]
+  .text              ro code  0x002003cc   0x36  strlen.o [4]
+  .text              ro code  0x00200404   0xf0  gptimer.o [1]
+  .text              ro code  0x002004f4   0xc4  interrupt.o [1]
+  .text              ro code  0x002005b8    0x8  cpu.o [1]
+  .text              ro code  0x002005c0   0xa4  leds_example.o [1]
+  .text              ro code  0x00200664   0x4c  led.o [1]
+  .text              ro code  0x002006b0   0x7e  gpio.o [1]
+  .text              ro code  0x00200730   0x2c  sys_ctrl.o [1]
+  .text              ro code  0x0020075c   0x28  printf.o [3]
+  .text              ro code  0x00200784   0x8c  ioc.o [1]
+  .text              ro code  0x00200810   0x68  iarttio.o [5]
+  .text              ro code  0x00200878    0x8  XShttio.o [3]
+  .text              ro code  0x00200880   0x38  packbits_init_single.o [4]
+  .text              ro code  0x002008b8   0x28  data_init.o [4]
+  .text              ro code  0x002008e0   0x22  iarwrite.o [5]
+  .iar.init_table    const    0x00200904   0x10  - Linker created -
+  .rodata            const    0x00200914   0x20  ioc.o [1]
+  .rodata            const    0x00200934   0x20  ioc.o [1]
+  .rodata            const    0x00200954   0x20  ioc.o [1]
+  .rodata            const    0x00200974   0x20  ioc.o [1]
+  .text              ro code  0x00200994   0x20  putchar.o [3]
+  .text              ro code  0x002009b4   0x10  write.o [5]
+  .text              ro code  0x002009c4   0x1e  dwrite.o [5]
+  .text              ro code  0x002009e2   0x20  iarwstd.o [5]
+  .text              ro code  0x00200a04   0x1a  cmain.o [4]
+  .text              ro code  0x00200a1e    0x4  low_level_init.o [3]
+  .text              ro code  0x00200a22    0x4  exit.o [3]
+  .text              ro code  0x00200a28    0xa  cexit.o [4]
+  .text              ro code  0x00200a34   0x14  exit.o [5]
+  .rodata            const    0x00200a48   0x18  sys_ctrl.o [1]
+  .text              ro code  0x00200a60   0x16  xprout.o [3]
+  .rodata            const    0x00200a78   0x14  interrupt.o [1]
+  .text              ro code  0x00200a8c    0xe  startup_iar.o [1]
+  .text              ro code  0x00200a9a    0xc  cstartup_M.o [4]
+  .rodata            const    0x00200aa6    0x0  packbits_init_single.o [4]
+  Initializer bytes  const    0x00200aa6    0x4  <for P2-1>
+                            - 0x00200aaa  0x81e
+
+"A1":                                       0xc
+  .flashcca          const    0x0027ffd4    0xc  startup_iar.o [1]
+                            - 0x0027ffe0    0xc
+
+"A2":                                     0x28c
+  VTABLE             uninit   0x20004000  0x28c  interrupt.o [1]
+                            - 0x2000428c  0x28c
+
+"P2":                                      0x10
+  P2-1                        0x2000428c   0x10  <Init block>
+    .data            inited   0x2000428c    0x8  XShttio.o [3]
+    .bss             inited   0x20004294    0x4  leds_example.o [1]
+    .bss             inited   0x20004298    0x4  leds_example.o [1]
+                            - 0x2000429c   0x10
+
+"A3":                                     0x800
+  CSTACK                      0x20007800  0x800  <Block>
+    .stack           uninit   0x20007800    0x4  startup_iar.o [1]
+    CSTACK           uninit   0x20007804  0x7fc  <Block tail>
+                            - 0x20008000  0x800
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address     Size
+          -------     ----
+Copy/packbits (__iar_packbits_init_single3)
+    1 source range, total size 0x4 (25% of destination):
+          0x00200aa6   0x4
+    1 destination range, total size 0x10:
+          0x2000428c  0x10
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                  ro code  ro data  rw data
+    ------                  -------  -------  -------
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj: [1]
+    cpu.o                         8
+    gpio.o                      126
+    gptimer.o                   240
+    interrupt.o                 196       20      652
+    ioc.o                       140      128
+    led.o                        76
+    leds_example.o              164        2        8
+    startup_iar.o                14      664        4
+    sys_ctrl.o                   44       24
+    -------------------------------------------------
+    Total:                    1 008      838      664
+
+command line: [2]
+    -------------------------------------------------
+    Total:
+
+dl7M_tln.a: [3]
+    XShttio.o                     8        2        8
+    exit.o                        4
+    low_level_init.o              4
+    printf.o                     40
+    putchar.o                    32
+    xprintftiny.o               318
+    xprout.o                     22
+    -------------------------------------------------
+    Total:                      428        2        8
+
+rt7M_tl.a: [4]
+    cexit.o                      10
+    cmain.o                      26
+    cstartup_M.o                 12
+    data_init.o                  40
+    packbits_init_single.o       56
+    strlen.o                     54
+    -------------------------------------------------
+    Total:                      198
+
+shb_l.a: [5]
+    dwrite.o                     30
+    exit.o                       20
+    iarttio.o                   104
+    iarwrite.o                   34
+    iarwstd.o                    32
+    write.o                      16
+    -------------------------------------------------
+    Total:                      236
+
+    Gaps                         12        4
+    Linker created                        16    2 044
+-----------------------------------------------------
+    Grand Total:              1 882      860    2 716
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address   Size  Type      Object
+-----                      -------   ----  ----      ------
+.iar.init_table$$Base   0x00200904          --   Gb  - Linker created -
+.iar.init_table$$Limit  0x00200914          --   Gb  - Linker created -
+?main                   0x00200a05         Code  Gb  cmain.o [4]
+CPUcpsie                0x002005b9    0x8  Code  Gb  cpu.o [1]
+CSTACK$$Base            0x20007800          --   Gb  - Linker created -
+CSTACK$$Limit           0x20008000          --   Gb  - Linker created -
+FaultISR                0x00200a97    0x2  Code  Lc  startup_iar.o [1]
+GPIODirModeSet          0x002006b1   0x48  Code  Gb  gpio.o [1]
+GPIOPinRead             0x002006f9    0xa  Code  Gb  gpio.o [1]
+GPIOPinTypeGPIOOutput   0x0020070f   0x20  Code  Gb  gpio.o [1]
+GPIOPinWrite            0x00200703    0xc  Code  Gb  gpio.o [1]
+IOCPadConfigSet         0x00200785   0x62  Code  Gb  ioc.o [1]
+IntDefaultHandler       0x00200a99    0x2  Code  Lc  startup_iar.o [1]
+IntEnable               0x0020053f   0x66  Code  Gb  interrupt.o [1]
+IntMasterEnable         0x002004f5   0x14  Code  Gb  interrupt.o [1]
+IntRegister             0x00200509   0x36  Code  Gb  interrupt.o [1]
+NmiISR                  0x00200a95    0x2  Code  Lc  startup_iar.o [1]
+Region$$Table$$Base     0x00200904          --   Gb  - Linker created -
+Region$$Table$$Limit    0x00200914          --   Gb  - Linker created -
+ResetISR                0x00200a8d    0x8  Code  Lc  startup_iar.o [1]
+STACK_TOP {Abs}         0x20008000         Data  Gb  command line/config [2]
+SysCtrlPeripheralEnable
+                        0x00200731   0x26  Code  Gb  sys_ctrl.o [1]
+Timer1AIntHandler       0x002005c1   0x12  Code  Gb  leds_example.o [1]
+TimerConfigure          0x00200419   0x30  Code  Gb  gptimer.o [1]
+TimerEnable             0x00200405   0x14  Code  Gb  gptimer.o [1]
+TimerIntClear           0x002004ef    0x6  Code  Gb  gptimer.o [1]
+TimerIntEnable          0x002004e1    0xe  Code  Gb  gptimer.o [1]
+TimerIntRegister        0x0020047f   0x50  Code  Gb  gptimer.o [1]
+TimerLoadGet            0x0020045f   0x10  Code  Gb  gptimer.o [1]
+TimerLoadSet            0x00200449   0x16  Code  Gb  gptimer.o [1]
+TimerValueGet           0x0020046f   0x10  Code  Gb  gptimer.o [1]
+_PrintfTiny             0x002002a5  0x126  Code  Gb  xprintftiny.o [3]
+_Prout                  0x00200a61   0x16  Code  Gb  xprout.o [3]
+__cca                   0x0027ffd4    0xc  Data  Gb  startup_iar.o [1]
+__cmain                 0x00200a05         Code  Gb  cmain.o [4]
+__dwrite                0x002009c5   0x1e  Code  Gb  dwrite.o [5]
+__exit                  0x00200a35   0x14  Code  Gb  exit.o [5]
+__iar_close_ttio        0x00200811   0x2c  Code  Gb  iarttio.o [5]
+__iar_data_init3        0x002008b9   0x28  Code  Gb  data_init.o [4]
+__iar_get_ttio          0x0020083d   0x38  Code  Gb  iarttio.o [5]
+__iar_lookup_ttioh      0x00200879    0x8  Code  Gb  XShttio.o [3]
+__iar_packbits_init_single3
+                        0x00200881   0x38  Code  Gb  packbits_init_single.o [4]
+__iar_program_start     0x00200a9b         Code  Gb  cstartup_M.o [4]
+__iar_sh_stdout         0x002009e3   0x20  Code  Gb  iarwstd.o [5]
+__iar_sh_write          0x002008e1   0x22  Code  Gb  iarwrite.o [5]
+__iar_systems$$module {Abs}
+                        0x00000001         Data  Gb  command line/config [2]
+__iar_ttio_handles      0x2000428c    0x8  Data  Lc  XShttio.o [3]
+__low_level_init        0x00200a1f    0x4  Code  Gb  low_level_init.o [3]
+__vector_table          0x00200000  0x28c  Data  Gb  startup_iar.o [1]
+__write                 0x002009b5   0x10  Code  Gb  write.o [5]
+_call_main              0x00200a11         Code  Gb  cmain.o [4]
+_exit                   0x00200a29         Code  Gb  cexit.o [4]
+_main                   0x00200a1b         Code  Gb  cmain.o [4]
+dummy_stack             0x20007800    0x4  Data  Lc  startup_iar.o [1]
+exit                    0x00200a23    0x4  Code  Gb  exit.o [3]
+g_pfnRAMVectors         0x20004000  0x28c  Data  Lc  interrupt.o [1]
+g_pui32EnRegs           0x00200a78   0x14  Data  Lc  interrupt.o [1]
+g_pui32IOCPortAOverrideReg
+                        0x00200914   0x20  Data  Lc  ioc.o [1]
+g_pui32IOCPortBOverrideReg
+                        0x00200934   0x20  Data  Lc  ioc.o [1]
+g_pui32IOCPortCOverrideReg
+                        0x00200954   0x20  Data  Lc  ioc.o [1]
+g_pui32IOCPortDOverrideReg
+                        0x00200974   0x20  Data  Lc  ioc.o [1]
+g_pui32RCGCRegs         0x00200a48   0x18  Data  Lc  sys_ctrl.o [1]
+load                    0x20004298    0x4  Data  Gb  leds_example.o [1]
+main                    0x002005d3   0x76  Code  Gb  leds_example.o [1]
+mimsyLedClear           0x00200677   0x10  Code  Gb  led.o [1]
+mimsyLedSet             0x00200665   0x12  Code  Gb  led.o [1]
+mimsyLedToggle          0x00200687   0x24  Code  Gb  led.o [1]
+out                     0x0020028d   0x18  Code  Lc  xprintftiny.o [3]
+printf                  0x0020075d   0x28  Code  Gb  printf.o [3]
+putchar                 0x00200995   0x20  Code  Gb  putchar.o [3]
+strlen                  0x002003cd         Code  Gb  strlen.o [4]
+timer                   0x20004294    0x4  Data  Gb  leds_example.o [1]
+
+
+[1] = C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj
+[2] = command line
+[3] = dl7M_tln.a
+[4] = rt7M_tl.a
+[5] = shb_l.a
+
+  1 882 bytes of readonly  code memory
+    860 bytes of readonly  data memory
+  2 716 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

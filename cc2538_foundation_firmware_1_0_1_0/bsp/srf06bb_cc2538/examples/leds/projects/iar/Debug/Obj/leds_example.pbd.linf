@@ -1,7 +1,9 @@
 ﻿C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\leds_example.pbd
-C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\adc.pbi
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\leds_example.pbi
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\startup_iar.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\bsp.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\bsp_led.pbi
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\adc.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\cpu.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\debug.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\flash.pbi
@@ -10,13 +12,11 @@ C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\i2c.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\interrupt.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\ioc.pbi
-C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\led.pbi
-C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\leds_example.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\sleepmode.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\ssi.pbi
-C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\startup_iar.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\sys_ctrl.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\systick.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\uart.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\udma.pbi
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\watchdog.pbi
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\bsp\srf06bb_cc2538\examples\leds\projects\iar\Debug\Obj\led.pbi
