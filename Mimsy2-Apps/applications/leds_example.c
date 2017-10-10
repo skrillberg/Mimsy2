@@ -79,10 +79,10 @@ Timer1AIntHandler(void)
     //
     // Clear the timer interrupt flag.
     //
-     TimerIntClear(GPTIMER1_BASE, GPTIMER_TIMA_TIMEOUT |GPTIMER_TIMB_TIMEOUT);
-    mimsyLedToggle(GPIO_PIN_4 | GPIO_PIN_7);
+     TimerIntClear(GPTIMER1_BASE, GPTIMER_CAPA_EVENT );
+    mimsyLedToggle(GPIO_PIN_4);
     gpio_state=GPIOPinRead(GPIO_D_BASE,GPIO_PIN_1);
-    GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1,~gpio_state& GPIO_PIN_1);
+   // GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1,~gpio_state& GPIO_PIN_1);
 
 
 }
@@ -92,10 +92,10 @@ Timer1BIntHandler(void)
     //
     // Clear the timer interrupt flag.
     //
-     TimerIntClear(GPTIMER1_BASE,  GPTIMER_TIMA_TIMEOUT |GPTIMER_TIMB_TIMEOUT);
-   // mimsyLedToggle(GPIO_PIN_4);
+     TimerIntClear(GPTIMER1_BASE, GPTIMER_CAPB_EVENT);
+    mimsyLedToggle(GPIO_PIN_7);
     gpio_state=GPIOPinRead(GPIO_D_BASE,GPIO_PIN_2);
-    GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_2,~gpio_state& GPIO_PIN_2);
+    //GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_2,~gpio_state& GPIO_PIN_2);
     gpio_state=TimerValueGet(GPTIMER1_BASE,GPTIMER_B);
 
    // TimerEnable(GPTIMER1_BASE,GPTIMER_B);
@@ -113,9 +113,9 @@ void main(void)
     // Init LEDs (turned off)
     //
     IntMasterDisable();
-    GPIOPinTypeGPIOOutput(GPIO_C_BASE,GPIO_PIN_4);
-    GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
-       GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,GPIO_PIN_1);
+    GPIOPinTypeGPIOOutput(GPIO_C_BASE,GPIO_PIN_4|GPIO_PIN_7);
+    //GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
+    //   GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,GPIO_PIN_1);
     gpio_state=GPIO_PIN_1;
     //
     // Turn on LED1 and LED4
@@ -127,22 +127,24 @@ void main(void)
     
     
     SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT1);
-    TimerConfigure(GPTIMER1_BASE, GPTIMER_CFG_SPLIT_PAIR |GPTIMER_CFG_A_PERIODIC | GPTIMER_CFG_B_PERIODIC); //configures timer 1a as periodic half
+    TimerConfigure(GPTIMER1_BASE, GPTIMER_CFG_SPLIT_PAIR |GPTIMER_CFG_A_PWM | GPTIMER_CFG_B_PWM); //configures timer 1a as periodic half
     //HWREG(GPTIMER1_BASE + GPTIMER_O_TBMR)= HWREG(GPTIMER1_BASE + GPTIMER_O_TBMR)|64; //configures b to trigger on A timeout
     
     //set output pins for pwm//////////////////////////////
-   // GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
-   // IOCPadConfigSet(GPIO_D_BASE,IOC_PIN_1|IOC_PIN_2,IOC_OVERRIDE_OE);
-   // IOCPinConfigPeriphOutput(GPIO_D_BASE,IOC_PIN_1,IOC_MUX_OUT_SEL_GPT1_ICP1);
-    //IOCPinConfigPeriphOutput(GPIO_D_BASE,IOC_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2);
+    GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
+    gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1);
+    IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE);
+    IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_1,IOC_MUX_OUT_SEL_GPT1_ICP1);
+    IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2);
 
     
     //set pwm polarities to be opposite
-   // TimerControlLevel(GPTIMER1_BASE,GPTIMER_A,1); 
-   // TimerControlLevel(GPTIMER1_BASE,GPTIMER_B,0);
+    TimerControlLevel(GPTIMER1_BASE,GPTIMER_A,true); 
+    TimerControlLevel(GPTIMER1_BASE,GPTIMER_B,false);
     
     //set pwm duty cycles
-    TimerMatchSet(GPTIMER1_BASE,GPTIMER_BOTH,10000);
+    TimerMatchSet(GPTIMER1_BASE,GPTIMER_A,25000);
+    TimerMatchSet(GPTIMER1_BASE,GPTIMER_B,20000);
        
       //interrupts
     TimerIntClear(GPTIMER1_BASE, GPTIMER_TIMB_TIMEOUT);
@@ -162,7 +164,8 @@ void main(void)
     //
     // Configure the Timer0A interrupt for timer timeout.
     //
-    TimerIntEnable(GPTIMER1_BASE, GPTIMER_TIMA_MATCH| GPTIMER_TIMB_MATCH);
+    TimerIntEnable(GPTIMER1_BASE, GPTIMER_CAPA_EVENT| GPTIMER_CAPB_EVENT);
+    TimerControlEvent(GPTIMER1_BASE,GPTIMER_BOTH,GPTIMER_EVENT_POS_EDGE);
     //TimerIntEnable(GPTIMER1_BASE, GPTIMER_TIMB_TIMEOUT);
 
 
