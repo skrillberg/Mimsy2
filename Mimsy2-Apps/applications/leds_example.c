@@ -60,11 +60,15 @@
 * DEFINES
 */
 #define GP4 
-
+#define FREQ_CNT SysCtrlClockGet()/frequency 
+#define OVERLAP_MATCH (100-dutycycle)*SysCtrlClockGet()/frequency/100 
 /******************************************************************************
 * LOCAL VARIABLES AND FUNCTIONS
 */
-  uint32_t timer;
+uint32_t frequency=1000;  
+uint32_t dutycycle=80;
+uint32_t timer;
+uint32_t timeroffset;
   uint32_t load;
   uint32_t x=5;
   uint32_t y=5;
@@ -123,46 +127,53 @@ void main(void)
     mimsyLedSet(GPIO_PIN_7|GPIO_PIN_4);
     mimsyLedClear(GPIO_PIN_7|GPIO_PIN_4);
     
-        //config timer for pwm 
+        //config timers for pwm 
     
     
-    SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT1);
-    TimerConfigure(GPTIMER1_BASE, GPTIMER_CFG_SPLIT_PAIR |GPTIMER_CFG_A_PWM | GPTIMER_CFG_B_PWM); //configures timer 1a as periodic half
-    //HWREG(GPTIMER1_BASE + GPTIMER_O_TBMR)= HWREG(GPTIMER1_BASE + GPTIMER_O_TBMR)|64; //configures b to trigger on A timeout
+    SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT1); //enables timer 1 module
+    SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT0); //enables timer 0 module
+    
+    TimerConfigure(GPTIMER1_BASE, GPTIMER_CFG_SPLIT_PAIR |GPTIMER_CFG_A_PWM | GPTIMER_CFG_B_PWM); //configures timer 1ab as pwm timers
+    TimerControlWaitOnTrigger( GPTIMER1_BASE,GPTIMER_A,true); //configures 1a as a wait on trigger timer
+    TimerConfigure(GPTIMER0_BASE,GPTIMER_CFG_ONE_SHOT); //timer 0b configured as a one shot timer. this will be used to daisy chain start timer 1a 
+   
+    TimerLoadSet(GPTIMER0_BASE,GPTIMER_A,5000); //loads a timer value into 1b
+    TimerLoadSet(GPTIMER1_BASE,GPTIMER_A,FREQ_CNT); //1a load
+    TimerLoadSet(GPTIMER1_BASE,GPTIMER_B,FREQ_CNT); //1b load
+    load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
+    load=TimerLoadGet(GPTIMER0_BASE,GPTIMER_B);
     
     //set output pins for pwm//////////////////////////////
-    GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
-    gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1);
-    IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE);
-    IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_1,IOC_MUX_OUT_SEL_GPT1_ICP1);
-    IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2);
+    GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
+    //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
+    IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE); // enables pins as outputs, necessary for this code to work correctly
+   
+    IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps cp1 to gpio1
+    IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps cp2 to gpio2
 
     
     //set pwm polarities to be opposite
-    TimerControlLevel(GPTIMER1_BASE,GPTIMER_A,true); 
-    TimerControlLevel(GPTIMER1_BASE,GPTIMER_B,false);
+    TimerControlLevel(GPTIMER1_BASE,GPTIMER_A,true); //active high pwm
+    TimerControlLevel(GPTIMER1_BASE,GPTIMER_B,true); //active high pwm
     
     //set pwm duty cycles
-    TimerMatchSet(GPTIMER1_BASE,GPTIMER_A,25000);
-    TimerMatchSet(GPTIMER1_BASE,GPTIMER_B,20000);
+    TimerMatchSet(GPTIMER1_BASE,GPTIMER_A,OVERLAP_MATCH);
+    TimerMatchSet(GPTIMER1_BASE,GPTIMER_B,OVERLAP_MATCH);
        
       //interrupts
     TimerIntClear(GPTIMER1_BASE, GPTIMER_TIMB_TIMEOUT);
     TimerIntClear(GPTIMER1_BASE, GPTIMER_TIMA_TIMEOUT);
     
-    TimerIntRegister(GPTIMER1_BASE, GPTIMER_A, Timer1AIntHandler);      
-    TimerIntRegister(GPTIMER1_BASE, GPTIMER_B, Timer1BIntHandler);      
+    TimerIntRegister(GPTIMER1_BASE, GPTIMER_A, Timer1AIntHandler);       //sets timer a interrupt handler
+    TimerIntRegister(GPTIMER1_BASE, GPTIMER_B, Timer1BIntHandler);      //sets timer 1b interrupt handler
     
     //
     // Enable processor interrupts.
     //
     
-     TimerLoadSet(GPTIMER1_BASE,GPTIMER_A,50000);
-     TimerLoadSet(GPTIMER1_BASE,GPTIMER_B,50000);
-     load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
-     load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_B);
+
     //
-    // Configure the Timer0A interrupt for timer timeout.
+    // enable interrupts for pos edge pwm 
     //
     TimerIntEnable(GPTIMER1_BASE, GPTIMER_CAPA_EVENT| GPTIMER_CAPB_EVENT);
     TimerControlEvent(GPTIMER1_BASE,GPTIMER_BOTH,GPTIMER_EVENT_POS_EDGE);
@@ -170,7 +181,7 @@ void main(void)
 
 
     //
-    // Enable the Timer0B interrupt on the processor (NVIC).
+    // Enable the Timer interrupts on the processor (NVIC).
     //
     IntEnable(INT_TIMER1A);
     IntEnable(INT_TIMER1B);
@@ -178,7 +189,13 @@ void main(void)
    
    // TimerLoadSet(GPTIMER1_BASE,GPTIMER_B,500000);
     
-    TimerEnable(GPTIMER1_BASE,GPTIMER_BOTH);
+    //timer enables
+    TimerEnable(GPTIMER1_BASE,GPTIMER_B);
+    for(ui32Loop=1;ui32Loop<FREQ_CNT/2;ui32Loop++) {
+    }
+    TimerEnable(GPTIMER1_BASE,GPTIMER_A);
+    TimerEnable(GPTIMER0_BASE,GPTIMER_A);
+
    // TimerEnable(GPTIMER1_BASE,GPTIMER_B);
     
     load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
@@ -191,7 +208,7 @@ void main(void)
     {
       
       timer=TimerValueGet(GPTIMER1_BASE,GPTIMER_A);
-      timer=TimerValueGet(GPTIMER1_BASE,GPTIMER_B);
+      timeroffset=TimerValueGet(GPTIMER0_BASE,GPTIMER_A);
 
     }
 
