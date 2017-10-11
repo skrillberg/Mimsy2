@@ -1,44 +1,3 @@
-//*****************************************************************************
-//! @file       leds_example.c
-//! @brief      Example of board support package led functionality.
-//!             This example uses the bspLed functions to blink two LEDs.
-//!             See bsp_led.c for more information about the BSP led package.
-//!
-//! Revised     $Date: 2013-03-14 11:55:47 +0100 (on, 14 mar 2013) $
-//! Revision    $Revision: 7035 $
-//
-//  Copyright (C) 2013 Texas Instruments Incorporated - http://www.ti.com/
-//
-//
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions
-//  are met:
-//
-//    Redistributions of source code must retain the above copyright
-//    notice, this list of conditions and the following disclaimer.
-//
-//    Redistributions in binary form must reproduce the above copyright
-//    notice, this list of conditions and the following disclaimer in the
-//    documentation and/or other materials provided with the distribution.
-//
-//    Neither the name of Texas Instruments Incorporated nor the names of
-//    its contributors may be used to endorse or promote products derived
-//    from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-//  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-//  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-//  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-//  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-//  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-//  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-//  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-//  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-//  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//****************************************************************************/
-
-
 /******************************************************************************
 * INCLUDES
 */
@@ -56,29 +15,27 @@
 #include "hw_gpio.h"
 #include "ioc.h"
 
+/*GLOBALS
+*/
+volatile uint32 inchwormTimer=0;
 /******************************************************************************
 * DEFINES
 */
 #define GP4 
 #define FREQ_CNT SysCtrlClockGet()/frequency 
 #define OVERLAP_MATCH (100-dutycycle)*SysCtrlClockGet()/frequency/100 
-/******************************************************************************
-* LOCAL VARIABLES AND FUNCTIONS
+
+
+/*********************************************************************************
+*STRUCTURES
 */
-uint32_t frequency=2000; //must be greater than 250  
-uint32_t dutycycle=80;
-uint32_t timer;
-uint32_t timeroffset;
-  uint32_t load;
-  uint32_t x=5;
-  uint32_t y=5;
-  uint32_t z=5;
-  volatile uint32_t gpio_state;
+
+
 /******************************************************************************
 * FUNCTIONS
 */
 void
-Timer1AIntHandler(void)
+PwmTimerAIntHandler(void)
 {
     //
     // Clear the timer interrupt flag.
@@ -91,7 +48,7 @@ Timer1AIntHandler(void)
 
 }
 void
-Timer1BIntHandler(void)
+PwmTimerBIntHandler(void)
 {
     //
     // Clear the timer interrupt flag.
@@ -106,9 +63,132 @@ Timer1BIntHandler(void)
 
 }
 
-/**************************************************************************//**
-* @brief    Main function of example.
-******************************************************************************/
+
+void inchwormInit(struct Inchworms motor){
+  uint32 freqCnt=SysCtrlClockGet()/motor.motorFrequency;
+  uint32 match=(100-motor.dutyCycle)*SysCtrlClockGet()/motor.motorFrequency/100 ;
+  uint32 pwmTimerClkEnable;
+  uint32 pwmTimerBase;
+  uint32 timerIntA;
+  uint32 timerIntB;
+
+  //find timer modules used
+  switch(motor.timer){
+      
+  case 0: 
+    pwmTimerClkEnable=SYS_CTRL_PERIPH_GPT0;
+    pwmTimerBase=GPTIMER0_BASE;
+    timerIntA=TIMER0A;
+    timerIntB=TIMER0B;
+    break;
+
+  case 1: 
+    pwmTimerClkEnable=SYS_CTRL_PERIPH_GPT1;
+    pwmTimerBase=GPTIMER1_BASE;
+    timerIntA=TIMER1A;
+    timerIntB=TIMER1B;
+    break;
+    
+  case 2: 
+    pwmTimerClkEnable=SYS_CTRL_PERIPH_GPT2;
+    pwmTimerBase=GPTIMER2_BASE;
+    timerIntA=TIMER2A;
+    timerIntB=TIMER2B;
+    break;
+    
+  case 3: 
+    pwmTimerClkEnable=SYS_CTRL_PERIPH_GPT3;
+    pwmTimerBase=GPTIMER3_BASE;
+    timerIntA=TIMER3A;
+    timerIntB=TIMER3B;
+    break;    
+    
+    
+  }
+  
+    inchwormTimer=pwmTimerBase;//updates global value of current inchworm timer so interrupt knows what to do.
+  
+  
+    SysCtrlPeripheralEnable(pwTimerClkEnable); //enables timer module
+   
+    
+    TimerConfigure(pwmTimerBase, GPTIMER_CFG_SPLIT_PAIR |GPTIMER_CFG_A_PWM | GPTIMER_CFG_B_PWM); //configures timers as pwm timers
+  
+    
+    TimerControlWaitOnTrigger( pwmTimerBase,GPTIMER_A,true); //configures 1a as a wait on trigger timer
+    TimerConfigure(pwmTimerBase,GPTIMER_CFG_ONE_SHOT); //timer 0b configured as a one shot timer. this will be used to daisy chain start timer 1a 
+   
+    
+    TimerLoadSet(pwmTimerBase,GPTIMER_A,freqCnt); //1a load
+    TimerLoadSet(pwmTimerBase,GPTIMER_B,freqCnt); //1b load
+  //  load=TimerLoadGet(pwmTimerBase,GPTIMER_A);
+
+    
+    //set output pins for pwm//////////////////////////////
+    GPIOPinTypeTimer(motor.GPIObase1,motor.GPIOpin1); //enables hw muxing of pin outputs
+    GPIOPinTypeTimer(motor.GPIObase2,motor.GPIOpin2); //enables hw muxing of pin outputs
+
+        
+    //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
+    IOCPadConfigSet(motor.GPIObase1,motor.GPIOpin1,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+        IOCPadConfigSet(motor.GPIObase2,motor.GPIOpin2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+   
+    IOCPinConfigPeriphOutput(motor.GPIObase1,motor.GPIOpin1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps pwm1 output to pin1
+    IOCPinConfigPeriphOutput(motor.GPIObase2,motor.GPIOpin2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps pwm2 output to pin2
+
+    
+    //set pwm polarities 
+    TimerControlLevel(pwmTimerBase,GPTIMER_A,true); //active high pwm
+    TimerControlLevel(pwmTimerBase,GPTIMER_B,true); //active high pwm
+    
+    //set pwm duty cycles
+    TimerMatchSet(pwmTimerBase,GPTIMER_A,match);
+    TimerMatchSet(pwmTimerBase,GPTIMER_B,match);
+       
+      //interrupts
+    TimerIntClear(pwmTimerBase, GPTIMER_TIMB_TIMEOUT);
+    TimerIntClear(pwmTimerBase, GPTIMER_TIMA_TIMEOUT);
+    
+    TimerIntRegister(pwmTimerBase, GPTIMER_A, PwmTimerAIntHandler);       //sets timer a interrupt handler
+    TimerIntRegister(pwmTimerBase, GPTIMER_B, PwmTimerBIntHandler);      //sets timer 1b interrupt handler
+    
+    //
+    // Enable processor interrupts.
+    //
+    
+
+    //
+    // enable interrupts for pos edge pwm 
+    //
+    TimerIntEnable(pwmTimerBase, GPTIMER_CAPA_EVENT| GPTIMER_CAPB_EVENT);
+    TimerControlEvent(pwmTimerBase,GPTIMER_BOTH,GPTIMER_EVENT_POS_EDGE);
+    //TimerIntEnable(GPTIMER1_BASE, GPTIMER_TIMB_TIMEOUT);
+
+
+    //
+    // Enable the Timer interrupts on the processor (NVIC).
+    //
+    IntEnable(timerIntA);
+    IntEnable(timerIntB);
+}
+
+void inchwormDisable(void){
+      TimerDisable(GPTIMER1_BASE,GPTIMER_B);
+
+    TimerDisable(GPTIMER1_BASE,GPTIMER_A);
+    GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
+    GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,255);
+}
+
+void inchwormEnable(void){
+      TimerEnable(GPTIMER1_BASE,GPTIMER_B);
+    for(ui32Loop=1;ui32Loop<FREQ_CNT/2;ui32Loop++) {
+    }
+    TimerEnable(GPTIMER1_BASE,GPTIMER_A);
+    TimerEnable(GPTIMER0_BASE,GPTIMER_A);
+
+}
+
 void main(void)
 {
     volatile uint32_t ui32Loop;
@@ -147,15 +227,12 @@ void main(void)
     
     //set output pins for pwm//////////////////////////////
     GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
-     GPIOPinTypeTimer(GPIO_A_BASE,GPIO_PIN_2);
     //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
     IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
-     IOCPadConfigSet(GPIO_A_BASE,GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE);
-     
-     
+   
     IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps cp1 to gpio1
     IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps cp2 to gpio2
-IOCPinConfigPeriphOutput(GPIO_A_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2);
+
     
     //set pwm polarities 
     TimerControlLevel(GPTIMER1_BASE,GPTIMER_A,true); //active high pwm
@@ -217,25 +294,25 @@ IOCPinConfigPeriphOutput(GPIO_A_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2);
    //    for(ui32Loop=1;ui32Loop<5000000;ui32Loop++) {
    // }
        
-    //TimerDisable(GPTIMER1_BASE,GPTIMER_B);
+    TimerDisable(GPTIMER1_BASE,GPTIMER_B);
 
-   // TimerDisable(GPTIMER1_BASE,GPTIMER_A);
+    TimerDisable(GPTIMER1_BASE,GPTIMER_A);
     GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
     GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,255);
      for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
     }
     
-   // TimerLoadSet(GPTIMER1_BASE,GPTIMER_A,FREQ_CNT); //1a load
-   // TimerLoadSet(GPTIMER1_BASE,GPTIMER_B,FREQ_CNT); //1b load
+    TimerLoadSet(GPTIMER1_BASE,GPTIMER_A,FREQ_CNT); //1a load
+    TimerLoadSet(GPTIMER1_BASE,GPTIMER_B,FREQ_CNT); //1b load
     GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
     //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
     IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
     
     
-    //TimerEnable(GPTIMER1_BASE,GPTIMER_B);
+    TimerEnable(GPTIMER1_BASE,GPTIMER_B);
     for(ui32Loop=1;ui32Loop<FREQ_CNT/3;ui32Loop++) {
     }
-   // TimerEnable(GPTIMER1_BASE,GPTIMER_A);
+    TimerEnable(GPTIMER1_BASE,GPTIMER_A);
    // TimerEnable(GPTIMER0_BASE,GPTIMER_A);
     
     for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
@@ -244,3 +321,4 @@ IOCPinConfigPeriphOutput(GPIO_A_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2);
 
     
 }
+
