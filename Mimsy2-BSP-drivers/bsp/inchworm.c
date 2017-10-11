@@ -19,6 +19,7 @@
 /*GLOBALS
 */
 volatile uint32_t inchwormTimer=0;
+volatile uint32_t phaseTimer=0;
 volatile uint32_t stepCountList[16];
 volatile bool actuating=false;
 volatile uint32_t stepTargetList[16];
@@ -26,7 +27,9 @@ volatile  uint32_t timerIntA;
 volatile  uint32_t timerIntB;
 volatile bool activeDriveList[16];
 volatile uint32_t motorsNum=0;
+volatile uint32_t startSecondTimer=false;
 InchwormMotor motorList[16];
+uint32_t value;
 /******************************************************************************
 * DEFINES
 */
@@ -81,6 +84,12 @@ PwmTimerBIntHandler(void)
     
 
 }
+void
+PhaseTimerAIntHandler(void)
+{
+       TimerIntClear(phaseTimer, GPTIMER_TIMA_TIMEOUT|GPTIMER_TIMB_TIMEOUT);
+       startSecondTimer=true;
+}
 
 //TODO: rename motor
 void inchwormInit(struct InchwormSetup setup){
@@ -88,10 +97,11 @@ void inchwormInit(struct InchwormSetup setup){
   uint32_t match=(100-setup.dutyCycle)*SysCtrlClockGet()/setup.motorFrequency/100 ;
   uint32_t pwmTimerClkEnable;
   uint32_t pwmTimerBase;
-
+  uint32_t phaseTimerBase;
+  uint32_t phaseTimerClkEnable;
   uint32_t x;
   uint32_t ui32Loop;
-  
+  uint32_t phaseIntA;
   //setup active motors list
   motorsNum=setup.numOfMotors;
   
@@ -138,14 +148,47 @@ void inchwormInit(struct InchwormSetup setup){
     
   }
   
+  switch(setup.phaseTimer){
+  case 0: 
+    phaseTimerClkEnable=SYS_CTRL_PERIPH_GPT0;
+    phaseTimerBase=GPTIMER0_BASE;
+    phaseIntA=INT_TIMER0A;
+
+    break;
+
+  case 1: 
+    phaseTimerClkEnable=SYS_CTRL_PERIPH_GPT1;
+    phaseTimerBase=GPTIMER1_BASE;
+    phaseIntA=INT_TIMER1A;
+
+    break;
+    
+  case 2: 
+    phaseTimerClkEnable=SYS_CTRL_PERIPH_GPT2;
+    phaseTimerBase=GPTIMER2_BASE;
+    phaseIntA=INT_TIMER2A;
+
+    break;
+    
+  case 3: 
+    phaseTimerClkEnable=SYS_CTRL_PERIPH_GPT3;
+    phaseTimerBase=GPTIMER3_BASE;
+    phaseIntA=INT_TIMER3A;
+
+    break; 
+  }
+  
     inchwormTimer=pwmTimerBase;//updates global value of current inchworm timer so interrupt handler knows which module to clear.
   
   
     SysCtrlPeripheralEnable(pwmTimerClkEnable); //enables timer module
    
+   
     
     TimerConfigure(pwmTimerBase, GPTIMER_CFG_SPLIT_PAIR |GPTIMER_CFG_A_PWM | GPTIMER_CFG_B_PWM); //configures timers as pwm timers
   
+  
+    
     
    // TimerControlWaitOnTrigger( pwmTimerBase,GPTIMER_A,true); //configures 1a as a wait on trigger timer
    // TimerConfigure(pwmTimerBase,GPTIMER_CFG_ONE_SHOT); //timer 0b configured as a one shot timer. this will be used to daisy chain start timer 1a 
@@ -153,6 +196,9 @@ void inchwormInit(struct InchwormSetup setup){
     
     TimerLoadSet(pwmTimerBase,GPTIMER_A,freqCnt); //1a load
     TimerLoadSet(pwmTimerBase,GPTIMER_B,freqCnt); //1b load
+    
+    
+    
   //  load=TimerLoadGet(pwmTimerBase,GPTIMER_A);
 
     
@@ -180,33 +226,45 @@ void inchwormInit(struct InchwormSetup setup){
     TimerIntRegister(pwmTimerBase, GPTIMER_B, PwmTimerBIntHandler);      //sets timer 1b interrupt handler
     
     //
-    // Enable processor interrupts.
+    // setup phase offset timer
     //
-    
-
+     SysCtrlPeripheralEnable(phaseTimerClkEnable); 
+     TimerConfigure(phaseTimerBase,GPTIMER_CFG_ONE_SHOT); //configures one shot timer for phase offset
+     TimerLoadSet(phaseTimerBase,GPTIMER_A,freqCnt/2);//offset timer
+   //  TimerIntRegister(phaseTimerBase, GPTIMER_A, PhaseTimerAIntHandler);
+   //  TimerIntClear(phaseTimerBase, GPTIMER_TIMA_TIMEOUT|GPTIMER_TIMB_TIMEOUT);
+   //  TimerIntEnable(phaseTimerBase, GPTIMER_TIMA_TIMEOUT);
+     
+    // IntEnable(phaseIntA);
     //
     // enable interrupts for pos edge pwm 
     //
     TimerIntEnable(pwmTimerBase, GPTIMER_CAPA_EVENT| GPTIMER_CAPB_EVENT);
     TimerControlEvent(pwmTimerBase,GPTIMER_BOTH,GPTIMER_EVENT_POS_EDGE);
-    //TimerIntEnable(GPTIMER1_BASE, GPTIMER_TIMB_TIMEOUT);
 
 
     //
     // Enable the Timer interrupts on the processor (NVIC).
     //
     IntEnable(timerIntA);
-    //IntEnable(timerIntB);
+    IntEnable(timerIntB);
 
-    //IntMasterDisable();
        //timer enables
   x=freqCnt/16;
+  
     TimerEnable(pwmTimerBase,GPTIMER_B);
     //wait for a 1/8 period to initialize next timer ? this might be a bit sketchy and not perfect. this is really weird, when i added the list of iw motors i had to increase the divisor to 16 from 8 
-    for(ui32Loop=1;ui32Loop<x;ui32Loop++) {
+   // for(ui32Loop=1;ui32Loop<x;ui32Loop++) {
+  //  }
+    TimerEnable(phaseTimerBase,GPTIMER_A);
+   
+    //wait for offest timer to expire and throw interrupt
+    while(TimerValueGet(phaseTimerBase,GPTIMER_A)>10 &&TimerValueGet(phaseTimerBase,GPTIMER_A)!=freqCnt/2){
+      
     }
     TimerEnable(pwmTimerBase,GPTIMER_A);
-    //IntMasterEnable();
+   
+   
 }
 
 void inchwormRelease(InchwormMotor motor){

@@ -156,7 +156,8 @@ void main(void)
       .motorFrequency=1000,
       .dutyCycle=80,
       .motorID=0,
-       .timer=1
+      .timer=1,
+      .phaseTimer=0
     };
     
     //intialize inchworms
@@ -171,7 +172,7 @@ void main(void)
     {
       
 
-       inchwormDriveToPosition(motor0,10000);
+       inchwormDriveToPosition(motor0,1000);
 //disables iws
       //inchwormRelease(motor0);
        //     inchwormRelease(motor1);
@@ -181,8 +182,8 @@ void main(void)
     }
     
 //enables iws
-  //  inchwormFreerun(motor0);
-   //   inchwormFreerun(motor1);
+//    inchwormFreerun(motor0);
+ //    inchwormFreerun(motor1);
 
  //wait   
       

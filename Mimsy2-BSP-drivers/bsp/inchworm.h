@@ -14,10 +14,11 @@ typedef struct InchwormSetup{
   uint32_t dutyCycle;
   uint32_t motorID; //id for motor
   uint32_t timer;
+  uint32_t phaseTimer;
 } InchwormSetup;
 
 
-
+extern void PhaseTimerAIntHandler(void);
 extern void PwmTimerAIntHandler(void);
 extern void PwmTimerBIntHandler(void);
 extern void inchwormInit(struct InchwormSetup setup);
