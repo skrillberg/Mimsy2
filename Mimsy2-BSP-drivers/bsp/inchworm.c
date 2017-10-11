@@ -19,12 +19,21 @@
 /*GLOBALS
 */
 volatile uint32_t inchwormTimer=0;
+volatile uint32_t stepCountList[16];
+volatile bool actuating=false;
+volatile uint32_t stepTargetList[16];
+volatile  uint32_t timerIntA;
+volatile  uint32_t timerIntB;
+volatile bool activeDriveList[16];
+volatile uint32_t motorsNum=0;
+InchwormMotor motorList[16];
 /******************************************************************************
 * DEFINES
 */
 #define GP4 
 #define FREQ_CNT SysCtrlClockGet()/frequency 
 #define OVERLAP_MATCH (100-dutycycle)*SysCtrlClockGet()/frequency/100 
+
 
 
 /*********************************************************************************
@@ -41,11 +50,21 @@ PwmTimerAIntHandler(void)
     //
     // Clear the timer interrupt flag.
     //
-     TimerIntClear(GPTIMER1_BASE, GPTIMER_CAPA_EVENT );
+     TimerIntClear(inchwormTimer, GPTIMER_CAPA_EVENT );
     mimsyLedToggle(GPIO_PIN_4);
-    //gpio_state=GPIOPinRead(GPIO_D_BASE,GPIO_PIN_1);
-   // GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1,~gpio_state& GPIO_PIN_1);
-
+    
+    
+    //optimize this for loop, it think it will be a bit much
+    for(uint8_t i=0;i<motorsNum;i++){
+      if(activeDriveList[i]){
+        stepCountList[i]=stepCountList[i]+2;
+        if(stepCountList[i]>=stepTargetList[i]){
+          stepCountList[i]=0;
+          activeDriveList[i]=false;
+          inchwormHold(motorList[i]);      
+        }
+      }
+    }
 
 }
 void
@@ -54,13 +73,12 @@ PwmTimerBIntHandler(void)
     //
     // Clear the timer interrupt flag.
     //
-     TimerIntClear(GPTIMER1_BASE, GPTIMER_CAPB_EVENT);
+     TimerIntClear(inchwormTimer, GPTIMER_CAPB_EVENT);
     mimsyLedToggle(GPIO_PIN_7);
-   // gpio_state=GPIOPinRead(GPIO_D_BASE,GPIO_PIN_2);
-    //GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_2,~gpio_state& GPIO_PIN_2);
-   // gpio_state=TimerValueGet(GPTIMER1_BASE,GPTIMER_B);
 
-   // TimerEnable(GPTIMER1_BASE,GPTIMER_B);
+      
+      
+    
 
 }
 
@@ -70,11 +88,22 @@ void inchwormInit(struct InchwormSetup setup){
   uint32_t match=(100-setup.dutyCycle)*SysCtrlClockGet()/setup.motorFrequency/100 ;
   uint32_t pwmTimerClkEnable;
   uint32_t pwmTimerBase;
-  uint32_t timerIntA;
-  uint32_t timerIntB;
+
   uint32_t x;
   uint32_t ui32Loop;
-
+  
+  //setup active motors list
+  motorsNum=setup.numOfMotors;
+  
+  for(uint8_t i=0;i<motorsNum;i++){
+    activeDriveList[i]=false;
+    motorList[i]=setup.iwMotors[i];
+    stepCountList[i]=0;
+    stepTargetList[i]=0;
+  }
+  
+  
+  
   //find timer modules used
   switch(setup.timer){
       
@@ -109,7 +138,7 @@ void inchwormInit(struct InchwormSetup setup){
     
   }
   
-    inchwormTimer=pwmTimerBase;//updates global value of current inchworm timer so interrupt knows what to do.
+    inchwormTimer=pwmTimerBase;//updates global value of current inchworm timer so interrupt handler knows which module to clear.
   
   
     SysCtrlPeripheralEnable(pwmTimerClkEnable); //enables timer module
@@ -167,7 +196,8 @@ void inchwormInit(struct InchwormSetup setup){
     // Enable the Timer interrupts on the processor (NVIC).
     //
     IntEnable(timerIntA);
-    IntEnable(timerIntB);
+    //IntEnable(timerIntB);
+
     //IntMasterDisable();
        //timer enables
   x=freqCnt/16;
@@ -197,5 +227,22 @@ void inchwormFreerun(InchwormMotor motor){
     IOCPadConfigSet(motor.GPIObase1,motor.GPIOpin1,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
     IOCPadConfigSet(motor.GPIObase2,motor.GPIOpin2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
 
+}
+
+void inchwormHold(InchwormMotor motor){
+    
+    GPIOPinTypeGPIOOutput(motor.GPIObase1,motor.GPIOpin1);
+    GPIOPinTypeGPIOOutput(motor.GPIObase2,motor.GPIOpin2);
+
+    GPIOPinWrite(motor.GPIObase1,motor.GPIOpin1,0);
+    GPIOPinWrite(motor.GPIObase2,motor.GPIOpin2,0);
+}
+
+void inchwormDriveToPosition(InchwormMotor motor, uint32_t steps){
+    activeDriveList[motor.motorID]=true;
+    stepTargetList[motor.motorID]=steps;
+    inchwormFreerun(motor);
+
+  
 }
 

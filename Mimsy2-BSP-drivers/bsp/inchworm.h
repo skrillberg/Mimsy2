@@ -23,3 +23,5 @@ extern void PwmTimerBIntHandler(void);
 extern void inchwormInit(struct InchwormSetup setup);
 extern void inchwormRelease(InchwormMotor motor);
 extern void inchwormFreerun(InchwormMotor motor);
+extern void inchwormDriveToPosition(InchwormMotor motor, uint32_t steps);
+extern void inchwormHold(InchwormMotor motor);

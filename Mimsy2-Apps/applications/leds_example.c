@@ -171,18 +171,18 @@ void main(void)
     {
       
 
-       
+       inchwormDriveToPosition(motor0,10000);
 //disables iws
-      inchwormRelease(motor0);
-            inchwormRelease(motor1);
+      //inchwormRelease(motor0);
+       //     inchwormRelease(motor1);
 
 //wait
      for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
     }
     
 //enables iws
-    inchwormFreerun(motor0);
-      inchwormFreerun(motor1);
+  //  inchwormFreerun(motor0);
+   //   inchwormFreerun(motor1);
 
  //wait   
       
