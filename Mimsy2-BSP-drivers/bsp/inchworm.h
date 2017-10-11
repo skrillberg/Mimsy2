@@ -20,6 +20,6 @@ typedef struct InchwormSetup{
 
 extern void PwmTimerAIntHandler(void);
 extern void PwmTimerBIntHandler(void);
-extern void inchwormInit(struct InchwormSetup motor);
+extern void inchwormInit(struct InchwormSetup setup);
 extern void inchwormRelease(InchwormMotor motor);
 extern void inchwormFreerun(InchwormMotor motor);

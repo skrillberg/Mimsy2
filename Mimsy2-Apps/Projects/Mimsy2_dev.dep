@@ -1050,10 +1050,6 @@
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\inchworm.c</name>
             <outputs>
                 <tool>
-                    <name>ICCARM</name>
-                    <file> 185</file>
-                </tool>
-                <tool>
                     <name>BICOMP</name>
                     <file> 186</file>
                 </tool>
