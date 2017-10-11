@@ -65,7 +65,7 @@
 /******************************************************************************
 * LOCAL VARIABLES AND FUNCTIONS
 */
-uint32_t frequency=1000;  
+uint32_t frequency=500; //must be greater than 250  
 uint32_t dutycycle=80;
 uint32_t timer;
 uint32_t timeroffset;
@@ -134,6 +134,8 @@ void main(void)
     SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT0); //enables timer 0 module
     
     TimerConfigure(GPTIMER1_BASE, GPTIMER_CFG_SPLIT_PAIR |GPTIMER_CFG_A_PWM | GPTIMER_CFG_B_PWM); //configures timer 1ab as pwm timers
+  
+    
     TimerControlWaitOnTrigger( GPTIMER1_BASE,GPTIMER_A,true); //configures 1a as a wait on trigger timer
     TimerConfigure(GPTIMER0_BASE,GPTIMER_CFG_ONE_SHOT); //timer 0b configured as a one shot timer. this will be used to daisy chain start timer 1a 
    
@@ -146,13 +148,13 @@ void main(void)
     //set output pins for pwm//////////////////////////////
     GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
     //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
-    IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE); // enables pins as outputs, necessary for this code to work correctly
+    IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
    
     IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps cp1 to gpio1
     IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps cp2 to gpio2
 
     
-    //set pwm polarities to be opposite
+    //set pwm polarities 
     TimerControlLevel(GPTIMER1_BASE,GPTIMER_A,true); //active high pwm
     TimerControlLevel(GPTIMER1_BASE,GPTIMER_B,true); //active high pwm
     
@@ -209,7 +211,32 @@ void main(void)
       
       timer=TimerValueGet(GPTIMER1_BASE,GPTIMER_A);
       timeroffset=TimerValueGet(GPTIMER0_BASE,GPTIMER_A);
+   //    for(ui32Loop=1;ui32Loop<5000000;ui32Loop++) {
+   // }
+       
+    TimerDisable(GPTIMER1_BASE,GPTIMER_B);
 
+    TimerDisable(GPTIMER1_BASE,GPTIMER_A);
+    GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
+    GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,255);
+     for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
+    }
+    
+    TimerLoadSet(GPTIMER1_BASE,GPTIMER_A,FREQ_CNT); //1a load
+    TimerLoadSet(GPTIMER1_BASE,GPTIMER_B,FREQ_CNT); //1b load
+    GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
+    //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
+    IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+    
+    
+    TimerEnable(GPTIMER1_BASE,GPTIMER_B);
+    for(ui32Loop=1;ui32Loop<FREQ_CNT/2;ui32Loop++) {
+    }
+    TimerEnable(GPTIMER1_BASE,GPTIMER_A);
+   // TimerEnable(GPTIMER0_BASE,GPTIMER_A);
+    
+    for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
+    }
     }
 
     
