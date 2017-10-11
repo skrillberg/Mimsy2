@@ -64,7 +64,7 @@ PwmTimerBIntHandler(void)
 
 }
 
-
+//TODO: rename motor
 void inchwormInit(struct InchwormSetup motor){
   uint32_t freqCnt=SysCtrlClockGet()/motor.motorFrequency;
   uint32_t match=(100-motor.dutyCycle)*SysCtrlClockGet()/motor.motorFrequency/100 ;
@@ -128,17 +128,20 @@ void inchwormInit(struct InchwormSetup motor){
 
     
     //set output pins for pwm//////////////////////////////
-    GPIOPinTypeTimer(motor.iwMotor.GPIObase1,motor.iwMotor.GPIOpin1); //enables hw muxing of pin outputs
-    GPIOPinTypeTimer(motor.iwMotor.GPIObase2,motor.iwMotor.GPIOpin2); //enables hw muxing of pin outputs
+    
+    for(uint8_t i=0;i<motor.numOfMotors;i++){
+      GPIOPinTypeTimer(motor.iwMotors[i].GPIObase1,motor.iwMotors[i].GPIOpin1); //enables hw muxing of pin outputs
+      GPIOPinTypeTimer(motor.iwMotors[i].GPIObase2,motor.iwMotors[i].GPIOpin2); //enables hw muxing of pin outputs
+    
 
         
     //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
-    IOCPadConfigSet(motor.iwMotor.GPIObase1,motor.iwMotor.GPIOpin1,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
-        IOCPadConfigSet(motor.iwMotor.GPIObase2,motor.iwMotor.GPIOpin2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+    IOCPadConfigSet(motor.iwMotors[i].GPIObase1,motor.iwMotors[i].GPIOpin1,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+        IOCPadConfigSet(motor.iwMotors[i].GPIObase2,motor.iwMotors[i].GPIOpin2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
    
-    IOCPinConfigPeriphOutput(motor.iwMotor.GPIObase1,motor.iwMotor.GPIOpin1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps pwm1 output to pin1
-    IOCPinConfigPeriphOutput(motor.iwMotor.GPIObase2,motor.iwMotor.GPIOpin2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps pwm2 output to pin2
-
+    IOCPinConfigPeriphOutput(motor.iwMotors[i].GPIObase1,motor.iwMotors[i].GPIOpin1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps pwm1 output to pin1
+    IOCPinConfigPeriphOutput(motor.iwMotors[i].GPIObase2,motor.iwMotors[i].GPIOpin2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps pwm2 output to pin2
+    }
     
     //set pwm polarities 
     TimerControlLevel(pwmTimerBase,GPTIMER_A,true); //active high pwm
@@ -175,28 +178,32 @@ void inchwormInit(struct InchwormSetup motor){
     IntEnable(timerIntB);
     //IntMasterDisable();
        //timer enables
-  x=freqCnt/8;
+  x=freqCnt/16;
     TimerEnable(pwmTimerBase,GPTIMER_B);
-    //wait for a 1/8 period to initialize next timer ? this might be a bit sketchy and not perfect 
+    //wait for a 1/8 period to initialize next timer ? this might be a bit sketchy and not perfect. this is really weird, when i added the list of iw motors i had to increase the divisor to 16 from 8 
     for(ui32Loop=1;ui32Loop<x;ui32Loop++) {
     }
     TimerEnable(pwmTimerBase,GPTIMER_A);
     //IntMasterEnable();
 }
 
-void inchwormDisable(void){
-      TimerDisable(GPTIMER1_BASE,GPTIMER_B);
+void inchwormRelease(InchwormMotor motor){
 
-    TimerDisable(GPTIMER1_BASE,GPTIMER_A);
-    GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
-    GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,255);
+    GPIOPinTypeGPIOOutput(motor.GPIObase1,motor.GPIOpin1);
+    GPIOPinTypeGPIOOutput(motor.GPIObase2,motor.GPIOpin2);
+
+    GPIOPinWrite(motor.GPIObase1,motor.GPIOpin1,255);
+    GPIOPinWrite(motor.GPIObase2,motor.GPIOpin2,255);
+
 }
 
-void inchwormEnable(void){
-      TimerEnable(GPTIMER1_BASE,GPTIMER_B);
-  
-    TimerEnable(GPTIMER1_BASE,GPTIMER_A);
-    TimerEnable(GPTIMER0_BASE,GPTIMER_A);
+void inchwormFreerun(InchwormMotor motor){
+    
+    GPIOPinTypeTimer(motor.GPIObase1,motor.GPIOpin1); //enables hw muxing of pin outputs
+    GPIOPinTypeTimer(motor.GPIObase2,motor.GPIOpin2); //enables hw muxing of pin outputs
+
+    IOCPadConfigSet(motor.GPIObase1,motor.GPIOpin1,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+    IOCPadConfigSet(motor.GPIObase2,motor.GPIOpin2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
 
 }
 

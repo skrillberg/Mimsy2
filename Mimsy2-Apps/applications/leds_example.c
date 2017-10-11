@@ -130,19 +130,29 @@ void main(void)
     mimsyLedClear(GPIO_PIN_7|GPIO_PIN_4);
     
     //create inchworm motor strucutures
-    
+    //AMAYBE TODO: add a contstructor for these motors for  where you only have to put in the mimsy pinout (GP1, GP2, etc...) for this to be generated
     InchwormMotor motor0={
       .GPIObase1=GPIO_D_BASE,  //mapping for pin1 gpio base
       .GPIObase2=GPIO_D_BASE,   //mapping for pin 2 base
       .GPIOpin1=GPIO_PIN_1,     //mapping for pin 1 pin
-      .GPIOpin2=GPIO_PIN_2,            //mapping for pin2 pin
+      .GPIOpin2=GPIO_PIN_2,     //mapping for pin2 pin
+      .motorID=0     
     };
     
+    InchwormMotor motor1={
+      .GPIObase1=GPIO_A_BASE,  //mapping for pin1 gpio base
+      .GPIObase2=GPIO_A_BASE,   //mapping for pin 2 base
+      .GPIOpin1=GPIO_PIN_2,     //mapping for pin 1 pin
+      .GPIOpin2=GPIO_PIN_5,            //mapping for pin2 pin
+      .motorID=1
+    };
     
+    InchwormMotor motorList[2] ={motor0,motor1}; //array of motors to be passed to inchworm setup
     
 //create inchworm structure #TODO: change inchworm struct so it contains all 4 inchworm motor pin mappings 
     InchwormSetup inchworm0 = {
-      .iwMotor=motor0,
+      .iwMotors=motorList,
+      .numOfMotors=2,
       .motorFrequency=1000,
       .dutyCycle=80,
       .motorID=0,
@@ -166,15 +176,17 @@ void main(void)
    // }
        
 //disables iws
-    GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
-    GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,255);
+      inchwormRelease(motor0);
+  //  GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
+   // GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,255);
      for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
     }
     
 //enables iws
-    GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
+    inchwormFreerun(motor0);
+  //  GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
 
-    IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+  //  IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
     
     
 

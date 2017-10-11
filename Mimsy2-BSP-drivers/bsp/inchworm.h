@@ -4,10 +4,12 @@ typedef struct InchwormMotor{
   uint32_t GPIObase2; //gpio base for pin 2
   uint8_t GPIOpin1; //bit packed representation for gpio1
   uint8_t GPIOpin2;
+  uint8_t motorID;
 } InchwormMotor;
 
 typedef struct InchwormSetup{
-  struct InchwormMotor iwMotor;
+  InchwormMotor *iwMotors;
+  uint32_t numOfMotors;
   uint32_t motorFrequency;
   uint32_t dutyCycle;
   uint32_t motorID; //id for motor
@@ -19,5 +21,5 @@ typedef struct InchwormSetup{
 extern void PwmTimerAIntHandler(void);
 extern void PwmTimerBIntHandler(void);
 extern void inchwormInit(struct InchwormSetup motor);
-extern void inchwormDisable(void);
-extern void inchwormEnable(void);
+extern void inchwormRelease(InchwormMotor motor);
+extern void inchwormFreerun(InchwormMotor motor);
