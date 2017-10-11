@@ -130,15 +130,7 @@ void inchwormInit(struct InchwormSetup motor){
     //set output pins for pwm//////////////////////////////
     
     for(uint8_t i=0;i<motor.numOfMotors;i++){
-      GPIOPinTypeTimer(motor.iwMotors[i].GPIObase1,motor.iwMotors[i].GPIOpin1); //enables hw muxing of pin outputs
-      GPIOPinTypeTimer(motor.iwMotors[i].GPIObase2,motor.iwMotors[i].GPIOpin2); //enables hw muxing of pin outputs
-    
-
-        
-    //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
-    IOCPadConfigSet(motor.iwMotors[i].GPIObase1,motor.iwMotors[i].GPIOpin1,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
-        IOCPadConfigSet(motor.iwMotors[i].GPIObase2,motor.iwMotors[i].GPIOpin2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
-   
+  
     IOCPinConfigPeriphOutput(motor.iwMotors[i].GPIObase1,motor.iwMotors[i].GPIOpin1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps pwm1 output to pin1
     IOCPinConfigPeriphOutput(motor.iwMotors[i].GPIObase2,motor.iwMotors[i].GPIOpin2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps pwm2 output to pin2
     }
