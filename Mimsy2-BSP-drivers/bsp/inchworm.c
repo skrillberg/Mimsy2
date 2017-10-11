@@ -65,7 +65,7 @@ PwmTimerBIntHandler(void)
 }
 
 
-void inchwormInit(struct Inchworms motor){
+void inchwormInit(struct InchwormSetup motor){
   uint32_t freqCnt=SysCtrlClockGet()/motor.motorFrequency;
   uint32_t match=(100-motor.dutyCycle)*SysCtrlClockGet()/motor.motorFrequency/100 ;
   uint32_t pwmTimerClkEnable;
@@ -128,16 +128,16 @@ void inchwormInit(struct Inchworms motor){
 
     
     //set output pins for pwm//////////////////////////////
-    GPIOPinTypeTimer(motor.GPIObase1,motor.GPIOpin1); //enables hw muxing of pin outputs
-    GPIOPinTypeTimer(motor.GPIObase2,motor.GPIOpin2); //enables hw muxing of pin outputs
+    GPIOPinTypeTimer(motor.iwMotor.GPIObase1,motor.iwMotor.GPIOpin1); //enables hw muxing of pin outputs
+    GPIOPinTypeTimer(motor.iwMotor.GPIObase2,motor.iwMotor.GPIOpin2); //enables hw muxing of pin outputs
 
         
     //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
-    IOCPadConfigSet(motor.GPIObase1,motor.GPIOpin1,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
-        IOCPadConfigSet(motor.GPIObase2,motor.GPIOpin2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+    IOCPadConfigSet(motor.iwMotor.GPIObase1,motor.iwMotor.GPIOpin1,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+        IOCPadConfigSet(motor.iwMotor.GPIObase2,motor.iwMotor.GPIOpin2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
    
-    IOCPinConfigPeriphOutput(motor.GPIObase1,motor.GPIOpin1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps pwm1 output to pin1
-    IOCPinConfigPeriphOutput(motor.GPIObase2,motor.GPIOpin2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps pwm2 output to pin2
+    IOCPinConfigPeriphOutput(motor.iwMotor.GPIObase1,motor.iwMotor.GPIOpin1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps pwm1 output to pin1
+    IOCPinConfigPeriphOutput(motor.iwMotor.GPIObase2,motor.iwMotor.GPIOpin2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps pwm2 output to pin2
 
     
     //set pwm polarities 

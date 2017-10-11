@@ -118,7 +118,7 @@ void main(void)
     //
     // Init LEDs (turned off)
     //
-    IntMasterDisable();
+    IntMasterDisable(); //disable interrupts for initializations
     GPIOPinTypeGPIOOutput(GPIO_C_BASE,GPIO_PIN_4|GPIO_PIN_7);
     //GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
     //   GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,GPIO_PIN_1);
@@ -129,12 +129,20 @@ void main(void)
     mimsyLedSet(GPIO_PIN_7|GPIO_PIN_4);
     mimsyLedClear(GPIO_PIN_7|GPIO_PIN_4);
     
+    //create inchworm motor strucutures
+    
+    InchwormMotor motor0={
+      .GPIObase1=GPIO_D_BASE,  //mapping for pin1 gpio base
+      .GPIObase2=GPIO_D_BASE,   //mapping for pin 2 base
+      .GPIOpin1=GPIO_PIN_1,     //mapping for pin 1 pin
+      .GPIOpin2=GPIO_PIN_2,            //mapping for pin2 pin
+    };
+    
+    
+    
 //create inchworm structure #TODO: change inchworm struct so it contains all 4 inchworm motor pin mappings 
-    Inchworms inchworm0 = {
-      .GPIObase1=GPIO_D_BASE,
-      .GPIObase2=GPIO_D_BASE,
-      .GPIOpin1=GPIO_PIN_1,
-      .GPIOpin2=GPIO_PIN_2,
+    InchwormSetup inchworm0 = {
+      .iwMotor=motor0,
       .motorFrequency=1000,
       .dutyCycle=80,
       .motorID=0,
@@ -145,7 +153,7 @@ void main(void)
     inchwormInit(inchworm0);
 
    
-    IntMasterEnable();
+    IntMasterEnable(); // re-enable interrupts
     //
     // Infinite loop
     //
@@ -157,26 +165,19 @@ void main(void)
    //    for(ui32Loop=1;ui32Loop<5000000;ui32Loop++) {
    // }
        
-    //TimerDisable(GPTIMER1_BASE,GPTIMER_B);
-
-   // TimerDisable(GPTIMER1_BASE,GPTIMER_A);
+//disables iws
     GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
     GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,255);
      for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
     }
     
-   // TimerLoadSet(GPTIMER1_BASE,GPTIMER_A,FREQ_CNT); //1a load
-   // TimerLoadSet(GPTIMER1_BASE,GPTIMER_B,FREQ_CNT); //1b load
+//enables iws
     GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
-    //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
+
     IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
     
     
-    //TimerEnable(GPTIMER1_BASE,GPTIMER_B);
-    for(ui32Loop=1;ui32Loop<FREQ_CNT/3;ui32Loop++) {
-    }
-   // TimerEnable(GPTIMER1_BASE,GPTIMER_A);
-   // TimerEnable(GPTIMER0_BASE,GPTIMER_A);
+
     
     for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
     }
