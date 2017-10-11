@@ -170,27 +170,22 @@ void main(void)
     while(1)
     {
       
-      timer=TimerValueGet(GPTIMER1_BASE,GPTIMER_A);
-      timeroffset=TimerValueGet(GPTIMER0_BASE,GPTIMER_A);
-   //    for(ui32Loop=1;ui32Loop<5000000;ui32Loop++) {
-   // }
+
        
 //disables iws
       inchwormRelease(motor0);
-  //  GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
-   // GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,255);
+            inchwormRelease(motor1);
+
+//wait
      for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
     }
     
 //enables iws
     inchwormFreerun(motor0);
-  //  GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
+      inchwormFreerun(motor1);
 
-  //  IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
-    
-    
-
-    
+ //wait   
+      
     for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
     }
     }
