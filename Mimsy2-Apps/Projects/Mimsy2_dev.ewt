@@ -2328,6 +2328,12 @@
     <group>
         <name>bsp_mimsy</name>
         <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\inchworm.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\inchworm.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\led.c</name>
         </file>
         <file>

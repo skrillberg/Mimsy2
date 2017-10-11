@@ -55,6 +55,7 @@
 #include "hw_memmap.h"
 #include "hw_gpio.h"
 #include "ioc.h"
+#include "inchworm.h"
 
 /******************************************************************************
 * DEFINES
@@ -73,6 +74,7 @@ uint32_t timeroffset;
   uint32_t x=5;
   uint32_t y=5;
   uint32_t z=5;
+  
   volatile uint32_t gpio_state;
 /******************************************************************************
 * FUNCTIONS
@@ -127,84 +129,22 @@ void main(void)
     mimsyLedSet(GPIO_PIN_7|GPIO_PIN_4);
     mimsyLedClear(GPIO_PIN_7|GPIO_PIN_4);
     
-        //config timers for pwm 
+//create inchworm structure #TODO: change inchworm struct so it contains all 4 inchworm motor pin mappings 
+    Inchworms inchworm0 = {
+      .GPIObase1=GPIO_D_BASE,
+      .GPIObase2=GPIO_D_BASE,
+      .GPIOpin1=GPIO_PIN_1,
+      .GPIOpin2=GPIO_PIN_2,
+      .motorFrequency=1000,
+      .dutyCycle=80,
+      .motorID=0,
+       .timer=1
+    };
     
-    
-    SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT1); //enables timer 1 module
-    SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT0); //enables timer 0 module
-    
-    TimerConfigure(GPTIMER1_BASE, GPTIMER_CFG_SPLIT_PAIR |GPTIMER_CFG_A_PWM | GPTIMER_CFG_B_PWM); //configures timer 1ab as pwm timers
-  
-    
-    TimerControlWaitOnTrigger( GPTIMER1_BASE,GPTIMER_A,true); //configures 1a as a wait on trigger timer
-    TimerConfigure(GPTIMER0_BASE,GPTIMER_CFG_ONE_SHOT); //timer 0b configured as a one shot timer. this will be used to daisy chain start timer 1a 
+    //intialize inchworms
+    inchwormInit(inchworm0);
+
    
-    TimerLoadSet(GPTIMER0_BASE,GPTIMER_A,5000); //loads a timer value into 1b
-    TimerLoadSet(GPTIMER1_BASE,GPTIMER_A,FREQ_CNT); //1a load
-    TimerLoadSet(GPTIMER1_BASE,GPTIMER_B,FREQ_CNT); //1b load
-    load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
-    load=TimerLoadGet(GPTIMER0_BASE,GPTIMER_B);
-    
-    //set output pins for pwm//////////////////////////////
-    GPIOPinTypeTimer(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2); //enables hw muxing of pin outputs
-     GPIOPinTypeTimer(GPIO_A_BASE,GPIO_PIN_2);
-    //gpio_state=IOCPadConfigGet(GPIO_D_BASE,GPIO_PIN_1); 
-    IOCPadConfigSet(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
-     IOCPadConfigSet(GPIO_A_BASE,GPIO_PIN_2,IOC_OVERRIDE_OE|IOC_OVERRIDE_PUE);
-     
-     
-    IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_1,IOC_MUX_OUT_SEL_GPT1_ICP1); //maps cp1 to gpio1
-    IOCPinConfigPeriphOutput(GPIO_D_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2); //maps cp2 to gpio2
-IOCPinConfigPeriphOutput(GPIO_A_BASE,GPIO_PIN_2,IOC_MUX_OUT_SEL_GPT1_ICP2);
-    
-    //set pwm polarities 
-    TimerControlLevel(GPTIMER1_BASE,GPTIMER_A,true); //active high pwm
-    TimerControlLevel(GPTIMER1_BASE,GPTIMER_B,true); //active high pwm
-    
-    //set pwm duty cycles
-    TimerMatchSet(GPTIMER1_BASE,GPTIMER_A,OVERLAP_MATCH);
-    TimerMatchSet(GPTIMER1_BASE,GPTIMER_B,OVERLAP_MATCH);
-       
-      //interrupts
-    TimerIntClear(GPTIMER1_BASE, GPTIMER_TIMB_TIMEOUT);
-    TimerIntClear(GPTIMER1_BASE, GPTIMER_TIMA_TIMEOUT);
-    
-    TimerIntRegister(GPTIMER1_BASE, GPTIMER_A, Timer1AIntHandler);       //sets timer a interrupt handler
-    TimerIntRegister(GPTIMER1_BASE, GPTIMER_B, Timer1BIntHandler);      //sets timer 1b interrupt handler
-    
-    //
-    // Enable processor interrupts.
-    //
-    
-
-    //
-    // enable interrupts for pos edge pwm 
-    //
-    TimerIntEnable(GPTIMER1_BASE, GPTIMER_CAPA_EVENT| GPTIMER_CAPB_EVENT);
-    TimerControlEvent(GPTIMER1_BASE,GPTIMER_BOTH,GPTIMER_EVENT_POS_EDGE);
-    //TimerIntEnable(GPTIMER1_BASE, GPTIMER_TIMB_TIMEOUT);
-
-
-    //
-    // Enable the Timer interrupts on the processor (NVIC).
-    //
-    IntEnable(INT_TIMER1A);
-    IntEnable(INT_TIMER1B);
-    
-   
-   // TimerLoadSet(GPTIMER1_BASE,GPTIMER_B,500000);
-    
-    //timer enables
-    TimerEnable(GPTIMER1_BASE,GPTIMER_B);
-    for(ui32Loop=1;ui32Loop<FREQ_CNT/2;ui32Loop++) {
-    }
-    TimerEnable(GPTIMER1_BASE,GPTIMER_A);
-    TimerEnable(GPTIMER0_BASE,GPTIMER_A);
-
-   // TimerEnable(GPTIMER1_BASE,GPTIMER_B);
-    
-    load=TimerLoadGet(GPTIMER1_BASE,GPTIMER_A);
-    printf("%d",load);
     IntMasterEnable();
     //
     // Infinite loop

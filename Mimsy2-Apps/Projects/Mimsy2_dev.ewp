@@ -340,6 +340,7 @@
                     <state>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\source</state>
                     <state>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp</state>
                     <state>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\drivers</state>
+                    <state>$PROJ_DIR$\..\..\Mimsy2-Apps</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -2046,6 +2047,12 @@
     </group>
     <group>
         <name>bsp_mimsy</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\inchworm.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\inchworm.h</name>
+        </file>
         <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\led.c</name>
         </file>

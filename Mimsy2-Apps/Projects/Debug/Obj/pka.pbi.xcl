@@ -10,6 +10,8 @@ C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\..\..\Mimsy2-BSP-driv
 -I
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\..\..\Mimsy2-BSP-drivers\drivers
 -I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\..\..\Mimsy2-Apps
+-I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc\c
@@ -21,6 +23,8 @@ C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\driverl
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp
 -I
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\drivers
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0
