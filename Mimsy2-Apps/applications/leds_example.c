@@ -56,6 +56,7 @@
 #include "hw_gpio.h"
 #include "ioc.h"
 #include "inchworm.h"
+#include "..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\source\flash.h"
 
 /******************************************************************************
 * DEFINES
@@ -63,6 +64,11 @@
 #define GP4 
 #define FREQ_CNT SysCtrlClockGet()/frequency 
 #define OVERLAP_MATCH (100-dutycycle)*SysCtrlClockGet()/frequency/100 
+
+#define PAGE_SIZE                2048
+#define PAGE_TO_ERASE            14
+#define PAGE_TO_ERASE_START_ADDR (FLASH_BASE + (PAGE_TO_ERASE * PAGE_SIZE))
+
 /******************************************************************************
 * LOCAL VARIABLES AND FUNCTIONS
 */
@@ -74,7 +80,7 @@ uint32_t timeroffset;
   uint32_t x=5;
   uint32_t y=5;
   uint32_t z=5;
-  
+ uint32_t flash_contents; 
   volatile uint32_t gpio_state;
 /******************************************************************************
 * FUNCTIONS
@@ -168,6 +174,8 @@ void main(void)
     //
     // Infinite loop
     //
+    
+
     while(1)
     {
       
@@ -178,16 +186,16 @@ void main(void)
        //     inchwormRelease(motor1);
 
 //wait
-     for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
+     for(ui32Loop=1;ui32Loop<50000;ui32Loop++) {
     }
-    
+    inchwormRelease(motor0);
 //enables iws
 //    inchwormFreerun(motor0);
  //    inchwormFreerun(motor1);
 
  //wait   
       
-    for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
+    for(ui32Loop=1;ui32Loop<50000;ui32Loop++) {
     }
     }
 

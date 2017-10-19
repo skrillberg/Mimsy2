@@ -1,4 +1,4 @@
-"C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\i2c.c"
+"C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\flash_mimsy.c"
 -std=c11
 -ferror-limit=0
 -I
