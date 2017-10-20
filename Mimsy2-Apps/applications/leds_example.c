@@ -88,6 +88,10 @@ uint32_t timeroffset;
   IMUData debug4;
    IMUData imu;
    uint32_t debug3[4];
+   IMUData data[3];
+   IMUDataCard refCard;
+   IMUData flashData[2048/16];
+   IMUDataCard * refptr;
 /******************************************************************************
 * FUNCTIONS
 */
@@ -174,16 +178,17 @@ void main(void)
     
     //intialize inchworms
     inchwormInit(inchworm0);
-
+  IntMasterEnable();
    
-    IntMasterEnable(); // re-enable interrupts
+    // re-enable interrupts
+
     //
     // Infinite loop
     //
     //IMUData imu;
     
      
-         imu.fields.accelX=1;//a X data
+   imu.fields.accelX=1;//a X data
    imu.fields.accelY=2;//a X data
    imu.fields.accelZ=3;//a X data
   
@@ -192,17 +197,37 @@ void main(void)
    imu.fields.gyroZ=6;//gyro Z data
    
    imu.fields.timestamp=1;
-      
+   
+   debug=sizeof(data);
+   for(uint32_t k=0; k<sizeof(data)/16;k++){
+     
+   data[k].fields.accelX=6*k+1;//a X data
+   data[k].fields.accelY=6*k+2;//a X data
+   data[k].fields.accelZ=6*k+3;//a X data
+  
+   data[k].fields.gyroX=6*k+4;//gyro X data
+   data[k].fields.gyroY=6*k+5;//gyro Y data
+   data[k].fields.gyroZ=6*k+6;//gyro Z data
+   
+   data[k].fields.timestamp=k;
+     
+   }
+   refptr = &refCard;
+   flashWriteIMU(data,sizeof(data)/16,14,refptr);
+   flashReadIMU(refCard,flashData,sizeof(flashData)/16);
    
     debug=sizeof(imu);
     
     
    
-    for(uint32_t v=0;v<4;v++){
+    for(uint32_t v=0;v<sizeof(imu.bits);v++){
     debug4.bits[v] = imu.bits[v];
     }
     debug=debug4.fields.timestamp;
     
+    
+    
+   
     while(1)
     {
       
