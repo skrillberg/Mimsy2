@@ -1,9 +1,11 @@
 #define IMU_DATA_STRUCT_SIZE 16
+#include <stdint.h>
+extern uint32_t * flashWrite(uint32_t *data,uint32_t startPage);
 
-uint32_t * flashWrite(uint32_t *data,uint32_t startPage);
 
-
-typedef struct IMUData{
+typedef union {
+  
+  struct IMUData{
   uint16_t accelX;//a X data
   uint16_t accelY;//a X data
   uint16_t accelZ;//a X data
@@ -16,4 +18,6 @@ typedef struct IMUData{
   
  
 
-} IMUData;
+} fields;
+uint32_t bits[4];
+}IMUData;

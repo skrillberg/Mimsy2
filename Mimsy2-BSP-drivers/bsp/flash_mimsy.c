@@ -1,4 +1,19 @@
 #include "flash_mimsy.h"
+#include <stdio.h>
+//#include "bsp.h"
+//#include "bsp_led.h"
+#include "gptimer.h"
+#include "sys_ctrl.h"
+#include "hw_gptimer.h"
+#include "hw_ints.h"
+#include "gpio.h"
+#include "interrupt.h"
+#include "led.h"
+#include "hw_memmap.h"
+#include "hw_gpio.h"
+#include "ioc.h"
+#include "inchworm.h"
+#include "..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\source\flash.h"
 
 
 #define PAGE_SIZE                2048
@@ -15,18 +30,15 @@ uint32_t structNum = sizeof(data);
 uint32_t pageNum= structNum*IMU_DATA_STRUCT_SIZE;
 
 
-uint32_t i;
-    
+
+
 
        i32Res = FlashMainPageErase(PAGE_TO_ERASE_START_ADDR);
-
-    
-    for(i=0; i<PAGE_SIZE; i+=sizeof(pcStrInRam))
-    {
-        i32Res = FlashMainPageProgram((uint32_t*) pcStrInRam, 
-                                      PAGE_TO_ERASE_START_ADDR+i,
-                                      sizeof(pcStrInRam));
+for(uint32_t i=0;i<structNum;i++ ){
+    uint32_t* wordified_data=data[i].bits;
+    i32Res = FlashMainPageProgram(wordified_data,pageStartAddr+i*sizeof(data[i]),sizeof(data[i]));
      
-    }
-    flash_contents=FlashGet(PAGE_TO_ERASE_START_ADDR+1);
+    
+ }
+    //flash_contents=FlashGet(PAGE_TO_ERASE_START_ADDR+1);
 }  

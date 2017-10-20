@@ -57,6 +57,7 @@
 #include "ioc.h"
 #include "inchworm.h"
 #include "..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\source\flash.h"
+#include "flash_mimsy.h"
 
 /******************************************************************************
 * DEFINES
@@ -82,6 +83,11 @@ uint32_t timeroffset;
   uint32_t z=5;
  uint32_t flash_contents; 
   volatile uint32_t gpio_state;
+  uint32_t debug;
+  uint32_t debug2[4];
+  IMUData debug4;
+   IMUData imu;
+   uint32_t debug3[4];
 /******************************************************************************
 * FUNCTIONS
 */
@@ -174,8 +180,29 @@ void main(void)
     //
     // Infinite loop
     //
+    //IMUData imu;
     
-
+     
+         imu.fields.accelX=1;//a X data
+   imu.fields.accelY=2;//a X data
+   imu.fields.accelZ=3;//a X data
+  
+   imu.fields.gyroX=4;//gyro X data
+   imu.fields.gyroY=5;//gyro Y data
+   imu.fields.gyroZ=6;//gyro Z data
+   
+   imu.fields.timestamp=1;
+      
+   
+    debug=sizeof(imu);
+    
+    
+   
+    for(uint32_t v=0;v<4;v++){
+    debug4.bits[v] = imu.bits[v];
+    }
+    debug=debug4.fields.timestamp;
+    
     while(1)
     {
       

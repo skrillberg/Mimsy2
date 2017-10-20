@@ -2051,6 +2051,9 @@
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\flash_mimsy.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\flash_mimsy.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\inchworm.c</name>
         </file>
         <file>
