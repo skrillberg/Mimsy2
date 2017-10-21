@@ -37,10 +37,13 @@ void flashWriteIMU(IMUData data[],uint32_t size, uint32_t startPage,IMUDataCard 
   i32Res = FlashMainPageErase(pageStartAddr);
   for(uint32_t i=0;i<size;i++ ){
       uint32_t* wordified_data=data[i].bits;
+     IntMasterDisable();
       i32Res = FlashMainPageProgram(wordified_data,pageStartAddr+i*IMU_DATA_SIZE,IMU_DATA_SIZE);
-       
+        IntMasterEnable();
       
    }
+   
+
     //flash_contents=FlashGet(PAGE_TO_ERASE_START_ADDR+1);
   
   
@@ -59,8 +62,10 @@ void flashReadIMU(IMUDataCard card, IMUData * dataArray,uint32_t size){
   
   
   for(uint32_t i=0;i<size;i++){
-    for(uint32_t j=0;j<IMU_DATA_SIZE;j++){
+    for(uint32_t j=0;j<IMU_DATA_SIZE/4;j++){
+       IntMasterDisable();
     dataArray[i].bits[j]=FlashGet(pageAddr+i*16+j*4);
+     IntMasterEnable();
     }
   }
   

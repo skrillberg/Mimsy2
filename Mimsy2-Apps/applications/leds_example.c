@@ -88,9 +88,9 @@ uint32_t timeroffset;
   IMUData debug4;
    IMUData imu;
    uint32_t debug3[4];
-   IMUData data[3];
+   IMUData data[128];
    IMUDataCard refCard;
-   IMUData flashData[2048/16];
+   IMUData flashData[128];
    IMUDataCard * refptr;
 /******************************************************************************
 * FUNCTIONS
@@ -178,7 +178,7 @@ void main(void)
     
     //intialize inchworms
     inchwormInit(inchworm0);
-  IntMasterEnable();
+
    
     // re-enable interrupts
 
@@ -213,18 +213,17 @@ void main(void)
      
    }
    refptr = &refCard;
+   IntMasterEnable();
    flashWriteIMU(data,sizeof(data)/16,14,refptr);
+        for(ui32Loop=1;ui32Loop<50000;ui32Loop++) {
+    }
    flashReadIMU(refCard,flashData,sizeof(flashData)/16);
    
     debug=sizeof(imu);
     
     
-   
-    for(uint32_t v=0;v<sizeof(imu.bits);v++){
-    debug4.bits[v] = imu.bits[v];
-    }
-    debug=debug4.fields.timestamp;
-    
+     
+
     
     
    
