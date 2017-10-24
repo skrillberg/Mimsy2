@@ -11,9 +11,9 @@
 #include <hw_memmap.h>
 #include <hw_sys_ctrl.h>
 #include <hw_types.h>
-
+#include <gptimer.h>
 #include <gpio.h>
-//#include <i2c_lib.h>
+#include <i2c.h>
 #include <ioc.h>
 #include <sys_ctrl.h>
 
@@ -23,18 +23,62 @@
 #define I2C_BASE                ( GPIO_D_BASE )
 #define I2C_SCL                 ( GPIO_PIN_4 )
 #define I2C_SDA                 ( GPIO_PIN_5 )
-#define I2C_BAUDRATE            ( 100000 )
-#define I2C_MAX_DELAY_US        ( 100000 )
+#define I2C_BAUDRATE            ( 400000 )
+#define I2C_MAX_DELAY_US        ( 1000000 )
 
 //=========================== variables =======================================
 
 
 //=========================== prototypes ======================================
 
-extern uint32_t board_timer_get(void);
-extern bool board_timer_expired(uint32_t future);
-
+ uint32_t board_timer_get(void);
+ bool board_timer_expired(uint32_t future);
+bool board_timer_expired(uint32_t future);
 //=========================== public ==========================================
+/**
+ * Timer runs at 32 MHz and is 32-bit wide
+ * The timer is divided by 32, whichs gives a 1 microsecond ticks
+ */
+void board_timer_init(void) {
+     SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_GPT2);
+  
+  // Configure the timer
+    TimerConfigure(GPTIMER2_BASE, GPTIMER_CFG_PERIODIC_UP);
+    
+    // Enable the timer
+    TimerEnable(GPTIMER2_BASE, GPTIMER_BOTH);
+}
+
+/**
+ * Returns the current value of the timer
+ * The timer is divided by 32, whichs gives a 1 microsecond ticks
+ */
+uint32_t board_timer_get(void) {
+    uint32_t current;
+    
+    current = TimerValueGet(GPTIMER2_BASE, GPTIMER_A) >> 5;
+    
+    return current;
+}
+
+/**
+ * Returns true if the timer has expired
+ * The timer is divided by 32, whichs gives a 1 microsecond ticks
+ */
+bool board_timer_expired(uint32_t future) {
+    uint32_t current;
+    int32_t remaining;
+
+    current = TimerValueGet(GPTIMER2_BASE, GPTIMER_A) >> 5;
+
+    remaining = (int32_t) (future - current);
+    
+    if (remaining > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 void i2c_init(void) {
     bool status;
@@ -49,11 +93,14 @@ void i2c_init(void) {
 
     // Configure the SCL pin
     GPIOPinTypeI2C(I2C_BASE, I2C_SCL);
+    IOCPadConfigSet(I2C_BASE, I2C_SCL,IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
+ 
     IOCPinConfigPeriphInput(I2C_BASE, I2C_SCL, IOC_I2CMSSCL);
     IOCPinConfigPeriphOutput(I2C_BASE, I2C_SCL, IOC_MUX_OUT_SEL_I2C_CMSSCL);
 
     // Configure the SDA pin
     GPIOPinTypeI2C(I2C_BASE, I2C_SDA);
+    IOCPadConfigSet(I2C_BASE, I2C_SDA,IOC_OVERRIDE_PUE); // enables pins as outputs, necessary for this code to work correctly
     IOCPinConfigPeriphInput(I2C_BASE, I2C_SDA, IOC_I2CMSSDA);
     IOCPinConfigPeriphOutput(I2C_BASE, I2C_SDA, IOC_MUX_OUT_SEL_I2C_CMSSDA);
 

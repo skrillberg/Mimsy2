@@ -2328,10 +2328,19 @@
     <group>
         <name>bsp_mimsy</name>
         <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\accel_mimsy.c</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\flash_mimsy.c</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\flash_mimsy.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\i2c_mimsy.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\i2c_mimsy.h</name>
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\inchworm.c</name>

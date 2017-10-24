@@ -45,7 +45,9 @@
 #include <stdio.h>
 //#include "bsp.h"
 //#include "bsp_led.h"
+//#include "board.c"
 #include "gptimer.h"
+#include "i2c_mimsy.h"
 #include "sys_ctrl.h"
 #include "hw_gptimer.h"
 #include "hw_ints.h"
@@ -92,6 +94,8 @@ uint32_t timeroffset;
    IMUDataCard refCard;
    IMUData flashData[128];
    IMUDataCard * refptr;
+   uint8_t readbyte;
+   
 /******************************************************************************
 * FUNCTIONS
 */
@@ -210,7 +214,7 @@ void main(void)
    data[k].fields.gyroZ=6*k+6;//gyro Z data
    
    data[k].fields.timestamp=k;
-     
+
    }
    refptr = &refCard;
    IntMasterEnable();
@@ -218,10 +222,64 @@ void main(void)
         for(ui32Loop=1;ui32Loop<50000;ui32Loop++) {
     }
    flashReadIMU(refCard,flashData,sizeof(flashData)/16);
-   
+   board_timer_init();
     debug=sizeof(imu);
     
     
+         i2c_init();
+    uint8_t address;
+    address=0x69;
+    uint8_t bytes[2]={0x6B,0x01}  ; 
+     i2c_write_bytes(address,bytes,2); //set gyro clock source
+   
+     //  bytes[0]=0x6A;
+  //   bytes[1]=  0x20;
+    // i2c_write_bytes(address,bytes); //set reset
+     
+     bytes[0]=0x6B;
+     bytes[1]=  0x80;
+     i2c_write_bytes(address,bytes,2); //set reset
+     bytes[0]=0x6C;
+     bytes[1]=0x03;
+        uint8_t *byteptr=&readbyte;
+      
+        i2c_write_byte(address,0x6C);
+     i2c_read_byte(address,byteptr);
+     
+     i2c_write_byte(address,0x6C); //sens enable
+     i2c_write_byte(address,0x00);
+     
+     i2c_write_byte(address,0x6C);
+     i2c_read_byte(address,byteptr);
+     
+     readbyte=1;
+   
+      i2c_write_byte(address,0x75);
+i2c_read_byte(address,byteptr);
+      
+     i2c_write_byte(address,0x3B);
+     i2c_read_byte(address,byteptr);
+     debug4.fields.accelX=((uint16_t) readbyte)<<8;
+    
+     i2c_write_byte(address,0x3C);
+     i2c_read_byte(address,byteptr);
+      debug4.fields.accelX=((uint16_t) readbyte)| debug4.fields.accelX;
+     
+     i2c_write_byte(address,0x3F);
+     i2c_read_byte(address,byteptr);
+    //  debug4.fields.accelZ[15:8]=readbyte;
+          i2c_write_byte(address,0x40);
+     i2c_read_byte(address,byteptr);
+    //  debug4.fields.accelZ[7:0]=readbyte;
+      
+              i2c_write_byte(address,0x1C);
+     i2c_write_byte(address,0x18);
+     
+             i2c_write_byte(address,0x1C);
+     i2c_read_byte(address,byteptr);
+     
+          i2c_write_byte(address,0x1C);
+     i2c_read_byte(address,byteptr);
      
 
     
@@ -230,7 +288,23 @@ void main(void)
     while(1)
     {
       
-
+     i2c_write_byte(address,0x3B);
+     i2c_read_byte(address,byteptr);
+     debug4.fields.accelX=((uint16_t) readbyte)<<8;
+    
+     i2c_write_byte(address,0x3C);
+     i2c_read_byte(address,byteptr);
+      debug4.fields.accelX=((uint16_t) readbyte)| debug4.fields.accelX;
+     
+     i2c_write_byte(address,0x3F);
+     i2c_read_byte(address,byteptr);
+          debug4.fields.accelZ=((uint16_t) readbyte)<<8;
+     
+               i2c_write_byte(address,0x40);
+     i2c_read_byte(address,byteptr);
+       debug4.fields.accelZ=((uint16_t) readbyte)| debug4.fields.accelZ;
+     
+     
        inchwormDriveToPosition(motor0,1000);
 //disables iws
       //inchwormRelease(motor0);

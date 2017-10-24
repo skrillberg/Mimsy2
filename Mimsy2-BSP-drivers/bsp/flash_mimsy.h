@@ -1,7 +1,9 @@
 #define IMU_DATA_STRUCT_SIZE 16
 #include <stdint.h>
 
-
+/*IMUData is a union data structure used to store imu data points. Access the struct
+type of this union is used for accessing and setting the data. The uint32 array version
+of the struct is used for reading and writing to flash*/
 typedef union IMUData {
   
   struct {
@@ -22,11 +24,17 @@ typedef union IMUData {
 uint32_t bits[4];
 }IMUData;
 
+
+/*This struct is used to keep track of wherer data was written to. This strucut 
+must be passed to flashWriteIMU where it is updated to include the flash location 
+of the data. A written data card is passed to flashReadIMU inorder to read the 
+data from that location*/
 typedef struct IMUDataCard{
     uint32_t page;
     uint32_t startTime;
     uint32_t endTime;
 } IMUDataCard;
+
 
 extern void flashWriteIMU(IMUData data[],uint32_t size, uint32_t startPage, IMUDataCard * card);
 extern void flashReadIMU(IMUDataCard card, IMUData *data, uint32_t size);

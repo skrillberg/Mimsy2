@@ -1,4 +1,4 @@
-"C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\i2c.c"
+"C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\source\i2c.c"
 -std=c11
 -ferror-limit=0
 -I
@@ -11,6 +11,12 @@ C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\..\..\Mimsy2-BSP-driv
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\..\..\Mimsy2-BSP-drivers\drivers
 -I
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\..\..\Mimsy2-Apps
+-I
+C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\bsp\boards\openmote-cc2538
+-I
+C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\bsp\boards
+-I
+C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc
 -I
@@ -25,6 +31,12 @@ C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\drivers
 -I
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps
+-I
+C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\bsp\boards\openmote-cc2538
+-I
+C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\bsp\boards
+-I
+C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\inc
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0
