@@ -42,11 +42,13 @@
 /******************************************************************************
 * INCLUDES
 */
+#include "mpu9250/MPU9250_RegisterMap.h"
 #include <stdio.h>
 //#include "bsp.h"
 //#include "bsp_led.h"
 //#include "board.c"
 #include "gptimer.h"
+#include "accel_mimsy.h"
 #include "i2c_mimsy.h"
 #include "sys_ctrl.h"
 #include "hw_gptimer.h"
@@ -60,6 +62,12 @@
 #include "inchworm.h"
 #include "..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\source\flash.h"
 #include "flash_mimsy.h"
+#include "string.h"
+#include "usb_firmware_library_headers.h"
+#include "usb_cdc.h"
+#include "usb_in_buffer.h"
+#include "usb_out_buffer.h"
+
 
 /******************************************************************************
 * DEFINES
@@ -73,6 +81,8 @@
 #define PAGE_TO_ERASE_START_ADDR (FLASH_BASE + (PAGE_TO_ERASE * PAGE_SIZE))
 
 /******************************************************************************
+
+
 * LOCAL VARIABLES AND FUNCTIONS
 */
 uint32_t frequency=2000; //must be greater than 250  
@@ -95,6 +105,40 @@ uint32_t timeroffset;
    IMUData flashData[128];
    IMUDataCard * refptr;
    uint8_t readbyte;
+   uint32_t bufferCount=0;
+   uint32_t currentflashpage=14;
+   IMUDataCard cards[100];
+   uint32_t pagesWritten=0;
+   union IMURaw {
+  
+  uint16_t words[7];
+  uint8_t bytes[14];
+  
+  
+}imuraw;
+   USB_EPIN_RINGBUFFER_DATA usbCdcInBufferData;
+USB_EPOUT_RINGBUFFER_DATA usbCdcOutBufferData;
+static uint8_t pInBuffer[128];
+static uint8_t pOutBuffer[128];
+static uint8_t pAppBuffer[128];
+
+
+//*****************************************************************************
+//
+// Implementations of function that are required by usb framework.
+//
+//*****************************************************************************
+void usbsuspHookEnteringSuspend(bool remoteWakeupAllowed) {
+    if (remoteWakeupAllowed) {
+    }
+}
+
+
+void usbsuspHookExitingSuspend(void) {
+}
+
+
+   
    
 /******************************************************************************
 * FUNCTIONS
@@ -134,7 +178,7 @@ Timer1BIntHandler(void)
 void main(void)
 {
     volatile uint32_t ui32Loop;
-
+   // SysCtrlClockSet(false,false,SYS_CTRL_SYSDIV_32MHZ);
     //
     // Init LEDs (turned off)
     //
@@ -218,10 +262,10 @@ void main(void)
    }
    refptr = &refCard;
    IntMasterEnable();
-   flashWriteIMU(data,sizeof(data)/16,14,refptr);
-        for(ui32Loop=1;ui32Loop<50000;ui32Loop++) {
-    }
-   flashReadIMU(refCard,flashData,sizeof(flashData)/16);
+  // flashWriteIMU(data,sizeof(data)/16,14,refptr);
+       // for(ui32Loop=1;ui32Loop<50000;ui32Loop++) {
+  //  }
+   //flashReadIMU(refCard,flashData,sizeof(flashData)/16);
    board_timer_init();
     debug=sizeof(imu);
     
@@ -229,32 +273,48 @@ void main(void)
          i2c_init();
     uint8_t address;
     address=0x69;
-    uint8_t bytes[2]={0x6B,0x01}  ; 
+    
+     i2c_write_byte(address,MPU9250_PWR_MGMT_1); //reset
+     i2c_write_byte(address,0x80);
+    
+      i2c_write_byte(address,MPU9250_PWR_MGMT_1); //wake
+     i2c_write_byte(address,0x00);
+    
+    uint8_t bytes[2]={MPU9250_PWR_MGMT_1,0x01}  ; 
      i2c_write_bytes(address,bytes,2); //set gyro clock source
    
      //  bytes[0]=0x6A;
   //   bytes[1]=  0x20;
     // i2c_write_bytes(address,bytes); //set reset
      
-     bytes[0]=0x6B;
+   /*  bytes[0]=0x6B;
      bytes[1]=  0x80;
      i2c_write_bytes(address,bytes,2); //set reset
+*/
      bytes[0]=0x6C;
      bytes[1]=0x03;
         uint8_t *byteptr=&readbyte;
       
-        i2c_write_byte(address,0x6C);
+        i2c_write_byte(address,MPU9250_PWR_MGMT_2);
      i2c_read_byte(address,byteptr);
      
-     i2c_write_byte(address,0x6C); //sens enable
+     i2c_write_byte(address,MPU9250_PWR_MGMT_2); //sens enable
      i2c_write_byte(address,0x00);
      
-     i2c_write_byte(address,0x6C);
+     i2c_write_byte(address,MPU9250_PWR_MGMT_2);
      i2c_read_byte(address,byteptr);
+     
+     //fifo enable
+     
+              i2c_write_byte(address,MPU9250_USER_CTRL);
+     i2c_write_byte(address,0x40);
+     
+         i2c_write_byte(address,MPU9250_FIFO_EN);
+     i2c_write_byte(address,0x78); //enalbe gyro and accel fifo writes
      
      readbyte=1;
    
-      i2c_write_byte(address,0x75);
+      i2c_write_byte(address,MPU9250_WHO_AM_I);
 i2c_read_byte(address,byteptr);
       
      i2c_write_byte(address,0x3B);
@@ -281,34 +341,43 @@ i2c_read_byte(address,byteptr);
           i2c_write_byte(address,0x1C);
      i2c_read_byte(address,byteptr);
      
+     
+         
+
 
     
     
    
     while(1)
     {
+     
+
+      mimsyIMURead6Dof(address,&debug4);
+     // i2c_read_registers(address,MPU9250_FIFO_R_W,14,imuraw.bytes);
+     // i2c_read_registers(address,MPU9250_ACCEL_XOUT_H,14,imuraw.bytes);
+    //  data[bufferCount]=debug4;
+      bufferCount++;
+      if(bufferCount==128&&pagesWritten<30){
+       bufferCount=0;
+       //IMUDataCard *card = malloc(sizeof(card));
+       IMUDataCard *card;
+     //   flashWriteIMU(data,sizeof(data)/16,currentflashpage,card);
+        cards[pagesWritten]=*card;
+        pagesWritten++;
+        currentflashpage++;
+      }
       
-     i2c_write_byte(address,0x3B);
-     i2c_read_byte(address,byteptr);
-     debug4.fields.accelX=((uint16_t) readbyte)<<8;
-    
-     i2c_write_byte(address,0x3C);
-     i2c_read_byte(address,byteptr);
-      debug4.fields.accelX=((uint16_t) readbyte)| debug4.fields.accelX;
-     
-     i2c_write_byte(address,0x3F);
-     i2c_read_byte(address,byteptr);
-          debug4.fields.accelZ=((uint16_t) readbyte)<<8;
-     
-               i2c_write_byte(address,0x40);
-     i2c_read_byte(address,byteptr);
-       debug4.fields.accelZ=((uint16_t) readbyte)| debug4.fields.accelZ;
-     
-     
+      if(pagesWritten==4){
+          //flashReadIMU(cards[3],flashData,sizeof(flashData)/16);
+          pagesWritten=0;
+      }
+     // printf("stuff");
+  
+      
+      
+      /*// printf(debug4.fields.accelx,'%d')
        inchwormDriveToPosition(motor0,1000);
-//disables iws
-      //inchwormRelease(motor0);
-       //     inchwormRelease(motor1);
+
 
 //wait
      for(ui32Loop=1;ui32Loop<50000;ui32Loop++) {
@@ -324,5 +393,24 @@ i2c_read_byte(address,byteptr);
     }
     }
 
-    
+       //
+        // Process USB events
+        //
+        usbCdcProcessEvents();
+
+        //
+        // Implement COM-port loopback
+        //
+        uint16_t count = usbibufGetMaxPushCount(&usbCdcInBufferData);
+        uint16_t maxPopCount = usbobufGetMaxPopCount(&usbCdcOutBufferData);
+        if (count > maxPopCount)
+        {
+            count = maxPopCount;
+        }
+        if (count)
+        {
+            usbobufPop(&usbCdcOutBufferData, pAppBuffer, count);
+            usbibufPush(&usbCdcInBufferData, pAppBuffer, count);
+        }*/
+}
 }

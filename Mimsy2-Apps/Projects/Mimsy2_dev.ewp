@@ -344,6 +344,10 @@
                     <state>C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\bsp\boards\openmote-cc2538</state>
                     <state>C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\bsp\boards</state>
                     <state>C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\inc</state>
+                    <state>C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library</state>
+                    <state>C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\cc2538</state>
+                    <state>C:\Users\kilberg\Documents</state>
+                    <state>C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -643,7 +647,7 @@
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state></state>
+                    <state>Mimsy2_dev.srec</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -2050,6 +2054,12 @@
     </group>
     <group>
         <name>bsp_mimsy</name>
+        <group>
+            <name>mpu9250</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250\MPU9250_RegisterMap.h</name>
+            </file>
+        </group>
         <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\accel_mimsy.c</name>
         </file>
@@ -2289,6 +2299,81 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\inc\hw_usb.h</name>
+        </file>
+    </group>
+    <group>
+        <name>usb</name>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc\app_usb_descriptor.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc\app_usb_descriptor.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\hw_usb_aliases.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\cc2538\usb.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\cc2538\usb.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc\usb_cdc.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc\usb_cdc.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc\usb_cdc_hooks.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_descriptor_defs.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_descriptor_parser.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_descriptor_parser.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\cc2538\usb_firmware_library_headers.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_framework.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_framework.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_in_buffer.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_in_buffer.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\cc2538\usb_interrupt.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_interrupt.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_out_buffer.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_out_buffer.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_standard_requests.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_standard_requests.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\cc2538\usb_suspend.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_suspend.h</name>
         </file>
     </group>
 </project>

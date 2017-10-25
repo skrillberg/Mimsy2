@@ -41,7 +41,7 @@
 #include "interrupt.h"
 #include "gpio.h"
 
-
+uint32_t status;
 void UsbEnable(void)
 {
     //
@@ -71,7 +71,7 @@ void UsbDplusPullUpEnable(void)
 void UsbPllEnable(void)
 {
     HWREG(USB_CTRL) |= 0x00000002;
-    
+    status=HWREG(USB_CTRL);
     //
     // Poll PLL_LOCKED in USB_CTRL register until locked
     //

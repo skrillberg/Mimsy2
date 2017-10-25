@@ -80,6 +80,9 @@ bool board_timer_expired(uint32_t future) {
     }
 }
 
+
+
+
 void i2c_init(void) {
     bool status;
     
@@ -238,6 +241,31 @@ uint32_t i2c_write_bytes(uint8_t address, uint8_t* buffer, uint32_t length) {
     // Return bytes written
     return length;
 }
+void i2c_read_registers(uint8_t slave_addr,
+                             uint8_t reg_addr,
+                             uint8_t numBytes,
+                             uint8_t* spaceToWrite){
+                               
+           i2c_write_byte(slave_addr,reg_addr);
+           //i2c_read_byte(slave_addr,spaceToWrite);
+           i2c_read_bytes(slave_addr,spaceToWrite,numBytes);
+}
 
+void i2c_read_register(uint8_t slave_addr,
+                             uint8_t reg_addr,
+                             
+                             uint8_t* spaceToWrite){
+                               
+           i2c_write_byte(slave_addr,reg_addr);
+           i2c_read_byte(slave_addr,spaceToWrite);
+          
+}
+
+void i2c_write_register( uint8_t slave_addr,uint8_t reg_addr, uint8_t length, uint8_t* data){
+             i2c_write_byte(slave_addr,reg_addr);
+             
+              i2c_write_bytes(slave_addr,data,length);
+
+}
 //=========================== private =========================================
 

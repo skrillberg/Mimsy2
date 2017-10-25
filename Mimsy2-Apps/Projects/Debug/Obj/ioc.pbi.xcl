@@ -18,6 +18,14 @@ C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\bsp\boards
 -I
 C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\inc
 -I
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\cc2538
+-I
+C:\Users\kilberg\Documents
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc
+-I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc\c
@@ -37,6 +45,14 @@ C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\bsp\boards\openmote-cc2538
 C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\bsp\boards
 -I
 C:\Users\kilberg\Documents\Mimsy2\openwsn\openwsn-fw\inc
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\cc2538
+-I
+C:\Users\kilberg\Documents
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

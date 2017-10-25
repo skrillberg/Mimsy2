@@ -1,3 +1,6 @@
+#ifndef __FLASH_MIMSY_H__
+#define __FLASH_MIMSY_H__
+
 #define IMU_DATA_STRUCT_SIZE 16
 #include <stdint.h>
 
@@ -38,3 +41,5 @@ typedef struct IMUDataCard{
 
 extern void flashWriteIMU(IMUData data[],uint32_t size, uint32_t startPage, IMUDataCard * card);
 extern void flashReadIMU(IMUDataCard card, IMUData *data, uint32_t size);
+
+#endif
