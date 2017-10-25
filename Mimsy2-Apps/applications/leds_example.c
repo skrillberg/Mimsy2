@@ -44,6 +44,7 @@
 */
 #include "mpu9250/MPU9250_RegisterMap.h"
 #include <stdio.h>
+#include "uartstdio.h"
 //#include "bsp.h"
 //#include "bsp_led.h"
 //#include "board.c"
@@ -404,16 +405,19 @@ i2c_read_byte(address,byteptr);
     // frequency.  This could be also be a variable or hard coded value
     // instead of a function call.
     //
-    UARTConfigSetExpClk(UART0_BASE, SysCtrlClockGet(), 115200,
-                        (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
-                         UART_CONFIG_PAR_NONE));
-    UARTEnable(UART0_BASE);
-    
+   // UARTConfigSetExpClk(UART0_BASE, SysCtrlClockGet(), 115200,
+                     //   (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
+                     //    UART_CONFIG_PAR_NONE));
+  //  UARTEnable(UART0_BASE);
+    UARTStdioInit(0);
     //
     // Put a character to show start of example.  This will display on the
     // terminal.
     //
+      UARTwrite("hello world",11);
     UARTCharPut(UART0_BASE, '!');
+    
+    
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -424,11 +428,16 @@ i2c_read_byte(address,byteptr);
      
 
       mimsyIMURead6Dof(address,&debug4);
+      
      // i2c_read_registers(address,MPU9250_FIFO_R_W,14,imuraw.bytes);
      // i2c_read_registers(address,MPU9250_ACCEL_XOUT_H,14,imuraw.bytes);
     //  data[bufferCount]=debug4;
       bufferCount++;
       if(bufferCount==128&&pagesWritten<30){
+        UARTprintf("%c[2K",27);
+      UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
+UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
+
        bufferCount=0;
        //IMUDataCard *card = malloc(sizeof(card));
        IMUDataCard *card;
@@ -464,24 +473,7 @@ i2c_read_byte(address,byteptr);
     }
     }
 
-       //
-        // Process USB events
-        //
-        usbCdcProcessEvents();
-
-        //
-        // Implement COM-port loopback
-        //
-        uint16_t count = usbibufGetMaxPushCount(&usbCdcInBufferData);
-        uint16_t maxPopCount = usbobufGetMaxPopCount(&usbCdcOutBufferData);
-        if (count > maxPopCount)
-        {
-            count = maxPopCount;
-        }
-        if (count)
-        {
-            usbobufPop(&usbCdcOutBufferData, pAppBuffer, count);
-            usbibufPush(&usbCdcInBufferData, pAppBuffer, count);
-        }*/
+*/
 }
+
 }

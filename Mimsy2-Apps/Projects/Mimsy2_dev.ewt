@@ -2490,6 +2490,12 @@
             <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\source\uart.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\driver\uartstdio.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\driver\uartstdio.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\source\udma.c</name>
         </file>
         <file>

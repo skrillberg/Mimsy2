@@ -24,6 +24,21 @@ typedef union IMUData {
  
 
 } fields;
+  struct {
+  int16_t accelX;//a X data
+  int16_t accelY;//a X data
+  int16_t accelZ;//a X data
+  
+  int16_t gyroX;//gyro X data
+  int16_t gyroY;//gyro Y data
+  int16_t gyroZ;//gyro Z data
+  
+  int32_t timestamp;
+ 
+  
+ 
+
+} signedfields;
 uint32_t bits[4];
 }IMUData;
 

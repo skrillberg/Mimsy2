@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>2</fileVersion>
-    <fileChecksum>528260199</fileChecksum>
+    <fileChecksum>1299734242</fileChecksum>
     <configuration>
         <name>Debug</name>
         <outputs>
@@ -276,6 +276,10 @@
             <file>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\inc\hw_uart.h</file>
             <file>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\inc\hw_udmachctl.h</file>
             <file>$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\driverlib\cc2538\inc\hw_flash_ctrl.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\uartstdio.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\uartstdio.o</file>
+            <file>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\driver\uartstdio.h</file>
+            <file>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\driver\uartstdio.c</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
@@ -805,11 +809,11 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 69 228 148 227 142 17 171 155 35 244 166 231 15 78 68 36 259 252 75 53 62 58 258 242 39 61 73 136 149 232 240 248 264 219 266 239 222 225 208 233 221 70 217 209 234 41 257</file>
+                    <file> 69 228 148 227 142 17 171 155 273 166 35 244 231 15 78 68 36 259 252 75 53 62 58 258 242 39 61 73 136 149 232 240 248 264 219 266 239 222 225 208 233 221 70 217 209 234 41 257</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 244 148 219 78 258 75 17 53 68 242 209 166 155 240 208 35 259 62 61 232 41 171 231 227 58 149 264 222 221 228 15 36 252 39 73 136 217 234 142 248 239 225 233 70 266 69</file>
+                    <file> 248 73 148 252 257 231 233 15 258 217 227 244 166 239 70 273 36 53 39 136 234 142 228 242 225 35 68 259 75 62 61 78 232 209 41 155 17 171 88 58 149 240 264 219 222 208 221 69 266</file>
                 </tool>
             </inputs>
         </file>
@@ -992,7 +996,7 @@
             <inputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 1 235 95 115 12 123 144 187 110 196 127 180 205 91 89 100 191 199 192 212 6 147 104 129 26 119 150 86 203 9 10 175 8 23 4 27 3 185 190 84 106 105 98</file>
+                    <file> 1 235 95 115 12 123 144 187 110 196 127 180 205 91 89 100 191 199 192 212 6 147 104 129 26 119 150 272 86 203 9 10 175 8 23 4 27 3 185 190 84 106 105 98</file>
                 </tool>
             </inputs>
         </file>
@@ -1569,6 +1573,29 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 66 266 41 244 258 268 53 166 227 142 252 231 148 17 171</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\driver\uartstdio.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 272</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 271</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 231 166 148 227 142 17 171 252 258 244 268 66 53 51 36 41 273</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 244 148 88 53 258 273 231 268 36 171 227 166 252 66 51 41 17 142</file>
                 </tool>
             </inputs>
         </file>
