@@ -12,7 +12,7 @@
         <ByteLimit>50</ByteLimit>
     </Stack>
     <DebugChecksum>
-        <Checksum>3403374802</Checksum>
+        <Checksum>2349365375</Checksum>
     </DebugChecksum>
     <CodeCoverage>
         <Enabled>_ 0</Enabled>
@@ -80,18 +80,16 @@
     <Breakpoints2>
         <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\inchworm.h}.4.1" 0 0 1 "" 0 "" 0</Bp0>
         <Bp1>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\inchworm.h}.12.1" 0 0 1 "" 0 "" 0</Bp1>
-        <Bp2>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.493.1" 0 0 1 "" 0 "" 0</Bp2>
-        <Bp3>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.493.1" 0 0 1 "" 0 "" 0</Bp3>
-        <Bp4>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.493.1" 0 0 1 "" 0 "" 0</Bp4>
+        <Bp2>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.523.1" 0 0 1 "" 0 "" 0</Bp2>
+        <Bp3>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.523.1" 0 0 1 "" 0 "" 0</Bp3>
+        <Bp4>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.523.1" 0 0 1 "" 0 "" 0</Bp4>
         <Bp5>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\flash_mimsy.h}.6.1" 0 0 1 "" 0 "" 0</Bp5>
-        <Bp6>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.493.1" 0 0 1 "" 0 "" 0</Bp6>
+        <Bp6>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.523.1" 0 0 1 "" 0 "" 0</Bp6>
         <Bp7>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc\usb_cdc.c}.84.5" 0 0 1 "" 0 "" 0</Bp7>
         <Bp8>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\library\usb_framework.c}.78.5" 0 0 1 "" 0 "" 0</Bp8>
-        <Bp9>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.477.1" 0 0 1 "" 0 "" 0</Bp9>
-        <Bp10>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\accel_mimsy.c}.19.7" 0 0 1 "" 0 "" 0</Bp10>
-        <Bp11>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.426.14" 0 0 1 "" 0 "" 0</Bp11>
-        <Bp12>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.429.6" 0 0 1 "" 0 "" 0</Bp12>
-        <Count>13</Count>
+        <Bp9>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\applications\leds_example.c}.483.7" 0 0 1 "" 0 "" 0</Bp9>
+        <Bp10>_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\accel_mimsy.c}.22.7" 0 0 1 "" 0 "" 0</Bp10>
+        <Count>11</Count>
     </Breakpoints2>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>

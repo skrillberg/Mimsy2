@@ -11,6 +11,9 @@ union IMURaw {
   
   
 };
+
+
+
 void mimsyIMURead6Dof(uint8_t address, IMUData *data){
   uint8_t readbyte;  
   uint8_t *byteptr=&readbyte;

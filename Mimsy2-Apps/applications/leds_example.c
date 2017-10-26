@@ -87,7 +87,7 @@
 #define EXAMPLE_PIN_UART_RXD            GPIO_PIN_2 
 #define EXAMPLE_PIN_UART_TXD            GPIO_PIN_1 
 #define EXAMPLE_GPIO_BASE               GPIO_D_BASE
-
+#define FLASH_PAGE_STORAGE_START              14
 /******************************************************************************
 
 
@@ -439,9 +439,13 @@ i2c_read_byte(address,byteptr);
        UARTprintf("Register Value: %x",readbyte);
      
        
-
+bool stopLogging=false;
     
+    IMUDataCard cards_stable[100];
     
+    for(int i=0;i<100;i++){
+      (cards_stable[i].page)=FLASH_PAGE_STORAGE_START+i;
+    }
        
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -455,7 +459,7 @@ i2c_read_byte(address,byteptr);
       
      // i2c_read_registers(address,MPU9250_FIFO_R_W,14,imuraw.bytes);
      // i2c_read_registers(address,MPU9250_ACCEL_XOUT_H,14,imuraw.bytes);
-    //  data[bufferCount]=debug4;
+      data[bufferCount]=debug4;
       bufferCount++;
       if(bufferCount==128&&pagesWritten<30){
         UARTprintf("%c[2K",27);
@@ -463,19 +467,47 @@ i2c_read_byte(address,byteptr);
         UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
         UARTprintf(", Timestamp: %x",debug4.fields.timestamp);
         bufferCount=0;
-        //IMUDataCard *card = malloc(sizeof(card));
-        IMUDataCard *card;
-        //   flashWriteIMU(data,sizeof(data)/16,currentflashpage,card);
-        cards[pagesWritten]=*card;
+      
+        IMUDataCard *card=&(cards[pagesWritten]);
+       // flashWriteIMU(data,128,currentflashpage,card);
+       
         pagesWritten++;
         currentflashpage++;
       }
       
-      if(pagesWritten==4){
+     /* if(pagesWritten==4&&pagesWritten<30){
           //flashReadIMU(cards[3],flashData,sizeof(flashData)/16);
           pagesWritten=0;
+      }*/
+      
+      if(pagesWritten==30&&!stopLogging){
+          UARTprintf("\n data starts here:\n");
+        for(int i=0;i<30;i++){
+          IMUData sendData[128];
+          flashReadIMU(cards_stable[i],sendData,128);
+        
+          //loop through each data point
+          for(int j=0;j<128;j++){
+            
+   
+          
+              //print csv data to serial
+              //format: xl_x,xl_y,xl_z,gyrox,gyroy,gyroz,timestamp
+              UARTprintf("%d,%d,%d,%d,%d,%d,%x\n",
+                          sendData[j].signedfields.accelX,
+                          sendData[j].signedfields.accelY,
+                          sendData[j].signedfields.accelZ,
+                          sendData[j].signedfields.gyroX,
+                          sendData[j].signedfields.gyroY,
+                          sendData[j].signedfields.gyroZ,
+                          sendData[j].fields.timestamp);
+
+            
+          }
+        }
+        stopLogging=true;
       }
-     // printf("stuff");
+
   
       
       
