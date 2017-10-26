@@ -327,6 +327,10 @@ void main(void)
      
          i2c_write_byte(address,MPU9250_FIFO_EN);
      i2c_write_byte(address,0x78); //enalbe gyro and accel fifo writes
+    
+
+
+     
      
      readbyte=1;
    
@@ -416,9 +420,29 @@ i2c_read_byte(address,byteptr);
     //
       UARTwrite("hello world",11);
     UARTCharPut(UART0_BASE, '!');
+         i2c_write_byte(address,MPU9250_ACCEL_CONFIG);
+     i2c_write_byte(address,0x18);  
+     
+     uint8_t list[2]={MPU9250_ACCEL_CONFIG,0x18};
+     
+     //i2c_write_bytes(address,list,2);
+     i2c_write_register_8bit(address,MPU9250_ACCEL_CONFIG,0x18);//config full scale range
+     
+     
+    i2c_write_byte(address,MPU9250_ACCEL_CONFIG);
+     i2c_read_byte(address,byteptr);  
+       UARTprintf("Register Value: %x",readbyte);
+       
+       
+       i2c_write_byte(address,MPU9250_FIFO_EN);
+     i2c_read_byte(address,byteptr);  
+       UARTprintf("Register Value: %x",readbyte);
+     
+       
+
     
     
-    
+       
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
@@ -435,13 +459,13 @@ i2c_read_byte(address,byteptr);
       bufferCount++;
       if(bufferCount==128&&pagesWritten<30){
         UARTprintf("%c[2K",27);
-      UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
-UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
-
-       bufferCount=0;
-       //IMUDataCard *card = malloc(sizeof(card));
-       IMUDataCard *card;
-     //   flashWriteIMU(data,sizeof(data)/16,currentflashpage,card);
+        UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
+        UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
+        UARTprintf(", Timestamp: %x",debug4.fields.timestamp);
+        bufferCount=0;
+        //IMUDataCard *card = malloc(sizeof(card));
+        IMUDataCard *card;
+        //   flashWriteIMU(data,sizeof(data)/16,currentflashpage,card);
         cards[pagesWritten]=*card;
         pagesWritten++;
         currentflashpage++;

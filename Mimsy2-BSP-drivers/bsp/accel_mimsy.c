@@ -1,7 +1,9 @@
 #include "i2c_mimsy.h"
 #include "mpu9250/MPU9250_RegisterMap.h"
 #include "flash_mimsy.h"
-
+#include "gptimer.h"
+#include "hw_gptimer.h"
+#include "hw_memmap.h"
 union IMURaw {
   
   uint16_t words[7];
@@ -54,6 +56,8 @@ void mimsyIMURead6Dof(uint8_t address, IMUData *data){
     
     i2c_read_register(address,MPU9250_GYRO_ZOUT_L,byteptr);
       (*data).fields.gyroZ=((uint16_t) readbyte)| (*data).fields.gyroZ;
-     
+       
+      
+      (*data).fields.timestamp= TimerValueGet(GPTIMER2_BASE, GPTIMER_A);
 }   
      

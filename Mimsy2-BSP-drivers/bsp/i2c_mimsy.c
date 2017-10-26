@@ -261,10 +261,10 @@ void i2c_read_register(uint8_t slave_addr,
           
 }
 
-void i2c_write_register( uint8_t slave_addr,uint8_t reg_addr, uint8_t length, uint8_t* data){
-             i2c_write_byte(slave_addr,reg_addr);
-             
-              i2c_write_bytes(slave_addr,data,length);
+void i2c_write_register_8bit( uint8_t slave_addr,uint8_t reg_addr, uint8_t data){
+  uint8_t buffer[2]  ={reg_addr,data};          
+        
+              i2c_write_bytes(slave_addr,buffer,2);
 
 }
 //=========================== private =========================================

@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# IAR ELF Linker V8.11.3.13950/W32 for ARM                25/Oct/2017  16:45:41
+# IAR ELF Linker V8.11.3.13950/W32 for ARM                25/Oct/2017  18:05:04
 # Copyright 2007-2017 IAR Systems AB.
 #
 #    Output file  =  
@@ -8,7 +8,7 @@
 #    Map file     =  
 #        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\List\Mimsy2_dev.map
 #    Command line =  
-#        -f C:\Users\kilberg\AppData\Local\Temp\EW5B4D.tmp
+#        -f C:\Users\kilberg\AppData\Local\Temp\EW3A18.tmp
 #        (C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\accel_mimsy.o
 #        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\adc.o
 #        C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj\aes.o
@@ -98,64 +98,67 @@ initialize by copy { rw };
   .intvec            const    0x00200000   0x28c  startup_iar.o [1]
                             - 0x0020028c   0x28c
 
-"P1":                                     0x1a3c
-  .text              ro code  0x0020028c   0x468  leds_example.o [1]
-  .text              ro code  0x002006f4   0x134  gptimer.o [1]
-  .text              ro code  0x00200828    0x4c  led.o [1]
-  .text              ro code  0x00200874    0xde  gpio.o [1]
-  .rodata            const    0x00200952     0x2  leds_example.o [1]
-  .text              ro code  0x00200954   0x230  sys_ctrl.o [1]
-  .text              ro code  0x00200b84    0xd8  interrupt.o [1]
-  .text              ro code  0x00200c5c    0x56  ABImemcpy_unaligned.o [4]
-  .text              ro code  0x00200cb4   0x374  inchworm.o [1]
-  .text              ro code  0x00201028   0x1e4  i2c_mimsy.o [1]
-  .text              ro code  0x0020120c    0xe0  uart.o [1]
-  .text              ro code  0x002012ec   0x248  ioc.o [1]
-  .text              ro code  0x00201534   0x27e  uartstdio.o [1]
-  .text              ro code  0x002017b2   0x108  accel_mimsy.o [1]
-  .text              ro code  0x002018bc    0x10  cpu.o [1]
-  .text              ro code  0x002018cc    0x8c  i2c.o [1]
-  .text              ro code  0x00201958    0x40  zero_init3.o [4]
-  .rodata            const    0x00201998    0x2c  leds_example.o [1]
-  .text              ro code  0x002019c4    0x2c  copy_init3.o [4]
-  .rodata            const    0x002019f0    0x28  leds_example.o [1]
-  .text              ro code  0x00201a18    0x28  data_init.o [4]
-  .iar.init_table    const    0x00201a40    0x24  - Linker created -
-  .rodata            const    0x00201a64    0x20  ioc.o [1]
-  .rodata            const    0x00201a84    0x20  ioc.o [1]
-  .rodata            const    0x00201aa4    0x20  ioc.o [1]
-  .rodata            const    0x00201ac4    0x20  ioc.o [1]
-  .rodata            const    0x00201ae4    0x20  ioc.o [1]
-  .rodata            const    0x00201b04    0x20  ioc.o [1]
-  .rodata            const    0x00201b24    0x20  ioc.o [1]
-  .rodata            const    0x00201b44    0x20  ioc.o [1]
-  .rodata            const    0x00201b64    0x1c  leds_example.o [1]
-  .text              ro code  0x00201b80    0x1a  cmain.o [4]
-  .text              ro code  0x00201b9a     0x4  low_level_init.o [3]
-  .text              ro code  0x00201b9e     0x4  exit.o [3]
-  .text              ro code  0x00201ba4     0xa  cexit.o [4]
-  .text              ro code  0x00201bb0    0x14  exit.o [5]
-  .rodata            const    0x00201bc4    0x18  sys_ctrl.o [1]
-  .rodata            const    0x00201bdc    0x18  sys_ctrl.o [1]
-  .rodata            const    0x00201bf4    0x18  sys_ctrl.o [1]
-  .rodata            const    0x00201c0c    0x18  sys_ctrl.o [1]
-  .rodata            const    0x00201c24    0x14  interrupt.o [1]
-  .rodata            const    0x00201c38    0x14  sys_ctrl.o [1]
-  .rodata            const    0x00201c4c    0x14  uartstdio.o [1]
-  .text              ro code  0x00201c60     0xe  startup_iar.o [1]
-  .text              ro code  0x00201c6e     0xc  cstartup_M.o [4]
-  .rodata            const    0x00201c7c     0xc  leds_example.o [1]
-  .rodata            const    0x00201c88     0xc  leds_example.o [1]
-  .rodata            const    0x00201c94     0xc  leds_example.o [1]
-  .rodata            const    0x00201ca0     0x8  leds_example.o [1]
-  .rodata            const    0x00201ca8     0x8  uartstdio.o [1]
-  .rodata            const    0x00201cb0     0x8  uartstdio.o [1]
-  .rodata            const    0x00201cb8     0x8  uartstdio.o [1]
-  .rodata            const    0x00201cc0     0x4  uartstdio.o [1]
-  Initializer bytes  const    0x00201cc4     0x4  <for P2-1>
-  .rodata            const    0x00201cc8     0x0  zero_init3.o [4]
-  .rodata            const    0x00201cc8     0x0  copy_init3.o [4]
-                            - 0x00201cc8  0x1a3c
+"P1":                                     0x1b18
+  .text              ro code  0x0020028c   0x4f8  leds_example.o [1]
+  .text              ro code  0x00200784   0x134  gptimer.o [1]
+  .text              ro code  0x002008b8    0x4c  led.o [1]
+  .text              ro code  0x00200904    0xde  gpio.o [1]
+  .rodata            const    0x002009e2     0x2  leds_example.o [1]
+  .text              ro code  0x002009e4   0x230  sys_ctrl.o [1]
+  .text              ro code  0x00200c14    0xd8  interrupt.o [1]
+  .text              ro code  0x00200cec    0x56  ABImemcpy_unaligned.o [4]
+  .rodata            const    0x00200d42     0x2  leds_example.o [1]
+  .text              ro code  0x00200d44   0x374  inchworm.o [1]
+  .text              ro code  0x002010b8   0x1fa  i2c_mimsy.o [1]
+  .text              ro code  0x002012b4    0xe0  uart.o [1]
+  .text              ro code  0x00201394   0x248  ioc.o [1]
+  .text              ro code  0x002015dc   0x27e  uartstdio.o [1]
+  .text              ro code  0x0020185c   0x118  accel_mimsy.o [1]
+  .text              ro code  0x00201974    0x10  cpu.o [1]
+  .text              ro code  0x00201984    0x8c  i2c.o [1]
+  .text              ro code  0x00201a10    0x40  zero_init3.o [4]
+  .rodata            const    0x00201a50    0x2c  leds_example.o [1]
+  .text              ro code  0x00201a7c    0x2c  copy_init3.o [4]
+  .rodata            const    0x00201aa8    0x28  leds_example.o [1]
+  .text              ro code  0x00201ad0    0x28  data_init.o [4]
+  .iar.init_table    const    0x00201af8    0x24  - Linker created -
+  .rodata            const    0x00201b1c    0x20  ioc.o [1]
+  .rodata            const    0x00201b3c    0x20  ioc.o [1]
+  .rodata            const    0x00201b5c    0x20  ioc.o [1]
+  .rodata            const    0x00201b7c    0x20  ioc.o [1]
+  .rodata            const    0x00201b9c    0x20  ioc.o [1]
+  .rodata            const    0x00201bbc    0x20  ioc.o [1]
+  .rodata            const    0x00201bdc    0x20  ioc.o [1]
+  .rodata            const    0x00201bfc    0x20  ioc.o [1]
+  .rodata            const    0x00201c1c    0x1c  leds_example.o [1]
+  .text              ro code  0x00201c38    0x1a  cmain.o [4]
+  .text              ro code  0x00201c52     0x4  low_level_init.o [3]
+  .text              ro code  0x00201c56     0x4  exit.o [3]
+  .text              ro code  0x00201c5c     0xa  cexit.o [4]
+  .text              ro code  0x00201c68    0x14  exit.o [5]
+  .rodata            const    0x00201c7c    0x18  sys_ctrl.o [1]
+  .rodata            const    0x00201c94    0x18  sys_ctrl.o [1]
+  .rodata            const    0x00201cac    0x18  sys_ctrl.o [1]
+  .rodata            const    0x00201cc4    0x18  sys_ctrl.o [1]
+  .rodata            const    0x00201cdc    0x14  interrupt.o [1]
+  .rodata            const    0x00201cf0    0x14  leds_example.o [1]
+  .rodata            const    0x00201d04    0x14  sys_ctrl.o [1]
+  .rodata            const    0x00201d18    0x14  uartstdio.o [1]
+  .rodata            const    0x00201d2c    0x10  leds_example.o [1]
+  .text              ro code  0x00201d3c     0xe  startup_iar.o [1]
+  .text              ro code  0x00201d4a     0xc  cstartup_M.o [4]
+  .rodata            const    0x00201d58     0xc  leds_example.o [1]
+  .rodata            const    0x00201d64     0xc  leds_example.o [1]
+  .rodata            const    0x00201d70     0xc  leds_example.o [1]
+  .rodata            const    0x00201d7c     0x8  leds_example.o [1]
+  .rodata            const    0x00201d84     0x8  uartstdio.o [1]
+  .rodata            const    0x00201d8c     0x8  uartstdio.o [1]
+  .rodata            const    0x00201d94     0x8  uartstdio.o [1]
+  .rodata            const    0x00201d9c     0x4  uartstdio.o [1]
+  Initializer bytes  const    0x00201da0     0x4  <for P2-1>
+  .rodata            const    0x00201da4     0x0  zero_init3.o [4]
+  .rodata            const    0x00201da4     0x0  copy_init3.o [4]
+                            - 0x00201da4  0x1b18
 
 "A1":                                        0xc
   .flashcca          const    0x0027ffd4     0xc  startup_iar.o [1]
@@ -212,7 +215,7 @@ Zero (__iar_zero_init3)
 
 Copy (__iar_copy_init3)
     1 source range, total size 0x4:
-          0x00201cc4    0x4
+          0x00201da0    0x4
     1 destination range, total size 0x4:
           0x2000428c    0x4
 
@@ -225,23 +228,23 @@ Copy (__iar_copy_init3)
     Module                 ro code  ro data  rw data
     ------                 -------  -------  -------
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-Apps\Projects\Debug\Obj: [1]
-    accel_mimsy.o              264
+    accel_mimsy.o              280
     cpu.o                       16
     gpio.o                     222
     gptimer.o                  308
     i2c.o                      140
-    i2c_mimsy.o                484
+    i2c_mimsy.o                506
     inchworm.o                 884               352
     interrupt.o                216       20      652
     ioc.o                      584      256
     led.o                       76
-    leds_example.o           1 128      162    3 317
+    leds_example.o           1 272      200    3 317
     startup_iar.o               14      664        4
     sys_ctrl.o                 560      116
     uart.o                     224
     uartstdio.o                638       48        4
     ------------------------------------------------
-    Total:                   5 758    1 266    4 329
+    Total:                   5 940    1 304    4 329
 
 command line: [2]
     ------------------------------------------------
@@ -272,7 +275,7 @@ shb_l.a: [5]
     Gaps                         8        2
     Linker created                       36    2 044
 ----------------------------------------------------
-    Grand Total:             6 076    1 304    6 373
+    Grand Total:             6 258    1 342    6 373
 
 
 *******************************************************************************
@@ -281,103 +284,103 @@ shb_l.a: [5]
 
 Entry                      Address   Size  Type      Object
 -----                      -------   ----  ----      ------
-.iar.init_table$$Base   0x00201a40          --   Gb  - Linker created -
-.iar.init_table$$Limit  0x00201a64          --   Gb  - Linker created -
-?main                   0x00201b81         Code  Gb  cmain.o [4]
-CPUcpsid                0x002018bd    0x8  Code  Gb  cpu.o [1]
-CPUcpsie                0x002018c5    0x8  Code  Gb  cpu.o [1]
+.iar.init_table$$Base   0x00201af8          --   Gb  - Linker created -
+.iar.init_table$$Limit  0x00201b1c          --   Gb  - Linker created -
+?main                   0x00201c39         Code  Gb  cmain.o [4]
+CPUcpsid                0x00201975    0x8  Code  Gb  cpu.o [1]
+CPUcpsie                0x0020197d    0x8  Code  Gb  cpu.o [1]
 CSTACK$$Base            0x20007800          --   Gb  - Linker created -
 CSTACK$$Limit           0x20008000          --   Gb  - Linker created -
-FaultISR                0x00201c6b    0x2  Code  Lc  startup_iar.o [1]
-GPIODirModeSet          0x00200875   0x48  Code  Gb  gpio.o [1]
-GPIOPinRead             0x002008bd    0xa  Code  Gb  gpio.o [1]
-GPIOPinTypeGPIOOutput   0x002008d3   0x20  Code  Gb  gpio.o [1]
-GPIOPinTypeI2C          0x002008f3   0x20  Code  Gb  gpio.o [1]
-GPIOPinTypeUARTInput    0x00200913   0x20  Code  Gb  gpio.o [1]
-GPIOPinTypeUARTOutput   0x00200933   0x20  Code  Gb  gpio.o [1]
-GPIOPinWrite            0x002008c7    0xc  Code  Gb  gpio.o [1]
-I2CMasterBusy           0x00201917   0x10  Code  Gb  i2c.o [1]
-I2CMasterControl        0x00201927    0x6  Code  Gb  i2c.o [1]
-I2CMasterDataGet        0x00201935    0x6  Code  Gb  i2c.o [1]
-I2CMasterDataPut        0x0020192d    0x8  Code  Gb  i2c.o [1]
-I2CMasterEnable         0x002018fb    0xe  Code  Gb  i2c.o [1]
-I2CMasterInitExpClk     0x002018cd   0x2e  Code  Gb  i2c.o [1]
-I2CMasterSlaveAddrSet   0x00201909    0xe  Code  Gb  i2c.o [1]
-IOCPadConfigSet         0x00201499   0x62  Code  Gb  ioc.o [1]
+FaultISR                0x00201d47    0x2  Code  Lc  startup_iar.o [1]
+GPIODirModeSet          0x00200905   0x48  Code  Gb  gpio.o [1]
+GPIOPinRead             0x0020094d    0xa  Code  Gb  gpio.o [1]
+GPIOPinTypeGPIOOutput   0x00200963   0x20  Code  Gb  gpio.o [1]
+GPIOPinTypeI2C          0x00200983   0x20  Code  Gb  gpio.o [1]
+GPIOPinTypeUARTInput    0x002009a3   0x20  Code  Gb  gpio.o [1]
+GPIOPinTypeUARTOutput   0x002009c3   0x20  Code  Gb  gpio.o [1]
+GPIOPinWrite            0x00200957    0xc  Code  Gb  gpio.o [1]
+I2CMasterBusy           0x002019cf   0x10  Code  Gb  i2c.o [1]
+I2CMasterControl        0x002019df    0x6  Code  Gb  i2c.o [1]
+I2CMasterDataGet        0x002019ed    0x6  Code  Gb  i2c.o [1]
+I2CMasterDataPut        0x002019e5    0x8  Code  Gb  i2c.o [1]
+I2CMasterEnable         0x002019b3    0xe  Code  Gb  i2c.o [1]
+I2CMasterInitExpClk     0x00201985   0x2e  Code  Gb  i2c.o [1]
+I2CMasterSlaveAddrSet   0x002019c1    0xe  Code  Gb  i2c.o [1]
+IOCPadConfigSet         0x00201541   0x62  Code  Gb  ioc.o [1]
 IOCPinConfigPeriphInput
-                        0x00201363  0x136  Code  Gb  ioc.o [1]
+                        0x0020140b  0x136  Code  Gb  ioc.o [1]
 IOCPinConfigPeriphOutput
-                        0x002012ed   0x76  Code  Gb  ioc.o [1]
-IntDefaultHandler       0x00201c6d    0x2  Code  Lc  startup_iar.o [1]
-IntEnable               0x00200be3   0x66  Code  Gb  interrupt.o [1]
-IntMasterDisable        0x00200b99   0x14  Code  Gb  interrupt.o [1]
-IntMasterEnable         0x00200b85   0x14  Code  Gb  interrupt.o [1]
-IntRegister             0x00200bad   0x36  Code  Gb  interrupt.o [1]
-NmiISR                  0x00201c69    0x2  Code  Lc  startup_iar.o [1]
-PwmTimerAIntHandler     0x00200cb5   0x8c  Code  Gb  inchworm.o [1]
-PwmTimerBIntHandler     0x00200d41   0x16  Code  Gb  inchworm.o [1]
-Region$$Table$$Base     0x00201a40          --   Gb  - Linker created -
-Region$$Table$$Limit    0x00201a64          --   Gb  - Linker created -
-ResetISR                0x00201c61    0x8  Code  Lc  startup_iar.o [1]
+                        0x00201395   0x76  Code  Gb  ioc.o [1]
+IntDefaultHandler       0x00201d49    0x2  Code  Lc  startup_iar.o [1]
+IntEnable               0x00200c73   0x66  Code  Gb  interrupt.o [1]
+IntMasterDisable        0x00200c29   0x14  Code  Gb  interrupt.o [1]
+IntMasterEnable         0x00200c15   0x14  Code  Gb  interrupt.o [1]
+IntRegister             0x00200c3d   0x36  Code  Gb  interrupt.o [1]
+NmiISR                  0x00201d45    0x2  Code  Lc  startup_iar.o [1]
+PwmTimerAIntHandler     0x00200d45   0x8c  Code  Gb  inchworm.o [1]
+PwmTimerBIntHandler     0x00200dd1   0x16  Code  Gb  inchworm.o [1]
+Region$$Table$$Base     0x00201af8          --   Gb  - Linker created -
+Region$$Table$$Limit    0x00201b1c          --   Gb  - Linker created -
+ResetISR                0x00201d3d    0x8  Code  Lc  startup_iar.o [1]
 STACK_TOP {Abs}         0x20008000         Data  Gb  command line/config [2]
-SysCtrlClockGet         0x002009c5   0x48  Code  Gb  sys_ctrl.o [1]
-SysCtrlClockSet         0x00200955   0x70  Code  Gb  sys_ctrl.o [1]
-SysCtrlDelay            0x00200a21    0x8  Code  Gb  sys_ctrl.o [1]
-SysCtrlIOClockSet       0x00200a0d   0x12  Code  Gb  sys_ctrl.o [1]
+SysCtrlClockGet         0x00200a55   0x48  Code  Gb  sys_ctrl.o [1]
+SysCtrlClockSet         0x002009e5   0x70  Code  Gb  sys_ctrl.o [1]
+SysCtrlDelay            0x00200ab1    0x8  Code  Gb  sys_ctrl.o [1]
+SysCtrlIOClockSet       0x00200a9d   0x12  Code  Gb  sys_ctrl.o [1]
 SysCtrlPeripheralDeepSleepDisable
-                        0x00200b15   0x28  Code  Gb  sys_ctrl.o [1]
+                        0x00200ba5   0x28  Code  Gb  sys_ctrl.o [1]
 SysCtrlPeripheralEnable
-                        0x00200ac9   0x26  Code  Gb  sys_ctrl.o [1]
+                        0x00200b59   0x26  Code  Gb  sys_ctrl.o [1]
 SysCtrlPeripheralPresent
-                        0x00200a29   0x40  Code  Gb  sys_ctrl.o [1]
-SysCtrlPeripheralReset  0x00200a69   0x60  Code  Gb  sys_ctrl.o [1]
+                        0x00200ab9   0x40  Code  Gb  sys_ctrl.o [1]
+SysCtrlPeripheralReset  0x00200af9   0x60  Code  Gb  sys_ctrl.o [1]
 SysCtrlPeripheralSleepEnable
-                        0x00200aef   0x26  Code  Gb  sys_ctrl.o [1]
+                        0x00200b7f   0x26  Code  Gb  sys_ctrl.o [1]
 Timer1AIntHandler       0x0020028d   0x24  Code  Gb  leds_example.o [1]
 Timer1BIntHandler       0x002002b1   0x38  Code  Gb  leds_example.o [1]
-TimerConfigure          0x00200709   0x30  Code  Gb  gptimer.o [1]
-TimerControlEvent       0x0020075f   0x18  Code  Gb  gptimer.o [1]
-TimerControlLevel       0x00200739   0x26  Code  Gb  gptimer.o [1]
-TimerEnable             0x002006f5   0x14  Code  Gb  gptimer.o [1]
-TimerIntClear           0x00200823    0x6  Code  Gb  gptimer.o [1]
-TimerIntEnable          0x00200815    0xe  Code  Gb  gptimer.o [1]
-TimerIntRegister        0x002007b3   0x50  Code  Gb  gptimer.o [1]
-TimerLoadSet            0x00200777   0x16  Code  Gb  gptimer.o [1]
-TimerMatchSet           0x0020079d   0x16  Code  Gb  gptimer.o [1]
-TimerValueGet           0x0020078d   0x10  Code  Gb  gptimer.o [1]
-UARTCharPut             0x002012bf   0x10  Code  Gb  uart.o [1]
-UARTClockSourceSet      0x002012e5    0x8  Code  Gb  uart.o [1]
-UARTConfigSetExpClk     0x0020120d   0x66  Code  Gb  uart.o [1]
-UARTDisable             0x00201295   0x2a  Code  Gb  uart.o [1]
-UARTEnable              0x00201273   0x22  Code  Gb  uart.o [1]
-UARTIntDisable          0x002012d5   0x10  Code  Gb  uart.o [1]
-UARTStdioConfig         0x00201535   0x62  Code  Gb  uartstdio.o [1]
-UARTStdioInit           0x00201597   0x16  Code  Gb  uartstdio.o [1]
-UARTprintf              0x002017a5    0xe  Code  Gb  uartstdio.o [1]
-UARTvprintf             0x002015db  0x1b0  Code  Gb  uartstdio.o [1]
-UARTwrite               0x002015ad   0x2e  Code  Gb  uartstdio.o [1]
+TimerConfigure          0x00200799   0x30  Code  Gb  gptimer.o [1]
+TimerControlEvent       0x002007ef   0x18  Code  Gb  gptimer.o [1]
+TimerControlLevel       0x002007c9   0x26  Code  Gb  gptimer.o [1]
+TimerEnable             0x00200785   0x14  Code  Gb  gptimer.o [1]
+TimerIntClear           0x002008b3    0x6  Code  Gb  gptimer.o [1]
+TimerIntEnable          0x002008a5    0xe  Code  Gb  gptimer.o [1]
+TimerIntRegister        0x00200843   0x50  Code  Gb  gptimer.o [1]
+TimerLoadSet            0x00200807   0x16  Code  Gb  gptimer.o [1]
+TimerMatchSet           0x0020082d   0x16  Code  Gb  gptimer.o [1]
+TimerValueGet           0x0020081d   0x10  Code  Gb  gptimer.o [1]
+UARTCharPut             0x00201367   0x10  Code  Gb  uart.o [1]
+UARTClockSourceSet      0x0020138d    0x8  Code  Gb  uart.o [1]
+UARTConfigSetExpClk     0x002012b5   0x66  Code  Gb  uart.o [1]
+UARTDisable             0x0020133d   0x2a  Code  Gb  uart.o [1]
+UARTEnable              0x0020131b   0x22  Code  Gb  uart.o [1]
+UARTIntDisable          0x0020137d   0x10  Code  Gb  uart.o [1]
+UARTStdioConfig         0x002015dd   0x62  Code  Gb  uartstdio.o [1]
+UARTStdioInit           0x0020163f   0x16  Code  Gb  uartstdio.o [1]
+UARTprintf              0x0020184d    0xe  Code  Gb  uartstdio.o [1]
+UARTvprintf             0x00201683  0x1b0  Code  Gb  uartstdio.o [1]
+UARTwrite               0x00201655   0x2e  Code  Gb  uartstdio.o [1]
 __cca                   0x0027ffd4    0xc  Data  Gb  startup_iar.o [1]
-__cmain                 0x00201b81         Code  Gb  cmain.o [4]
-__exit                  0x00201bb1   0x14  Code  Gb  exit.o [5]
-__iar_copy_init3        0x002019c5   0x2c  Code  Gb  copy_init3.o [4]
-__iar_data_init3        0x00201a19   0x28  Code  Gb  data_init.o [4]
-__iar_program_start     0x00201c6f         Code  Gb  cstartup_M.o [4]
+__cmain                 0x00201c39         Code  Gb  cmain.o [4]
+__exit                  0x00201c69   0x14  Code  Gb  exit.o [5]
+__iar_copy_init3        0x00201a7d   0x2c  Code  Gb  copy_init3.o [4]
+__iar_data_init3        0x00201ad1   0x28  Code  Gb  data_init.o [4]
+__iar_program_start     0x00201d4b         Code  Gb  cstartup_M.o [4]
 __iar_systems$$module {Abs}
                         0x00000001         Data  Gb  command line/config [2]
 __iar_unaligned_memcpy4
-                        0x00200c5d         Code  Gb  ABImemcpy_unaligned.o [4]
+                        0x00200ced         Code  Gb  ABImemcpy_unaligned.o [4]
 __iar_unaligned_memcpy8
-                        0x00200c5d         Code  Gb  ABImemcpy_unaligned.o [4]
-__iar_zero_init3        0x00201959   0x40  Code  Gb  zero_init3.o [4]
-__low_level_init        0x00201b9b    0x4  Code  Gb  low_level_init.o [3]
+                        0x00200ced         Code  Gb  ABImemcpy_unaligned.o [4]
+__iar_zero_init3        0x00201a11   0x40  Code  Gb  zero_init3.o [4]
+__low_level_init        0x00201c53    0x4  Code  Gb  low_level_init.o [3]
 __vector_table          0x00200000  0x28c  Data  Gb  startup_iar.o [1]
-_call_main              0x00201b8d         Code  Gb  cmain.o [4]
-_exit                   0x00201ba5         Code  Gb  cexit.o [4]
-_main                   0x00201b97         Code  Gb  cmain.o [4]
+_call_main              0x00201c45         Code  Gb  cmain.o [4]
+_exit                   0x00201c5d         Code  Gb  cexit.o [4]
+_main                   0x00201c4f         Code  Gb  cmain.o [4]
 activeDriveList         0x20005080   0x10  Data  Gb  inchworm.o [1]
-board_timer_expired     0x00201053   0x1c  Code  Gb  i2c_mimsy.o [1]
-board_timer_get         0x00201045    0xe  Code  Gb  i2c_mimsy.o [1]
-board_timer_init        0x00201029   0x1c  Code  Gb  i2c_mimsy.o [1]
+board_timer_expired     0x002010e3   0x1c  Code  Gb  i2c_mimsy.o [1]
+board_timer_get         0x002010d5    0xe  Code  Gb  i2c_mimsy.o [1]
+board_timer_init        0x002010b9   0x1c  Code  Gb  i2c_mimsy.o [1]
 bufferCount             0x200050d8    0x4  Data  Gb  leds_example.o [1]
 cards                   0x20004a90  0x4b0  Data  Gb  leds_example.o [1]
 currentflashpage        0x2000428c    0x4  Data  Gb  leds_example.o [1]
@@ -385,49 +388,51 @@ data                    0x20004290  0x800  Data  Gb  leds_example.o [1]
 debug                   0x200050d0    0x4  Data  Gb  leds_example.o [1]
 debug4                  0x20005090   0x10  Data  Gb  leds_example.o [1]
 dummy_stack             0x20007800    0x4  Data  Lc  startup_iar.o [1]
-exit                    0x00201b9f    0x4  Code  Gb  exit.o [3]
-g_pcHex                 0x00201cc0    0x4  Data  Lc  uartstdio.o [1]
+exit                    0x00201c57    0x4  Code  Gb  exit.o [3]
+g_pcHex                 0x00201d9c    0x4  Data  Lc  uartstdio.o [1]
 g_pfnRAMVectors         0x20004000  0x28c  Data  Lc  interrupt.o [1]
-g_pui32DCGCRegs         0x00201bf4   0x18  Data  Lc  sys_ctrl.o [1]
-g_pui32DieCfgMask       0x00201c0c   0x18  Data  Lc  sys_ctrl.o [1]
-g_pui32EnRegs           0x00201c24   0x14  Data  Lc  interrupt.o [1]
+g_pui32DCGCRegs         0x00201cac   0x18  Data  Lc  sys_ctrl.o [1]
+g_pui32DieCfgMask       0x00201cc4   0x18  Data  Lc  sys_ctrl.o [1]
+g_pui32EnRegs           0x00201cdc   0x14  Data  Lc  interrupt.o [1]
 g_pui32IOCPortAOverrideReg
-                        0x00201a64   0x20  Data  Lc  ioc.o [1]
+                        0x00201b1c   0x20  Data  Lc  ioc.o [1]
 g_pui32IOCPortASignSelectReg
-                        0x00201ae4   0x20  Data  Lc  ioc.o [1]
+                        0x00201b9c   0x20  Data  Lc  ioc.o [1]
 g_pui32IOCPortBOverrideReg
-                        0x00201a84   0x20  Data  Lc  ioc.o [1]
+                        0x00201b3c   0x20  Data  Lc  ioc.o [1]
 g_pui32IOCPortBSignSelectReg
-                        0x00201b04   0x20  Data  Lc  ioc.o [1]
+                        0x00201bbc   0x20  Data  Lc  ioc.o [1]
 g_pui32IOCPortCOverrideReg
-                        0x00201aa4   0x20  Data  Lc  ioc.o [1]
+                        0x00201b5c   0x20  Data  Lc  ioc.o [1]
 g_pui32IOCPortCSignSelectReg
-                        0x00201b24   0x20  Data  Lc  ioc.o [1]
+                        0x00201bdc   0x20  Data  Lc  ioc.o [1]
 g_pui32IOCPortDOverrideReg
-                        0x00201ac4   0x20  Data  Lc  ioc.o [1]
+                        0x00201b7c   0x20  Data  Lc  ioc.o [1]
 g_pui32IOCPortDSignSelectReg
-                        0x00201b44   0x20  Data  Lc  ioc.o [1]
-g_pui32RCGCRegs         0x00201bc4   0x18  Data  Lc  sys_ctrl.o [1]
-g_pui32SCGCRegs         0x00201bdc   0x18  Data  Lc  sys_ctrl.o [1]
-g_pui32SRRegs           0x00201c38   0x14  Data  Lc  sys_ctrl.o [1]
+                        0x00201bfc   0x20  Data  Lc  ioc.o [1]
+g_pui32RCGCRegs         0x00201c7c   0x18  Data  Lc  sys_ctrl.o [1]
+g_pui32SCGCRegs         0x00201c94   0x18  Data  Lc  sys_ctrl.o [1]
+g_pui32SRRegs           0x00201d04   0x14  Data  Lc  sys_ctrl.o [1]
 g_ui32Base              0x200050e0    0x4  Data  Lc  uartstdio.o [1]
-g_ui32UARTBase          0x00201cb0    0x8  Data  Lc  uartstdio.o [1]
-g_ui32UARTPeriph        0x00201cb8    0x8  Data  Lc  uartstdio.o [1]
+g_ui32UARTBase          0x00201d8c    0x8  Data  Lc  uartstdio.o [1]
+g_ui32UARTPeriph        0x00201d94    0x8  Data  Lc  uartstdio.o [1]
 gpio_state              0x200050cc    0x4  Data  Gb  leds_example.o [1]
-i2c_init                0x0020106f   0x82  Code  Gb  i2c_mimsy.o [1]
-i2c_read_byte           0x002010f1   0x3a  Code  Gb  i2c_mimsy.o [1]
-i2c_read_register       0x002011f1   0x1c  Code  Gb  i2c_mimsy.o [1]
-i2c_write_byte          0x0020112b   0x3c  Code  Gb  i2c_mimsy.o [1]
-i2c_write_bytes         0x00201167   0x76  Code  Gb  i2c_mimsy.o [1]
+i2c_init                0x002010ff   0x82  Code  Gb  i2c_mimsy.o [1]
+i2c_read_byte           0x00201181   0x3a  Code  Gb  i2c_mimsy.o [1]
+i2c_read_register       0x00201281   0x1c  Code  Gb  i2c_mimsy.o [1]
+i2c_write_byte          0x002011bb   0x3c  Code  Gb  i2c_mimsy.o [1]
+i2c_write_bytes         0x002011f7   0x76  Code  Gb  i2c_mimsy.o [1]
+i2c_write_register_8bit
+                        0x0020129d   0x16  Code  Gb  i2c_mimsy.o [1]
 imu                     0x200050a0   0x10  Data  Gb  leds_example.o [1]
-inchwormHold            0x00200fbb   0x30  Code  Gb  inchworm.o [1]
-inchwormInit            0x00200d57  0x264  Code  Gb  inchworm.o [1]
+inchwormHold            0x0020104b   0x30  Code  Gb  inchworm.o [1]
+inchwormInit            0x00200de7  0x264  Code  Gb  inchworm.o [1]
 inchwormTimer           0x200050bc    0x4  Data  Gb  inchworm.o [1]
-main                    0x002002e9  0x3a8  Code  Gb  leds_example.o [1]
-mimsyIMURead6Dof        0x002017b3  0x108  Code  Gb  accel_mimsy.o [1]
-mimsyLedClear           0x0020083b   0x10  Code  Gb  led.o [1]
-mimsyLedSet             0x00200829   0x12  Code  Gb  led.o [1]
-mimsyLedToggle          0x0020084b   0x24  Code  Gb  led.o [1]
+main                    0x002002e9  0x42a  Code  Gb  leds_example.o [1]
+mimsyIMURead6Dof        0x0020185d  0x118  Code  Gb  accel_mimsy.o [1]
+mimsyLedClear           0x002008cb   0x10  Code  Gb  led.o [1]
+mimsyLedSet             0x002008b9   0x12  Code  Gb  led.o [1]
+mimsyLedToggle          0x002008db   0x24  Code  Gb  led.o [1]
 motorList               0x20004f40   0xc0  Data  Gb  inchworm.o [1]
 motorsNum               0x200050c8    0x4  Data  Gb  inchworm.o [1]
 pagesWritten            0x200050dc    0x4  Data  Gb  leds_example.o [1]
@@ -446,8 +451,8 @@ timerIntB               0x200050c4    0x4  Data  Gb  inchworm.o [1]
 [4] = rt7M_tl.a
 [5] = shb_l.a
 
-  6 076 bytes of readonly  code memory
-  1 304 bytes of readonly  data memory
+  6 258 bytes of readonly  code memory
+  1 342 bytes of readonly  data memory
   6 373 bytes of readwrite data memory
 
 Errors: none

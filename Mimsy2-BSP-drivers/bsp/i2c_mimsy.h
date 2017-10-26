@@ -32,7 +32,7 @@ void i2c_read_registers(uint8_t slave_addr,
                              uint8_t reg_addr,
                              uint8_t numBytes,
                              uint8_t* spaceToWrite);
-void i2c_write_register(uint8_t slave_addr,uint8_t reg_addr, uint8_t length, uint8_t* data);
+void i2c_write_register_8bit(uint8_t slave_addr,uint8_t reg_addr, uint8_t data);
 
 uint8_t i2c_slave_present(uint8_t bus_num,uint8_t slave_address);
 
