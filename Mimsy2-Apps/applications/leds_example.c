@@ -189,7 +189,7 @@ void main(void)
     SysCtrlClockSet(false,false,SYS_CTRL_SYSDIV_32MHZ);
     
         //
-    // Set IO clock to the same as system clock
+    // Set IO clock to the same as system  clock
     //
     SysCtrlIOClockSet(SYS_CTRL_SYSDIV_32MHZ);
    
