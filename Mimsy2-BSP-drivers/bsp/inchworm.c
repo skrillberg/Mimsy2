@@ -54,7 +54,7 @@ PwmTimerAIntHandler(void)
     // Clear the timer interrupt flag.
     //
      TimerIntClear(inchwormTimer, GPTIMER_CAPA_EVENT );
-    mimsyLedToggle(GPIO_PIN_4);
+//    mimsyLedToggle(GPIO_PIN_4);
     
     
     //optimize this for loop, it think it will be a bit much
@@ -77,7 +77,7 @@ PwmTimerBIntHandler(void)
     // Clear the timer interrupt flag.
     //
      TimerIntClear(inchwormTimer, GPTIMER_CAPB_EVENT);
-    mimsyLedToggle(GPIO_PIN_7);
+  //  mimsyLedToggle(GPIO_PIN_7);
 
       
       

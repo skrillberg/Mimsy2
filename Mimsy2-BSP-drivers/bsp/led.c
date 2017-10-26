@@ -2,8 +2,7 @@
 #include "gpio.h"  //for gpio driver functions
 #include "led.h"
 #include "hw_memmap.h" //contains GPIO_C_BASE and other hardware mappings
-#define RED_LED  GPIO_PIN_4
-#define GREEN_LED  GPIO_PIN_7
+
 #define LED_BASE  GPIO_C_BASE //memory base for gpio bank c, which has all the leds
 void
 mimsyLedInit(void)

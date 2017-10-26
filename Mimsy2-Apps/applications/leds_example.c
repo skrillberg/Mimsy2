@@ -88,6 +88,7 @@
 #define EXAMPLE_PIN_UART_TXD            GPIO_PIN_1 
 #define EXAMPLE_GPIO_BASE               GPIO_D_BASE
 #define FLASH_PAGE_STORAGE_START              14
+#define FLASH_PAGES_TOUSE                       5
 /******************************************************************************
 
 
@@ -158,7 +159,7 @@ Timer1AIntHandler(void)
     // Clear the timer interrupt flag.
     //
      TimerIntClear(GPTIMER1_BASE, GPTIMER_CAPA_EVENT );
-    mimsyLedToggle(GPIO_PIN_4);
+   // mimsyLedToggle(GPIO_PIN_4);
     gpio_state=GPIOPinRead(GPIO_D_BASE,GPIO_PIN_1);
    // GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1,~gpio_state& GPIO_PIN_1);
 
@@ -171,7 +172,7 @@ Timer1BIntHandler(void)
     // Clear the timer interrupt flag.
     //
      TimerIntClear(GPTIMER1_BASE, GPTIMER_CAPB_EVENT);
-    mimsyLedToggle(GPIO_PIN_7);
+   // mimsyLedToggle(GPIO_PIN_7);
     gpio_state=GPIOPinRead(GPIO_D_BASE,GPIO_PIN_2);
     //GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_2,~gpio_state& GPIO_PIN_2);
     gpio_state=TimerValueGet(GPTIMER1_BASE,GPTIMER_B);
@@ -199,10 +200,11 @@ void main(void)
     // Init LEDs (turned off)
     //
     IntMasterDisable(); //disable interrupts for initializations
-    GPIOPinTypeGPIOOutput(GPIO_C_BASE,GPIO_PIN_4|GPIO_PIN_7);
+  //  GPIOPinTypeGPIOOutput(GPIO_C_BASE,GPIO_PIN_4|GPIO_PIN_7);
     //GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
     //   GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,GPIO_PIN_1);
-    gpio_state=GPIO_PIN_1;
+  //  gpio_state=GPIO_PIN_1;
+    mimsyLedInit();
     //
     // Turn on LED1 and LED4
     //
@@ -440,13 +442,15 @@ i2c_read_byte(address,byteptr);
      
        
 bool stopLogging=false;
-    
+bool triggered=false;    
     IMUDataCard cards_stable[100];
     
     for(int i=0;i<100;i++){
       (cards_stable[i].page)=FLASH_PAGE_STORAGE_START+i;
     }
-       
+    mimsyLedClear(RED_LED);   
+    mimsyLedSet(GREEN_LED);
+    
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
@@ -456,57 +460,75 @@ bool stopLogging=false;
      
 
       mimsyIMURead6Dof(address,&debug4);
-      
+      bufferCount++;
      // i2c_read_registers(address,MPU9250_FIFO_R_W,14,imuraw.bytes);
      // i2c_read_registers(address,MPU9250_ACCEL_XOUT_H,14,imuraw.bytes);
-      data[bufferCount]=debug4;
-      bufferCount++;
-      if(bufferCount==128&&pagesWritten<30){
-        UARTprintf("%c[2K",27);
-        UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
-        UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
-        UARTprintf(", Timestamp: %x",debug4.fields.timestamp);
+     data[bufferCount]=debug4;
+      if(!triggered){
+        if((debug4.signedfields.accelY<-2*32768/16 ||debug4.signedfields.accelY>2*32767/16)||(debug4.signedfields.accelX<-2*32768/16 ||debug4.signedfields.accelX>2*32767/16)  ||(debug4.signedfields.accelZ<-2*32768/16 ||debug4.signedfields.accelZ>2*32767/16) ){
+          mimsyLedSet(RED_LED);
+          triggered=true;
+          UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
+        }
+      }
+
+      if(bufferCount==128){
+        if(stopLogging){
+          UARTprintf("%c[2K",27);
+          UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
+          UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
+          UARTprintf(", Timestamp: %x",debug4.fields.timestamp);
+        }
         bufferCount=0;
-      
-        IMUDataCard *card=&(cards[pagesWritten]);
-       // flashWriteIMU(data,128,currentflashpage,card);
-       
-        pagesWritten++;
-        currentflashpage++;
+        
+        if(triggered && !stopLogging){
+          IMUDataCard *card=&(cards[pagesWritten]);
+          flashWriteIMU(data,128,currentflashpage,card);
+         
+          pagesWritten++;
+          currentflashpage++;
+        }
       }
       
-     /* if(pagesWritten==4&&pagesWritten<30){
-          //flashReadIMU(cards[3],flashData,sizeof(flashData)/16);
-          pagesWritten=0;
-      }*/
+
       
-      if(pagesWritten==30&&!stopLogging){
-          UARTprintf("\n data starts here:\n");
-        for(int i=0;i<30;i++){
+      if(pagesWritten==FLASH_PAGES_TOUSE&&!stopLogging){
+        stopLogging=true;
+        mimsyLedClear(GREEN_LED);
+      } 
+      while(stopLogging){
+        UARTprintf("\n data starts here:\n");
+        for(int cardindex=0;cardindex<FLASH_PAGES_TOUSE;cardindex++){
           IMUData sendData[128];
-          flashReadIMU(cards_stable[i],sendData,128);
+          flashReadIMU(cards_stable[cardindex],sendData,128);
         
           //loop through each data point
-          for(int j=0;j<128;j++){
+          for(int dataindex=0;dataindex<128;dataindex++){
             
    
           
               //print csv data to serial
               //format: xl_x,xl_y,xl_z,gyrox,gyroy,gyroz,timestamp
-              UARTprintf("%d,%d,%d,%d,%d,%d,%x\n",
-                          sendData[j].signedfields.accelX,
-                          sendData[j].signedfields.accelY,
-                          sendData[j].signedfields.accelZ,
-                          sendData[j].signedfields.gyroX,
-                          sendData[j].signedfields.gyroY,
-                          sendData[j].signedfields.gyroZ,
-                          sendData[j].fields.timestamp);
+              UARTprintf("%d,%d,%d,%d,%d,%d,%x,%d,%d\n",
+                          sendData[dataindex].signedfields.accelX,
+                          sendData[dataindex].signedfields.accelY,
+                          sendData[dataindex].signedfields.accelZ,
+                          sendData[dataindex].signedfields.gyroX,
+                          sendData[dataindex].signedfields.gyroY,
+                          sendData[dataindex].signedfields.gyroZ,
+                          sendData[dataindex].fields.timestamp,
+                          cardindex,
+                          dataindex);
 
             
           }
+          
         }
-        stopLogging=true;
-      }
+         UARTprintf("\n data ends here\n");
+          for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
+          }
+        }
+ 
 
   
       
