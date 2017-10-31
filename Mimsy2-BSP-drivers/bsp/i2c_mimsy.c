@@ -81,7 +81,15 @@ bool board_timer_expired(uint32_t future) {
 }
 
 
-
+void delay_ms(uint32_t delay){
+  uint32_t current=board_timer_get();
+  while(board_timer_get()<current+delay*32000){
+    
+  }
+}
+  void get_ms(uint32_t *timestamp){
+    *timestamp = board_timer_get()/(SysCtrlClockGet()/1000);
+  }
 
 void i2c_init(void) {
     bool status;
@@ -162,14 +170,16 @@ uint32_t i2c_read_bytes(uint8_t address, uint8_t* buffer, uint32_t length) {
         
         // Read data from I2C
         *buffer++ = I2CMasterDataGet();
-        length--;
+        
 
         // Check if it's the last byte
         if (length == 1) I2CMasterControl(I2C_MASTER_CMD_BURST_RECEIVE_FINISH);
         else             I2CMasterControl(I2C_MASTER_CMD_BURST_RECEIVE_CONT);
+        length--;
     }
     
     // Return bytes read
+    
     return length;
 }
 
@@ -241,7 +251,7 @@ uint32_t i2c_write_bytes(uint8_t address, uint8_t* buffer, uint32_t length) {
     // Return bytes written
     return length;
 }
-void i2c_read_registers(uint8_t slave_addr,
+int i2c_read_registers(uint8_t slave_addr,
                              uint8_t reg_addr,
                              uint8_t numBytes,
                              uint8_t* spaceToWrite){
@@ -249,6 +259,8 @@ void i2c_read_registers(uint8_t slave_addr,
            i2c_write_byte(slave_addr,reg_addr);
            //i2c_read_byte(slave_addr,spaceToWrite);
            i2c_read_bytes(slave_addr,spaceToWrite,numBytes);
+           delay_ms(1);
+           return 0;
 }
 
 void i2c_read_register(uint8_t slave_addr,
@@ -267,5 +279,20 @@ void i2c_write_register_8bit( uint8_t slave_addr,uint8_t reg_addr, uint8_t data)
               i2c_write_bytes(slave_addr,buffer,2);
 
 }
+
+int i2c_write_registers( uint8_t slave_addr,uint8_t reg_addr, uint8_t length,uint8_t *data){
+  uint8_t buffer[100] ;
+  buffer[0]=reg_addr;
+  for(int i = 0; i < length+1; i++){
+    buffer[i+1]=*data;
+    data++; 
+  }
+        
+              i2c_write_bytes(slave_addr,buffer,length+1);
+  delay_ms(1);
+  return 0;
+}
+
+
 //=========================== private =========================================
 

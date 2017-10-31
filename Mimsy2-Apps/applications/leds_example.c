@@ -70,7 +70,7 @@
 #include "usb_out_buffer.h"
 #include "uart.h"
 #include "hw_ioc.h"
-
+#include "inv_mpu.h"
 
 
 /******************************************************************************
@@ -88,7 +88,7 @@
 #define EXAMPLE_PIN_UART_TXD            GPIO_PIN_1 
 #define EXAMPLE_GPIO_BASE               GPIO_D_BASE
 #define FLASH_PAGE_STORAGE_START              14
-#define FLASH_PAGES_TOUSE                       5
+#define FLASH_PAGES_TOUSE                       100
 /******************************************************************************
 
 
@@ -324,11 +324,11 @@ void main(void)
      
      //fifo enable
      
-              i2c_write_byte(address,MPU9250_USER_CTRL);
-     i2c_write_byte(address,0x40);
+    //          i2c_write_byte(address,MPU9250_USER_CTRL);
+    // i2c_write_byte(address,0x40);
      
-         i2c_write_byte(address,MPU9250_FIFO_EN);
-     i2c_write_byte(address,0x78); //enalbe gyro and accel fifo writes
+        // i2c_write_byte(address,MPU9250_FIFO_EN);
+   //  i2c_write_byte(address,0x78); //enalbe gyro and accel fifo writes
     
 
 
@@ -363,8 +363,7 @@ i2c_read_byte(address,byteptr);
           i2c_write_byte(address,0x1C);
      i2c_read_byte(address,byteptr);
      
-     
-         
+
 
 ////////////////////////////////////////////////////////////////uart
        char cThisChar;
@@ -429,12 +428,16 @@ i2c_read_byte(address,byteptr);
      
      //i2c_write_bytes(address,list,2);
      i2c_write_register_8bit(address,MPU9250_ACCEL_CONFIG,0x18);//config full scale range
+      i2c_write_register_8bit(address,MPU9250_GYRO_CONFIG,0x18);//config full scale range
      
-     
+      
+      
     i2c_write_byte(address,MPU9250_ACCEL_CONFIG);
      i2c_read_byte(address,byteptr);  
        UARTprintf("Register Value: %x",readbyte);
-       
+       uint8_t byte=0x00;
+     //  i2c_write_registers(address,MPU9250_ACCEL_CONFIG,1,&byte);
+        mpu_read_reg(MPU9250_ACCEL_CONFIG,byteptr);
        
        i2c_write_byte(address,MPU9250_FIFO_EN);
      i2c_read_byte(address,byteptr);  
@@ -450,30 +453,40 @@ bool triggered=false;
     }
     mimsyLedClear(RED_LED);   
     mimsyLedSet(GREEN_LED);
-    
+    struct int_param_s intparam;
+    mpu_init(&intparam);
+
+        
+
+    mpu_set_sensors(INV_XYZ_ACCEL|INV_XYZ_GYRO);
+
+       UARTprintf("reg value: %x",readbyte);
+     unsigned  short xl[6];
+    long debugx;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
    
     while(1)
     {
-     
-
+      
+      mpu_get_accel_reg(xl,&debugx);
       mimsyIMURead6Dof(address,&debug4);
+      data[bufferCount]=debug4;
       bufferCount++;
      // i2c_read_registers(address,MPU9250_FIFO_R_W,14,imuraw.bytes);
      // i2c_read_registers(address,MPU9250_ACCEL_XOUT_H,14,imuraw.bytes);
-     data[bufferCount]=debug4;
+     
       if(!triggered){
-        if((debug4.signedfields.accelY<-2*32768/16 ||debug4.signedfields.accelY>2*32767/16)||(debug4.signedfields.accelX<-2*32768/16 ||debug4.signedfields.accelX>2*32767/16)  ||(debug4.signedfields.accelZ<-2*32768/16 ||debug4.signedfields.accelZ>2*32767/16) ){
+        if((debug4.signedfields.accelY<-3*32768/16 ||debug4.signedfields.accelY>3*32767/16)||(debug4.signedfields.accelX<-3*32768/16 ||debug4.signedfields.accelX>3*32767/16)  ||(debug4.signedfields.accelZ<-3*32768/16 ||debug4.signedfields.accelZ>3*32767/16) ){
           mimsyLedSet(RED_LED);
-          triggered=true;
-          UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
+         // triggered=true;
+        //  UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
         }
       }
 
       if(bufferCount==128){
-        if(stopLogging){
+        if(!triggered){
           UARTprintf("%c[2K",27);
           UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
           UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
@@ -497,7 +510,7 @@ bool triggered=false;
         mimsyLedClear(GREEN_LED);
       } 
       while(stopLogging){
-        UARTprintf("\n data starts here:\n");
+        UARTprintf("\n data starts here:+ \n"); //+ is start condition
         for(int cardindex=0;cardindex<FLASH_PAGES_TOUSE;cardindex++){
           IMUData sendData[128];
           flashReadIMU(cards_stable[cardindex],sendData,128);
@@ -509,7 +522,7 @@ bool triggered=false;
           
               //print csv data to serial
               //format: xl_x,xl_y,xl_z,gyrox,gyroy,gyroz,timestamp
-              UARTprintf("%d,%d,%d,%d,%d,%d,%x,%d,%d\n",
+            UARTprintf("%d,%d,%d,%d,%d,%d,%x,%d,%d \n",
                           sendData[dataindex].signedfields.accelX,
                           sendData[dataindex].signedfields.accelY,
                           sendData[dataindex].signedfields.accelZ,
@@ -524,7 +537,7 @@ bool triggered=false;
           }
           
         }
-         UARTprintf("\n data ends here\n");
+        UARTprintf("= \n data ends here\n"); //= is end
           for(ui32Loop=1;ui32Loop<500000;ui32Loop++) {
           }
         }

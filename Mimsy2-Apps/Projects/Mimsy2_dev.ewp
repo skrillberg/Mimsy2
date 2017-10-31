@@ -349,6 +349,7 @@
                     <state>C:\Users\kilberg\Documents</state>
                     <state>C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc</state>
                     <state>C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\driver</state>
+                    <state>C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -598,7 +599,7 @@
                 </option>
                 <option>
                     <name>AOutputFile</name>
-                    <state></state>
+                    <state>$FILE_BNAME$.o</state>
                 </option>
                 <option>
                     <name>ALimitErrorsCheck</name>
@@ -2059,6 +2060,27 @@
             <name>mpu9250</name>
             <file>
                 <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250\MPU9250_RegisterMap.h</name>
+            </file>
+        </group>
+        <group>
+            <name>mpu9250driverlib</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\dmpKey.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\dmpmap.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu_dmp_motion_driver.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu_dmp_motion_driver.h</name>
             </file>
         </group>
         <file>

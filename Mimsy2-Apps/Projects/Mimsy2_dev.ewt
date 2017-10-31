@@ -2333,6 +2333,27 @@
                 <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250\MPU9250_RegisterMap.h</name>
             </file>
         </group>
+        <group>
+            <name>mpu9250driverlib</name>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\dmpKey.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\dmpmap.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu_dmp_motion_driver.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu_dmp_motion_driver.h</name>
+            </file>
+        </group>
         <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\accel_mimsy.c</name>
         </file>

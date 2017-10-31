@@ -23,12 +23,13 @@
 
 //=========================== prototypes ======================================
 
-void i2c_read_register(uint8_t slave_addr,
+int i2c_read_register(uint8_t slave_addr,
                              uint8_t reg_addr,
                              
                              uint8_t* spaceToWrite);
 void i2c_init(void);
-void i2c_read_registers(uint8_t slave_addr,
+extern int i2c_write_registers( uint8_t slave_addr,uint8_t reg_addr, uint8_t length,uint8_t *data);
+extern int i2c_read_registers(uint8_t slave_addr,
                              uint8_t reg_addr,
                              uint8_t numBytes,
                              uint8_t* spaceToWrite);
@@ -41,6 +42,7 @@ uint32_t i2c_read_bytes(uint8_t address, uint8_t* buffer, uint32_t length);
 
 void i2c_write_byte(uint8_t address, uint8_t byte);
 uint32_t i2c_write_bytes(uint8_t address, uint8_t* buffer, uint32_t length);
+void delay_ms(uint32_t delay);
 
 // interrupt handlers
 void isr_i2c_tx(uint8_t bus_num);
