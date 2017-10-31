@@ -118,7 +118,7 @@ void inchwormInit(struct InchwormSetup setup){
   switch(setup.timer){
       
   case 0: 
-    pwmTimerClkEnable=SYS_CTRL_PERIPH_GPT0;
+    pwmTimerClkEnable=SYS_CTRL_PERIPH_GPT0; 
     pwmTimerBase=GPTIMER0_BASE;
     timerIntA=INT_TIMER0A;
     timerIntB=INT_TIMER0B;
@@ -269,10 +269,10 @@ void inchwormInit(struct InchwormSetup setup){
 
 void inchwormRelease(InchwormMotor motor){
 
-    GPIOPinTypeGPIOOutput(motor.GPIObase1,motor.GPIOpin1);
+    GPIOPinTypeGPIOOutput(motor.GPIObase1,motor.GPIOpin1); //sets inchworm motor pis to gpio output setting which disables PWM output
     GPIOPinTypeGPIOOutput(motor.GPIObase2,motor.GPIOpin2);
 
-    GPIOPinWrite(motor.GPIObase1,motor.GPIOpin1,255);
+    GPIOPinWrite(motor.GPIObase1,motor.GPIOpin1,255);   //releases inchworm motor palls
     GPIOPinWrite(motor.GPIObase2,motor.GPIOpin2,255);
 
 }
@@ -287,18 +287,20 @@ void inchwormFreerun(InchwormMotor motor){
 
 }
 
+//holds inchworm motors
 void inchwormHold(InchwormMotor motor){
     
-    GPIOPinTypeGPIOOutput(motor.GPIObase1,motor.GPIOpin1);
+    GPIOPinTypeGPIOOutput(motor.GPIObase1,motor.GPIOpin1); //sets pins to normal gpio mode; disables pwm output 
     GPIOPinTypeGPIOOutput(motor.GPIObase2,motor.GPIOpin2);
 
-    GPIOPinWrite(motor.GPIObase1,motor.GPIOpin1,0);
+    GPIOPinWrite(motor.GPIObase1,motor.GPIOpin1,0);  //closes inwhorm palls 
     GPIOPinWrite(motor.GPIObase2,motor.GPIOpin2,0);
 }
 
+//drives inchworms a certain number of steps
 void inchwormDriveToPosition(InchwormMotor motor, uint32_t steps){
-    activeDriveList[motor.motorID]=true;
-    stepTargetList[motor.motorID]=steps;
+    activeDriveList[motor.motorID]=true; //tells isr that this inchworm is actively driving
+    stepTargetList[motor.motorID]=steps;  //tells isr what the target number of steps is for this motor
     inchwormFreerun(motor);
 
   

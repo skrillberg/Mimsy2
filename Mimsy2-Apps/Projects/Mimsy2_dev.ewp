@@ -2175,6 +2175,9 @@
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\accel_mimsy.c</name>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\accel_mimsy.h</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\flash_mimsy.c</name>
         </file>
         <file>
@@ -2197,6 +2200,12 @@
         </file>
         <file>
             <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\led.h</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\uart_mimsy.c</name>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\uart_mimsy.h</name>
         </file>
     </group>
     <group>

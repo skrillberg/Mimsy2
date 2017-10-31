@@ -1,8 +1,9 @@
 /**
- * Author: Xavier Vilajosana (xvilajosana@eecs.berkeley.edu)
+ * Author: Brian Kilberg (bkilberg@berkeley.edu)
+            Xavier Vilajosana (xvilajosana@eecs.berkeley.edu)
  *         Pere Tuset (peretuset@openmote.com)
- * Date:   July 2013
- * Description:CC2538-specific definition of the "i2c" bsp module.
+ * Date:   October 2017
+ * Description:Mimsy-CC2538-specific definition of the "i2c" bsp module.
  */
 
 #include <hw_gpio.h>

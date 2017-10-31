@@ -82,7 +82,7 @@
 #include "mpu.h"
 #include "log.h"
 //#include "packet.h"
-
+#include "uart_mimsy.h"
 
 /******************************************************************************
 * DEFINES
@@ -95,9 +95,7 @@
 #define PAGE_TO_ERASE            14
 #define PAGE_TO_ERASE_START_ADDR (FLASH_BASE + (PAGE_TO_ERASE * PAGE_SIZE))
 
-#define EXAMPLE_PIN_UART_RXD            GPIO_PIN_2 
-#define EXAMPLE_PIN_UART_TXD            GPIO_PIN_1 
-#define EXAMPLE_GPIO_BASE               GPIO_D_BASE
+
 #define FLASH_PAGE_STORAGE_START              14
 #define FLASH_PAGES_TOUSE                       100
 /******************************************************************************
@@ -339,6 +337,7 @@ void main(void)
        // for(ui32Loop=1;ui32Loop<50000;ui32Loop++) {
   //  }
    //flashReadIMU(refCard,flashData,sizeof(flashData)/16);
+   //////////////////////////////////////////////////////////////////
    board_timer_init();
     debug=sizeof(imu);
     
@@ -376,7 +375,7 @@ void main(void)
      
      i2c_write_byte(address,MPU9250_PWR_MGMT_2);
      i2c_read_byte(address,byteptr);
-     
+     ///////////////////////////////////////////////////////////////
      //fifo enable
      
     //          i2c_write_byte(address,MPU9250_USER_CTRL);
@@ -418,62 +417,8 @@ i2c_read_byte(address,byteptr);
           i2c_write_byte(address,0x1C);
      i2c_read_byte(address,byteptr);
      
-
-
-////////////////////////////////////////////////////////////////uart
-       char cThisChar;
-
-    //
-    // Set the clocking to run directly from the external crystal/oscillator.
-    // (no ext 32k osc, no internal osc)
-    //
-   // SysCtrlClockSet(false, false, SYS_CTRL_SYSDIV_32MHZ);
-
-
-    //
-    // Enable UART peripheral module
-    //
-    SysCtrlPeripheralEnable(SYS_CTRL_PERIPH_UART0);
-
-    //
-    // Disable UART function
-    //
-    UARTDisable(UART0_BASE);
-
-    //
-    // Disable all UART module interrupts
-    //
-    UARTIntDisable(UART0_BASE, 0x1FFF);
-
-    //
-    // Set IO clock as UART clock source
-    //
-    UARTClockSourceSet(UART0_BASE, UART_CLOCK_PIOSC);
-
-    //
-    // Map UART signals to the correct GPIO pins and configure them as
-    // hardware controlled.
-    //
-    IOCPinConfigPeriphOutput(EXAMPLE_GPIO_BASE, EXAMPLE_PIN_UART_TXD, IOC_MUX_OUT_SEL_UART0_TXD);
-    GPIOPinTypeUARTOutput(EXAMPLE_GPIO_BASE, EXAMPLE_PIN_UART_TXD); 
-    IOCPinConfigPeriphInput(EXAMPLE_GPIO_BASE, EXAMPLE_PIN_UART_RXD, IOC_UARTRXD_UART0);
-    GPIOPinTypeUARTInput(EXAMPLE_GPIO_BASE, EXAMPLE_PIN_UART_RXD);
-     
-    //
-    // Configure the UART for 115,200, 8-N-1 operation.
-    // This function uses SysCtrlClockGet() to get the system clock
-    // frequency.  This could be also be a variable or hard coded value
-    // instead of a function call.
-    //
-   // UARTConfigSetExpClk(UART0_BASE, SysCtrlClockGet(), 115200,
-                     //   (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
-                     //    UART_CONFIG_PAR_NONE));
-  //  UARTEnable(UART0_BASE);
-    UARTStdioInit(0);
-    //
-    // Put a character to show start of example.  This will display on the
-    // terminal.
-    //
+//uart init found in uart_mimsy.c
+     uartMimsyInit();
       UARTwrite("hello world",11);
     UARTCharPut(UART0_BASE, '!');
          i2c_write_byte(address,MPU9250_ACCEL_CONFIG);

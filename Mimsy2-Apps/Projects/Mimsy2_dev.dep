@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>2</fileVersion>
-    <fileChecksum>2054197470</fileChecksum>
+    <fileChecksum>1292248156</fileChecksum>
     <configuration>
         <name>Debug</name>
         <outputs>
@@ -299,6 +299,7 @@
             <file>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\mpl.c</file>
             <file>$PROJ_DIR$\Debug\Obj\mpl.o</file>
             <file>$PROJ_DIR$\Debug\Obj\mpl.pbi</file>
+            <file>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\uart_mimsy.c</file>
             <file>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include\mlos.h</file>
             <file>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\libmpllib.a</file>
             <file>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include\mltypes.h</file>
@@ -357,6 +358,9 @@
             <file>$PROJ_DIR$\Debug\Obj\log_stm32.o</file>
             <file>$PROJ_DIR$\Debug\Obj\log_stm32.pbi</file>
             <file>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\log_stm32.c</file>
+            <file>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\uart_mimsy.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\uart_mimsy.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\uart_mimsy.pbi</file>
         </outputs>
         <file>
             <name>$PROJ_DIR$\..\applications\leds_example.c</name>
@@ -377,7 +381,7 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 16 132 71 121 55 254 91 85 171 133 198 180 22 252 3 7 187 157 158 15 208 5 197 165 179 202 8 20 69 72 230 156 226 152 232 162 214 243 238 242 240 215 19 224 234 236 206 150 318 296 315 302 310 286 289 276 275 317 311 303 245 266 304 313 297 298 48 218 319 312 321 314 308 299 316 320 322 300 301 305 306 307 309</file>
+                    <file> 16 132 71 121 55 254 91 85 171 133 198 180 22 252 3 7 187 157 158 15 208 5 197 165 179 202 8 20 69 72 230 156 226 152 232 162 214 243 238 242 240 215 19 224 234 236 206 150 319 297 316 303 311 286 289 276 275 318 312 304 245 266 305 314 298 299 48 218 320 313 322 315 309 300 317 321 323 301 302 306 307 308 310 353</file>
                 </tool>
             </inputs>
         </file>
@@ -523,7 +527,7 @@
             <inputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 233 21 42 38 255 23 67 339 88 62 140 60 109 346 120 261 263 37 277 278 146 137 125 295 349 348 338 347 292 139 334 220 65 56 340 64 341 273 26 78 143 250 145 239 216 105 251 270 217 256 221 124 87 332 259 44 43 51</file>
+                    <file> 233 21 42 38 255 23 67 340 88 62 140 60 109 347 120 261 263 37 277 278 146 137 125 296 350 349 339 348 292 139 335 220 65 56 341 64 342 273 26 78 354 143 250 145 239 216 105 251 270 217 256 221 124 87 333 259 44 43 51</file>
                 </tool>
             </inputs>
         </file>
@@ -1591,7 +1595,26 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 298 296 315 133 71 121 55 254 91 302 310 48 85 218 319 318 297 275 313 312</file>
+                    <file> 299 297 316 133 71 121 55 254 91 303 311 48 85 218 320 319 298 275 314 313</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\uart_mimsy.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 354</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 355</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 206 180 133 71 121 55 254 91 22 171 165 179 202 69 85 72 150 162 187 197</file>
                 </tool>
             </inputs>
         </file>
@@ -1600,83 +1623,7 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 341</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 344</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 69 71 121 55 254 91 85 72 298 296 315 133 302 310 48 218 319 304 303 245 266</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\start_manager.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 340</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 337</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 69 71 121 55 254 91 85 72 319 48 218 297 296 315 133 302 310</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\data_builder.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 339</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
                     <file> 342</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 69 71 121 55 254 91 85 72 304 296 315 133 302 310 275 303 245 266 298 48 218 311 313 319</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\hal_outputs.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 346</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 343</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 69 71 121 55 254 91 85 72 317 296 315 133 302 310 319 48 218 304 303 245 266 297 275 313</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\message_layer.c</name>
-            <outputs>
-                <tool>
-                    <name>ICCARM</name>
-                    <file> 348</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -1686,7 +1633,83 @@
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 311 296 315 133 71 121 55 254 91 302 310 319 48 85 218</file>
+                    <file> 69 71 121 55 254 91 85 72 299 297 316 133 303 311 48 218 320 305 304 245 266</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\start_manager.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 341</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 338</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 69 71 121 55 254 91 85 72 320 48 218 298 297 316 133 303 311</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\data_builder.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 340</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 343</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 69 71 121 55 254 91 85 72 305 297 316 133 303 311 275 304 245 266 299 48 218 312 314 320</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\hal_outputs.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 347</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 344</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 69 71 121 55 254 91 85 72 318 297 316 133 303 311 320 48 218 305 304 245 266 298 275 314</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\message_layer.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 349</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 346</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 312 297 316 133 71 121 55 254 91 303 311 320 48 85 218</file>
                 </tool>
             </inputs>
         </file>
@@ -1695,17 +1718,17 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 338</file>
+                    <file> 339</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 336</file>
+                    <file> 337</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 303 245 71 121 55 254 91 266 304 296 315 133 302 310 312 69 85 72</file>
+                    <file> 304 245 71 121 55 254 91 266 305 297 316 133 303 311 313 69 85 72</file>
                 </tool>
             </inputs>
         </file>
@@ -1714,11 +1737,11 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 347</file>
+                    <file> 348</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 335</file>
+                    <file> 336</file>
                 </tool>
             </outputs>
             <inputs>
@@ -1733,17 +1756,17 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 334</file>
+                    <file> 335</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 333</file>
+                    <file> 334</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 69 71 121 55 254 91 85 72 313 296 315 133 302 310 304 303 245 266 297 275 311 319 48 218</file>
+                    <file> 69 71 121 55 254 91 85 72 314 297 316 133 303 311 305 304 245 266 298 275 312 320 48 218</file>
                 </tool>
             </inputs>
         </file>
@@ -1752,17 +1775,17 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 349</file>
+                    <file> 350</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 350</file>
+                    <file> 351</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
-                    <file> 132 71 121 55 254 91 85 133 48 218 69 72 331 296 315 302 310 319 206 180 22</file>
+                    <file> 132 71 121 55 254 91 85 133 48 218 69 72 332 297 316 303 311 320 206 180 22</file>
                 </tool>
             </inputs>
         </file>
