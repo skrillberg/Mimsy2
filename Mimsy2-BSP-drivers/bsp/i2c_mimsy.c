@@ -83,12 +83,12 @@ bool board_timer_expired(uint32_t future) {
 
 void delay_ms(uint32_t delay){
   uint32_t current=board_timer_get();
-  while(board_timer_get()<current+delay*32000){
+  while(board_timer_get()<current+delay*1000){
     
   }
 }
   void get_ms(uint32_t *timestamp){
-    *timestamp = board_timer_get()/(SysCtrlClockGet()/1000);
+    *timestamp = board_timer_get()*32/(SysCtrlClockGet()/1000);
   }
 
 void i2c_init(void) {

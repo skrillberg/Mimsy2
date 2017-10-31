@@ -5,6 +5,8 @@
  $
  */
 #include "mltypes.h"
+#include "stdlib.h"
+
 
 #ifndef INV_STORAGE_MANAGER_H__
 #define INV_STORAGE_MANAGER_H__

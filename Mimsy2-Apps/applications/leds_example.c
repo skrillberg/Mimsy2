@@ -70,7 +70,18 @@
 #include "usb_out_buffer.h"
 #include "uart.h"
 #include "hw_ioc.h"
+
+
+#include "mpl.h"
 #include "inv_mpu.h"
+#include "inv_mpu_dmp_motion_driver.h"
+#include "invensense.h"
+#include "invensense_adv.h"
+#include "eMPL_outputs.h"
+#include "mltypes.h"
+#include "mpu.h"
+#include "log.h"
+//#include "packet.h"
 
 
 /******************************************************************************
@@ -79,7 +90,7 @@
 #define GP4 
 #define FREQ_CNT SysCtrlClockGet()/frequency 
 #define OVERLAP_MATCH (100-dutycycle)*SysCtrlClockGet()/frequency/100 
-
+#define DEFAULT_MPU_HZ  (20)
 #define PAGE_SIZE                2048
 #define PAGE_TO_ERASE            14
 #define PAGE_TO_ERASE_START_ADDR (FLASH_BASE + (PAGE_TO_ERASE * PAGE_SIZE))
@@ -130,8 +141,35 @@ USB_EPOUT_RINGBUFFER_DATA usbCdcOutBufferData;
 static uint8_t pInBuffer[128];
 static uint8_t pOutBuffer[128];
 static uint8_t pAppBuffer[128];
+struct platform_data_s {
+    signed char orientation[9];
+};
 
-
+static struct platform_data_s gyro_pdata = {
+    .orientation = { 1, 0, 0,
+                     0, 1, 0,
+                     0, 0, 1}
+};
+struct rx_s {
+    unsigned char header[3];
+    unsigned char cmd;
+};
+struct hal_s {
+    unsigned char lp_accel_mode;
+    unsigned char sensors;
+    unsigned char dmp_on;
+    unsigned char wait_for_tap;
+    volatile unsigned char new_gyro;
+    unsigned char motion_int_mode;
+    unsigned long no_dmp_hz;
+    unsigned long next_pedo_ms;
+    unsigned long next_temp_ms;
+    unsigned long next_compass_ms;
+    unsigned int report;
+    unsigned short dmp_features;
+    struct rx_s rx;
+};
+static struct hal_s hal = {0};
 //*****************************************************************************
 //
 // Implementations of function that are required by usb framework.
@@ -152,6 +190,23 @@ void usbsuspHookExitingSuspend(void) {
 /******************************************************************************
 * FUNCTIONS
 */
+
+static void tap_cb(unsigned char direction, unsigned char count)
+{
+
+    return;
+}
+
+static void android_orient_cb(unsigned char orientation)
+{
+	switch (orientation) {
+
+	default:
+		return;
+	}
+}
+
+
 void
 Timer1AIntHandler(void)
 {
@@ -463,13 +518,35 @@ bool triggered=false;
        UARTprintf("reg value: %x",readbyte);
      unsigned  short xl[6];
     long debugx;
+   
+//dmp stuff
+    inv_init_mpl();
+      dmp_load_motion_driver_firmware();
+    dmp_set_orientation(
+       inv_orientation_matrix_to_scalar(gyro_pdata.orientation));
+          dmp_register_tap_cb(tap_cb);
+    dmp_register_android_orient_cb(android_orient_cb);
+    
+        hal.dmp_features = DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP |
+        DMP_FEATURE_ANDROID_ORIENT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO |
+        DMP_FEATURE_GYRO_CAL;
+    dmp_enable_feature(hal.dmp_features);
+    dmp_set_fifo_rate(DEFAULT_MPU_HZ);
+    mpu_set_dmp_state(1);
+    hal.dmp_on = 1;
+    short gyro;
+    short accel;
+    long quat;
+    long timestamp2;
+    unsigned char more;
+    short sensors=INV_XYZ_GYRO | INV_WXYZ_QUAT|INV_XYZ_ACCEL;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
    
     while(1)
     {
-      
+      dmp_read_fifo(&gyro, &accel, &quat,&timestamp2, &sensors, &more);
       mpu_get_accel_reg(xl,&debugx);
       mimsyIMURead6Dof(address,&debug4);
       data[bufferCount]=debug4;

@@ -39,8 +39,8 @@
    
 #define i2c_write   i2c_write_registers
 #define i2c_read    i2c_read_registers
-#define delay_ms    mdelay
-#define get_ms      get_tick_count
+#define delay_ms    delay_ms
+#define get_ms      get_ms
 #define log_i(...)     do {} while (0)
 #define log_e(...)     do {} while (0)
 

@@ -350,6 +350,10 @@
                     <state>C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc</state>
                     <state>C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\driver</state>
                     <state>C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL</state>
+                    <state>C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\eMPL-hal</state>
+                    <state>C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite</state>
+                    <state>C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mpl</state>
+                    <state>C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -816,7 +820,7 @@
                 </option>
                 <option>
                     <name>IlinkAdditionalLibs</name>
-                    <state></state>
+                    <state>C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mpl\libmpllib.a</state>
                 </option>
                 <option>
                     <name>IlinkOverrideProgramEntryLabel</name>
@@ -2065,10 +2069,22 @@
         <group>
             <name>mpu9250driverlib</name>
             <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\data_builder.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\data_builder.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\dmpKey.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\dmpmap.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\hal_outputs.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\hal_outputs.h</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu.c</name>
@@ -2081,6 +2097,78 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL\inv_mpu_dmp_motion_driver.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\invensense.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\libmpllib.a</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include\log.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\log_stm32.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\message_layer.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\message_layer.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\ml_math_func.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\ml_math_func.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include\mlinclude.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\mlmath.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include\mlmath.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include\mlos.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include\mltypes.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\mpl.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\mpl.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include\mpu.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\packet.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\results_holder.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\results_holder.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\start_manager.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\start_manager.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include\stdint_invensense.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\storage_manager.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite\storage_manager.h</name>
             </file>
         </group>
         <file>
