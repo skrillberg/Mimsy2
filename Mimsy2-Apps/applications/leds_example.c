@@ -458,14 +458,16 @@ bool triggered=false;
 
         
 
-    mpu_set_sensors(INV_XYZ_ACCEL|INV_XYZ_GYRO);
-
+    mpu_set_sensors(INV_XYZ_ACCEL|INV_XYZ_GYRO|INV_XYZ_COMPASS);
+    mpu_set_accel_fsr(16);
        UARTprintf("reg value: %x",readbyte);
      unsigned  short xl[6];
     long debugx;
    
 //dmp stuff
     inv_init_mpl();
+  //  inv_enable_quaternion();
+  //  inv_enable_9x_sensor_fusion();
       dmp_load_motion_driver_firmware();
     dmp_set_orientation(
        inv_orientation_matrix_to_scalar(gyro_pdata.orientation));
@@ -477,11 +479,15 @@ bool triggered=false;
         DMP_FEATURE_GYRO_CAL;
     dmp_enable_feature(hal.dmp_features);
     dmp_set_fifo_rate(DEFAULT_MPU_HZ);
+    dmp_enable_6x_lp_quat(1);
     mpu_set_dmp_state(1);
     hal.dmp_on = 1;
-    short gyro;
-    short accel;
-    long quat;
+    
+    
+    short gyro[3];
+    short accel[3];
+    long quat[4];
+    long rot[3];
     long timestamp2;
     unsigned char more;
     short sensors=INV_XYZ_GYRO | INV_WXYZ_QUAT|INV_XYZ_ACCEL;
@@ -491,7 +497,7 @@ bool triggered=false;
    
     while(1)
     {
-      dmp_read_fifo(&gyro, &accel, &quat,&timestamp2, &sensors, &more);
+      dmp_read_fifo(gyro, accel, quat,&timestamp2, &sensors, &more);
       mpu_get_accel_reg(xl,&debugx);
       mimsyIMURead6Dof(address,&debug4);
       data[bufferCount]=debug4;
@@ -509,10 +515,11 @@ bool triggered=false;
 
       if(bufferCount==128){
         if(!triggered){
-          UARTprintf("%c[2K",27);
-          UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
-          UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
-          UARTprintf(", Timestamp: %x",debug4.fields.timestamp);
+          //UARTprintf("%c[2K",27);
+        //  UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
+        //  UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
+         // UARTprintf(", Timestamp: %x",debug4.fields.timestamp);
+          UARTprintf("\n Quaternions:%d,%d,%d,%d",quat[0],quat[1],quat[2],quat[3]);
         }
         bufferCount=0;
         
