@@ -23,20 +23,30 @@ This file contains methods for interfacing with Mimsy 2's onboard MPU9250 IMU. I
 ### Functions 
 * void mimsyIMUInit()
 
-Initalizes the imu on mimsy. This function enables all of the sensors.
+  Initalizes the imu on mimsy. This function enables all of the sensors.
+
 
 * void mimsySetAccelFsr(int fsr)
 
-Sets the accellerometers full scale range in g's. Valid values for fsr are 2,4,8,and 16
+  Sets the accellerometers full scale range in g's. Valid values for fsr are 2,4,8,and 16
+
 
 * void mimsySetGyroFsr(int fsr)
 
-Sets the gyro's full scale range. Valid values are 250,500,1000, and 2000
+  Sets the gyro's full scale range. Valid values are 250,500,1000, and 2000
+
 
 * void mimsyIMURead6Dof( IMUData *data)
 
-Read accel xyz and gyro xyz data from imu. The input to this function is a pointer to a IMUData struct.
+  Read accel xyz and gyro xyz data from imu. The input to this function is a pointer to a IMUData struct.
+
 
 * void mimsyDmpBegin()
 
-Initializes the dmp 
+  Initializes the dmp 
+  
+## flash_mimsy.c
+This file contains functions for using Mimsy's flash memory. Right now it supports saving and reading IMUData structs 
+
+## i2c_mimsy.c
+This file contains functions for using i2c to write to and read from the accelerometer.
