@@ -55,6 +55,7 @@ This file contains functions for using Mimsy's flash memory. Right now it suppor
 
 ### Data Structures
 * IMUData
+  
   Union that contains three different types, **struct** *fields*, **struct** *signedfields*, and **uint32_t** *bits*. This data structure stores IMU data read from the MPU9250 and allows for easy interfacing with the flash write and read functions. 
   * *fields*: a struct that contains the raw unsigned representation of the IMU data
     * *timestamp*: contains the timestamp that denotes the time the data was taken at
@@ -63,6 +64,7 @@ This file contains functions for using Mimsy's flash memory. Right now it suppor
   * *bits*: This type representation of the union is used by the flash utilities to write and read the IMUData structures to and from flash
   
 * IMUDataCard
+  
   A struct used to keep track of which page IMU data is stored in in flash
   * *page*: Contains the page number where a range of IMUData points is stored. 
   * *startTime*: Contains the timestamp of the first datapoint (data[0]) stored in the page
@@ -81,3 +83,76 @@ This file contains functions for using Mimsy's flash memory. Right now it suppor
 
 ## i2c_mimsy.c
 This file contains functions for using i2c to write to and read from the accelerometer.
+
+## inchworm.c
+This file contains functions and utilities required for driving electrostaic inchworm motors with Mimsy 2. Driving inchworm motors requires a high voltage switching circuit or a PIPS board 
+
+### Data Structures
+
+* **struct** *InchwormMotor*
+
+  A struct that is used to identify which GPIOs are used for driving the inchworm motors. Create one of these for each inchworm motor used
+    * GPIObase1: the gpio base for pin 1 of the inchworm motor i.e. GPIO_BASE_A
+    * GPIOpin1: the gpio pin for pin 1 of the inchworm i.e. GPIO_PIN_1
+    * GPIObase2: the gpio base for pin 2 of the inchworm motor i.e. GPIO_BASE_B
+    * GPIOpin2: the gpio pin for pin 2 of the inchworm i.e. GPIO_PIN_2
+    * motorID: a unique ID for this motor object
+* **struct** *InchwormSetup*
+
+  A struct that is used to define the setup parameters for all of the inchworm motors being driven by the board. 
+    * iwMotors: a pointer to the list of all the inchworm motor structs instantiated for use.
+    * numOfMotors: the number of motors being driven by the Mimsy board
+    * motorFrequency: the frequency that all inchworm motors will be driven at in Hz. All inchworm motors on the board must share the same frequency to to limited hardware timer resources available.
+    * dutyCycle: duty cycle of pwm signals used to drive inchworm motors. Ideally between 60 and 90. Increasing duty cycle increases the amount of overlap time where both inchworm palls are engaged. 
+    * motorID: not used
+    * timer: determines which timer module is used by the inchworm module to drive the inchworm signals. This cannot be 2 because timer 2 is used by the openWsn board time. 
+    * phaseTimer: determines which timer module should be used by the inchworm module to generate the phase offset of the two inchworm drive signals. This cannot be 2 because of previously stated reasons
+    
+### Functions
+
+* inchwormInit(**struct** InchwormSetup)
+  
+  Initializes the timers and GPIOs and pin mappings required to generate inchworm drive signals. See above documentation for *InchwormSetup* and *InchwormMotor* structs for more information on inchworm configuration
+  
+* inchwormRelease(**InchwormMotor** motor)
+
+  Releases the palls on the specified inchworm motor which allows free movement of the inchworm shuttle
+
+* inchwormHold(**InchwormMotor** motor)
+
+  Engages the palls on the specified inchworm motor and holds the shuttle in place.
+  
+* inchwormFreerun(**InchwormMotor** motor)
+
+  Runs the specified inchworm motor indefinitely
+
+* inchwormDriveToPosition(**InchwormMotor** motor, **uint32_t** steps)
+
+  Runs the specified inchworm motor for the number of steps specified by *steps*
+
+## uart_mimsy.c
+
+Contains functions for using the mimsy uart serial port. At some point this could be used for communicating for a variety of devices. 
+
+### Defines
+
+* EXAMPLE_PIN_UART_RXD: Specifies the gpio pin number of the UART rx pin i.e. GPIO_PIN_2
+* EXAMPLE_PIN_UART_TXD: Specifies the gpio pin number of the UART tx pin i.e. GPIO_PIN_1
+* EXAMPLE_GPIO_BASE: specifies the gpio base number of the UART tx and rx pins (both pins must share the same GPIO base) i.e. GPIO_D_BASE
+
+### Functions
+
+* uartMimsyInit()
+
+  Function that initializes the Mimsy UART serial port
+
+* mimsyPrintf(**const char** (pointer) pcString, ...)
+
+  Function that writes a string to serial port. Behaves like the standard *printf* command used in C.
+  
+## led.c 
+
+This file contains functions for using the red and green LEDs on Mimsy 2
+
+
+
