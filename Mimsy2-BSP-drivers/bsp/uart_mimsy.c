@@ -70,16 +70,22 @@ void uartMimsyInit(){
     // terminal.
     //  
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+}
+
+void mimsyPrintf(const char *pcString, ...){
+      va_list vaArgP;
+
+    //
+    // Start the varargs processing.
+    //
+    va_start(vaArgP, pcString); 
+
+    UARTvprintf(pcString, vaArgP); 
+
+    //
+    // We're finished with the varargs now.
+    //
+    va_end(vaArgP);
   
 }

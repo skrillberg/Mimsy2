@@ -28,6 +28,16 @@ C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\
 -I
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\driver
 -I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\eMPL-hal
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mpl
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include
+-I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc\c
@@ -57,6 +67,16 @@ C:\Users\kilberg\Documents
 C:\Users\kilberg\Documents\Mimsy2\iar\cc2538_foundation_firmware_1_0_1_0\usblib\cc2538\source\class_cdc
 -I
 C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\driver
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\driver\eMPL
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\eMPL-hal
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mllite
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\mpl
+-I
+C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\mpu9250motionlib\include
 -D__CHAR_BITS__=8
 -D__CHAR_MAX__=0xff
 -D__CHAR_MIN__=0

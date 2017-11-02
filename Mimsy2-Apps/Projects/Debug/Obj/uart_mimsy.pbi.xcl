@@ -1,4 +1,4 @@
-"C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\accel_mimsy.c"
+"C:\Users\kilberg\Documents\Mimsy2\iar\Mimsy2-BSP-drivers\bsp\uart_mimsy.c"
 -std=c11
 -ferror-limit=0
 -I

@@ -44,7 +44,7 @@
 */
 #include "mpu9250/MPU9250_RegisterMap.h"
 #include <stdio.h>
-#include "uartstdio.h"
+//#include "uartstdio.h"
 //#include "bsp.h"
 //#include "bsp_led.h"
 //#include "board.c"
@@ -253,10 +253,7 @@ void main(void)
     // Init LEDs (turned off)
     //
     IntMasterDisable(); //disable interrupts for initializations
-  //  GPIOPinTypeGPIOOutput(GPIO_C_BASE,GPIO_PIN_4|GPIO_PIN_7);
-    //GPIOPinTypeGPIOOutput(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2);
-    //   GPIOPinWrite(GPIO_D_BASE,GPIO_PIN_1|GPIO_PIN_2,GPIO_PIN_1);
-  //  gpio_state=GPIO_PIN_1;
+
     mimsyLedInit();
     //
     // Turn on LED1 and LED4
@@ -301,126 +298,31 @@ void main(void)
    
     // re-enable interrupts
 
-    //
-    // Infinite loop
-    //
-    //IMUData imu;
-    
-     
-   imu.fields.accelX=1;//a X data
-   imu.fields.accelY=2;//a X data
-   imu.fields.accelZ=3;//a X data
-  
-   imu.fields.gyroX=4;//gyro X data
-   imu.fields.gyroY=5;//gyro Y data
-   imu.fields.gyroZ=6;//gyro Z data
-   
-   imu.fields.timestamp=1;
-   
-   debug=sizeof(data);
-   for(uint32_t k=0; k<sizeof(data)/16;k++){
-     
-   data[k].fields.accelX=6*k+1;//a X data
-   data[k].fields.accelY=6*k+2;//a X data
-   data[k].fields.accelZ=6*k+3;//a X data
-  
-   data[k].fields.gyroX=6*k+4;//gyro X data
-   data[k].fields.gyroY=6*k+5;//gyro Y data
-   data[k].fields.gyroZ=6*k+6;//gyro Z data
-   
-   data[k].fields.timestamp=k;
-
-   }
    refptr = &refCard;
    IntMasterEnable();
-  // flashWriteIMU(data,sizeof(data)/16,14,refptr);
-       // for(ui32Loop=1;ui32Loop<50000;ui32Loop++) {
-  //  }
-   //flashReadIMU(refCard,flashData,sizeof(flashData)/16);
+
    //////////////////////////////////////////////////////////////////
-   board_timer_init();
-    debug=sizeof(imu);
-    
-    
-         i2c_init();
-    uint8_t address;
-    address=0x69;
-    
-     i2c_write_byte(address,MPU9250_PWR_MGMT_1); //reset
-     i2c_write_byte(address,0x80);
-    
-      i2c_write_byte(address,MPU9250_PWR_MGMT_1); //wake
-     i2c_write_byte(address,0x00);
-    
-    uint8_t bytes[2]={MPU9250_PWR_MGMT_1,0x01}  ; 
-     i2c_write_bytes(address,bytes,2); //set gyro clock source
-   
-     //  bytes[0]=0x6A;
-  //   bytes[1]=  0x20;
-    // i2c_write_bytes(address,bytes); //set reset
-     
-   /*  bytes[0]=0x6B;
-     bytes[1]=  0x80;
-     i2c_write_bytes(address,bytes,2); //set reset
-*/
-     bytes[0]=0x6C;
-     bytes[1]=0x03;
-        uint8_t *byteptr=&readbyte;
-      
-        i2c_write_byte(address,MPU9250_PWR_MGMT_2);
-     i2c_read_byte(address,byteptr);
-     
-     i2c_write_byte(address,MPU9250_PWR_MGMT_2); //sens enable
-     i2c_write_byte(address,0x00);
-     
-     i2c_write_byte(address,MPU9250_PWR_MGMT_2);
-     i2c_read_byte(address,byteptr);
+mimsyIMUInit();
      ///////////////////////////////////////////////////////////////
-     //fifo enable
-     
-    //          i2c_write_byte(address,MPU9250_USER_CTRL);
-    // i2c_write_byte(address,0x40);
-     
-        // i2c_write_byte(address,MPU9250_FIFO_EN);
-   //  i2c_write_byte(address,0x78); //enalbe gyro and accel fifo writes
-    
 
 
      
-     
-     readbyte=1;
-   
-      i2c_write_byte(address,MPU9250_WHO_AM_I);
-i2c_read_byte(address,byteptr);
+uint8_t *byteptr=&readbyte;
+uint8_t address = 0x69;
       
-     i2c_write_byte(address,0x3B);
-     i2c_read_byte(address,byteptr);
-     debug4.fields.accelX=((uint16_t) readbyte)<<8;
-    
-     i2c_write_byte(address,0x3C);
-     i2c_read_byte(address,byteptr);
-      debug4.fields.accelX=((uint16_t) readbyte)| debug4.fields.accelX;
-     
-     i2c_write_byte(address,0x3F);
-     i2c_read_byte(address,byteptr);
-    //  debug4.fields.accelZ[15:8]=readbyte;
-          i2c_write_byte(address,0x40);
-     i2c_read_byte(address,byteptr);
-    //  debug4.fields.accelZ[7:0]=readbyte;
-      
+
+     //full scale set
               i2c_write_byte(address,0x1C);
      i2c_write_byte(address,0x18);
      
              i2c_write_byte(address,0x1C);
      i2c_read_byte(address,byteptr);
      
-          i2c_write_byte(address,0x1C);
-     i2c_read_byte(address,byteptr);
-     
+
 //uart init found in uart_mimsy.c
      uartMimsyInit();
-      UARTwrite("hello world",11);
-    UARTCharPut(UART0_BASE, '!');
+     
+
          i2c_write_byte(address,MPU9250_ACCEL_CONFIG);
      i2c_write_byte(address,0x18);  
      
@@ -434,14 +336,14 @@ i2c_read_byte(address,byteptr);
       
     i2c_write_byte(address,MPU9250_ACCEL_CONFIG);
      i2c_read_byte(address,byteptr);  
-       UARTprintf("Register Value: %x",readbyte);
+      mimsyPrintf("Register Value: %x",readbyte);
        uint8_t byte=0x00;
      //  i2c_write_registers(address,MPU9250_ACCEL_CONFIG,1,&byte);
         mpu_read_reg(MPU9250_ACCEL_CONFIG,byteptr);
        
        i2c_write_byte(address,MPU9250_FIFO_EN);
      i2c_read_byte(address,byteptr);  
-       UARTprintf("Register Value: %x",readbyte);
+     mimsyPrintf("Register Value: %x",readbyte);
      
        
 bool stopLogging=false;
@@ -453,36 +355,27 @@ bool triggered=false;
     }
     mimsyLedClear(RED_LED);   
     mimsyLedSet(GREEN_LED);
-    struct int_param_s intparam;
+   
+    
+    
+    struct int_param_s intparam; //need an empty struct
     mpu_init(&intparam);
 
         
 
-    mpu_set_sensors(INV_XYZ_ACCEL|INV_XYZ_GYRO|INV_XYZ_COMPASS);
-    mpu_set_accel_fsr(16);
-       UARTprintf("reg value: %x",readbyte);
+    mpu_set_sensors(INV_XYZ_ACCEL|INV_XYZ_GYRO|INV_XYZ_COMPASS); //turn on sensor
+    mpu_set_accel_fsr(16); //set fsr for accel
+       mimsyPrintf("reg value: %x",readbyte);
      unsigned  short xl[6];
     long debugx;
    
 //dmp stuff
-    inv_init_mpl();
+   // inv_init_mpl();
   //  inv_enable_quaternion();
   //  inv_enable_9x_sensor_fusion();
-      dmp_load_motion_driver_firmware();
-    dmp_set_orientation(
-       inv_orientation_matrix_to_scalar(gyro_pdata.orientation));
-          dmp_register_tap_cb(tap_cb);
-    dmp_register_android_orient_cb(android_orient_cb);
     
-        hal.dmp_features = DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP |
-        DMP_FEATURE_ANDROID_ORIENT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO |
-        DMP_FEATURE_GYRO_CAL;
-    dmp_enable_feature(hal.dmp_features);
-    dmp_set_fifo_rate(DEFAULT_MPU_HZ);
-    dmp_enable_6x_lp_quat(1);
-    mpu_set_dmp_state(1);
-    hal.dmp_on = 1;
-    
+    //start dmp with 6axis fusion
+    mimsyDmpBegin();
     
     short gyro[3];
     short accel[3];
@@ -499,7 +392,7 @@ bool triggered=false;
     {
       dmp_read_fifo(gyro, accel, quat,&timestamp2, &sensors, &more);
       mpu_get_accel_reg(xl,&debugx);
-      mimsyIMURead6Dof(address,&debug4);
+      mimsyIMURead6Dof(&debug4);
       data[bufferCount]=debug4;
       bufferCount++;
      // i2c_read_registers(address,MPU9250_FIFO_R_W,14,imuraw.bytes);
@@ -519,7 +412,7 @@ bool triggered=false;
         //  UARTprintf("\n Accel X: %d, Accel Y: %d, Accel Z: %d ",debug4.signedfields.accelX,debug4.signedfields.accelY,debug4.signedfields.accelZ);
         //  UARTprintf(" Gyro X: %d, Gyro Y: %d, Gyro Z: %d ",debug4.signedfields.gyroX,debug4.signedfields.gyroY,debug4.signedfields.gyroZ);
          // UARTprintf(", Timestamp: %x",debug4.fields.timestamp);
-          UARTprintf("\n Quaternions:%d,%d,%d,%d",quat[0],quat[1],quat[2],quat[3]);
+          mimsyPrintf("\n Quaternions:%d,%d,%d,%d",quat[0],quat[1],quat[2],quat[3]);
         }
         bufferCount=0;
         
