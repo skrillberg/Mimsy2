@@ -7,6 +7,14 @@
 #include "../SerialDriver/serial.h"
 #else // assumes arm
 
+#include "hw_memmap.h"
+#include "hw_types.h"
+#include "hw_ioc.h"
+#include "sys_ctrl.h"
+#include "uart.h"
+#include "gpio.h"
+#include "ioc.h"
+
 #define TRUE 1
 #define FALSE 0
 
